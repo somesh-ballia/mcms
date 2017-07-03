@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<request 
+	xmlns="urn:ietf:params:xml:ns:cccp"
+	xmlns:mscp="http://schemas.microsoft.com/rtc/2005/08/cccpextensions"
+	C3PVersion="1"
+	to="sip:sqa02@ilw15a.polycom.eng;gruu;opaque=app:conf:focus:id:57GYYC88"
+	from="sip:sqa04@ilw15a.polycom.eng"
+	requestId="24788755472">
+    <addUser>
+        <conferenceKeys confEntity="sip:sqa02@ilw15a.polycom.eng;gruu;opaque=app:conf:focus:id:57GYYC88" />
+        <ci:user xmlns:ci="urn:ietf:params:xml:ns:conference-info" entity="sip:sqa04@ilw15a.polycom.eng">
+            <ci:roles>
+                <ci:entry>attendee</ci:entry>
+            </ci:roles>
+            <ci:endpoint entity="{77D4A6A7-44D5-476B-98E9-ED78679BA5EE}" xmlns:msci="http://schemas.microsoft.com/rtc/2005/08/confinfoextensions">
+                <msci:clientInfo>
+                    <cis:separator xmlns:cis="urn:ietf:params:xml:ns:conference-info-separator"></cis:separator>
+                    <msci2:lobby-capable xmlns:msci2="http://schemas.microsoft.com/rtc/2008/12/confinfoextensions">true</msci2:lobby-capable>
+                </msci:clientInfo>
+            </ci:endpoint>
+        </ci:user>
+    </addUser>
+</request>

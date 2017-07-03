@@ -1,0 +1,25 @@
+#ifndef __AUDITOR_DEFINES_H__
+#define __AUDITOR_DEFINES_H__
+
+
+#define AUDIT_DIRECTORY "Audit/"
+#define MAX_AUDIT_FILE_SIZE  1939865 // 1.85 MB = 1.85 * 1024 * 1024  1939865//
+#define AUDIT_FILE_NAME "Audit"
+#define AUDIT_FILE_EXT "xml"
+#define MAX_NUM_AUDIT_FILES 1000
+
+// max size of event is 32 * 1024 - it is defined in AuditorApi
+// -> 32 * 1024 * 32 = 1024 * 1024 = 1 MB
+#define MAX_NUM_AUDIT_EVENT_IN_MEMORY 32
+
+#define AUDIT_EVENT_LIST_XML_TAG "AUDIT_EVENT_LIST"
+#define AUDIT_FILE_LIST_XML_TAG  "AUDIT_FILE_SUMMARY_LS"
+#define AUDIT_EVENT_XML_TAG      "AUDIT_FILE_SUMMARY"
+
+
+#define AUDIT_LIST_XML_TAG_BEGIN "<AUDIT_EVENT_LIST>\n\n"
+#define AUDIT_LIST_XML_TAG_END   "\n</AUDIT_EVENT_LIST>\n"
+
+
+
+#endif // __AUDITOR_DEFINES_H__

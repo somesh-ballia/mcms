@@ -1,0 +1,40 @@
+// TestMcuMngrProcess.cpp: implementation of the CTestMcuMngrProcess class.
+//
+//////////////////////////////////////////////////////////////////////
+
+
+
+#include "TestMcuMngrProcess.h"
+#include "McuMngrProcess.h"
+#include "Trace.h"
+#include "SystemFunctions.h"
+
+CPPUNIT_TEST_SUITE_REGISTRATION( CTestMcuMngrProcess );
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+void CTestMcuMngrProcess::setUp()
+{
+}
+
+//////////////////////////////////////////////////////////////////////
+void CTestMcuMngrProcess::tearDown()
+{
+}
+
+//////////////////////////////////////////////////////////////////////
+void CTestMcuMngrProcess::testConstructor()
+{
+
+	FPTRACE(eLevelInfoNormal,"CTestMcuMngrProcess::testConstructor");
+
+	CPPUNIT_ASSERT_MESSAGE( "CTestMcuMngrProcess::testConstructor ",
+		CProcessBase::GetProcess() != NULL );  
+
+} 
+
+
+

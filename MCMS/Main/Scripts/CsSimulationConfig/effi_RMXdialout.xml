@@ -1,0 +1,1350 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="Basic Sipstone UAC">
+
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 0 UDP/BFCP *
+
+
+     ]]>
+   </send>
+   
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     P-Asserted-Identity: "HDX4000-SIP, 1420(SM4)" <sip:1420@video.com>
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 TCP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+
+
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+
+    <send response="200">
+ 
+     <![CDATA[
+     
+     SIP/2.0 200 OK
+     [last_From:]
+     Call-ID: [call_id]
+     [last_CSeq:]
+     [last_Via:]
+     [last_To:];tag=DLba8428fb75
+     Allow: INVITE,CANCEL,ACK,OPTIONS,INFO,SUBSCRIBE,NOTIFY,BYE,MESSAGE,REFER,PUBLISH
+     Session-Expires: 90;refresher=uac
+     User-Agent: Polycom HDX 4000 HD (BetaRC - 3.0.3-14334)
+     Supported: replaces,norefersub
+     Contact: sip:sipp@127.0.0.1:[local_port]
+     Content-Type: application/sdp
+     Content-Length: [len]
+
+v=0
+o=- 1314906404 4 IN IP4 135.9.209.72
+s=-
+c=IN IP4 135.9.40.71
+b=AS:1024
+t=0 0
+m=audio 49254 RTP/AVP 9 101
+a=rtpmap:9 G722/8000
+a=rtpmap:101 telephone-event/8000
+m=video 49256 RTP/AVP 114 109 108 34 31
+b=TIAS:1024000
+a=rtpmap:114 H264/90000
+a=fmtp:114 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016; max-mbps=69500; max-fs=2304; sar=13; packetization-mode=1
+a=rtpmap:108 H263-1998/90000
+a=fmtp:108 CIF4=2;CIF=1;QCIF=1;SQCIF=1;CUSTOM=352,240,1;CUSTOM=704,480,2
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1;SQCIF=1
+a=rtpmap:31 H261/90000
+a=fmtp:31 CIF=1;QCIF=1
+a=rtcp-fb:* ccm fir
+m=application 49258 RTP/AVP 100
+a=rtpmap:100 H224/4800
+m=application 49153 UDP/BFCP *
+a=connection:new
+a=setup:active
+a=floorctrl:c-only
+a=floorid:1 m-stream:3
+m=video 0 RTP/AVP 109 96 110 34
+b=TIAS:1152000
+a=rtpmap:109 H264/90000
+a=fmtp:109 profile-level-id=428016;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:96 H263-1998/90000
+a=fmtp:96 CIF4=2;CIF=1;QCIF=1;T=1;CUSTOM=352,240,1;CUSTOM=704,480,2;CUSTOM=640,480,2;CUSTOM=800,600,3
+a=rtpmap:110 H264/90000
+a=fmtp:110 profile-level-id=428016;packetization-mode=1;max-mbps=23040;max-fs=3600;sar=13
+a=rtpmap:34 H263/90000
+a=fmtp:34 CIF4=2;CIF=1;QCIF=1
+a=content:slides
+a=label:3
+a=rtcp-fb:* ccm fir
+ 
+     ]]>
+   </send>
+
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+
+
+
+<recv request="BYE">  </recv>
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:127.0.0.1:[local_port];transport=[transport]>
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+</scenario>
+
+
+

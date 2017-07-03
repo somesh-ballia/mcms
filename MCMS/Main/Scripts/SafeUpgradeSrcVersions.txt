@@ -1,0 +1,37 @@
+/*********************************************************************************************************************/
+/*  upgrade from  CURRENT_VERSION to  NEW_VERSION 
+/*  we run two scripts : first script running on the current version side (RunFirmwareCheck.sh) and the second script 
+/*  runs from the new version side (FirmwareCheck.sh).
+/*
+/*  when we use that txt file we are on the new version side. 
+/*  we use the following data in FirmwareCheck script 
+/*  and it means which version  can or cannot upgrade to new_version.
+/**********************************************************************************************************************/
+
+
+ALL_PRODUCTS_ALL_CARDS_BLACK_LIST:5.0;5.1;7.0;6.0;2.0;3.0;4.0     
+ALL_PRODUCTS_ALL_CARDS_WHITE_LIST:7.6;7.1;7.2;7.3;7.4;7.0.1;7.0.2;7.0.3;4.7.2;7.0.2C;7.5;8.5;8.4;8.3
+
+RMX4000_CARDS_MODE_MPMX_BLACK_LIST:NONE
+RMX4000_CARDS_MODE_MPMX_WHITE_LIST:NONE
+        
+RMX4000_CARDS_MODE_MPM_PLUS_BLACK_LIST:NONE
+RMX4000_CARDS_MODE_MPM_PLUS_WHITE_LIST:NONE
+
+RMX4000_CARDS_MODE_MPM_BLACK_LIST:ALL
+RMX4000_CARDS_MODE_MPM_WHITE_LIST:NONE
+
+RMX2000_CARDS_MODE_MPMX_BLACK_LIST:NONE
+RMX2000_CARDS_MODE_MPMX_WHITE_LIST:NONE
+        
+RMX2000_CARDS_MODE_MPM_PLUS_BLACK_LIST:NONE
+RMX2000_CARDS_MODE_MPM_PLUS_WHITE_LIST:NONE
+   
+RMX2000_CARDS_MODE_MPM_BLACK_LIST:ALL
+RMX2000_CARDS_MODE_MPM_WHITE_LIST:NONE
+        
+RMX1500_CARDS_MODE_MPMX_BLACK_LIST:NONE
+RMX1500_CARDS_MODE_MPMX_WHITE_LIST:NONE
+
+RMX1500Q_CARDS_MODE_MPMX_BLACK_LIST:7.0.1;7.0.2;7.0.3;7.0.2C;4.6;4.7;7.5
+RMX1500Q_CARDS_MODE_MPMX_WHITE_LIST:NONE

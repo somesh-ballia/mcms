@@ -1,0 +1,1356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<buildforge schema="7.020016">
+  <project failchain="0" primary="1" selectorId="auto-test-selector" maxthread="13" increment="Y" tagsync="0" buildclass="Production" sticky="N" tag="BUILD_$B" id="1" exclusive="0" startnotify="0" access="6" name="auto-test" active="Y" passnotify="0" failnotify="0" passchain="0" envId="1">
+    <tagvar autoincrement="Y" name="B" id="1">308</tagvar>
+    <step absolute="N" failwait="N" selectorId="" dir="/" broadcast="N" timeout="300" id="1" passwait="N" inline="N" threadable="N" access="6" active="N" passnotify="0" description="rename-project" onfail="H" failnotify="0" envId="0">
+      <command>echo rename-project
+
+.bset env "RMX_BL=`cleartool lsstream -fmt %[found_bls]Np -cview | fgrep MCMS | tail -1`"
+
+.retag ${RMX_BL}-BF.$B</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="2" passwait="N" inline="N" threadable="N" access="6" active="Y" passnotify="0" description="cleanup" onfail="H" failnotify="0" envId="0">
+      <command>echo cleanup
+
+.bset env "num = $[ $B - $KEEP_HISTORY ]"
+.bset env "dir =../BUILD_$num"
+
+# check existence of a directory to clean up
+if [ ! -d $dir ]; then
+echo directory $dir is cleaned up already
+exit 0
+fi
+
+# remove CC view if view directory exist
+if [ -d $dir/$BUILD_PATH ]; then
+
+echo cd $dir/$BUILD_PATH
+cd $dir/$BUILD_PATH
+
+echo ls -1 -d ${CC_VIEW_NAME_PREFIX}* | tail -1
+echo remove view
+$CT rmview `ls -1 -d ${CC_VIEW_NAME_PREFIX}* | tail -1`
+
+cd -
+fi
+
+echo rm -rf $dir
+rm -rf $dir</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="3" passwait="N" inline="N" threadable="N" access="6" active="Y" passnotify="0" description="create-view" onfail="H" failnotify="0" envId="0">
+      <command>echo create-view
+
+echo "mkdir -p $BUILD_PATH"
+mkdir -p $BUILD_PATH
+
+cd $BUILD_PATH
+
+echo "$CT mkview -snapshot -tag $CC_VIEW_NAME -stream $CC_STREAM_NAME -stgloc Views $CC_VIEW_NAME"
+$CT mkview -snapshot -tag $CC_VIEW_NAME -stream $CC_STREAM_NAME -stgloc Views $CC_VIEW_NAME
+
+cd $CC_VIEW_NAME
+
+echo "$CT update -add_loadrules vob/MCMS/Main vob/MIG/Schemas vob/COMMON/IpMc"
+$CT update -add_loadrules vob/MCMS/Main vob/MCMS/McmIncld vob/MIG/Schemas vob/COMMON/IpMc
+
+cd vob
+
+# update view with main components
+echo "$CT update -f -ove"
+$CT update -f -ove</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="4" passwait="N" inline="N" threadable="N" access="6" active="N" passnotify="0" description="create-view-test" onfail="H" failnotify="0" envId="0">
+      <command>echo create-view-test
+echo build test environment, step create-view should be disabled
+
+mkdir -p $MCMS_MAIN_PATH
+cd $MCMS_MAIN_PATH/..
+rmdir Main
+ln -sf $DRABKIN_MAIN_PATH Main</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="5" passwait="N" inline="N" threadable="N" access="6" active="Y" passnotify="0" description="verify-files" onfail="H" failnotify="0" envId="0">
+      <command>echo verify-files
+
+# check existence of the Main directory
+if [ ! -d $MCMS_MAIN_PATH ]; then
+echo directory $MCMS_MAIN_PATH is not exist
+exit -1
+fi
+
+if [ ! -e $MCMS_MAIN_PATH/Scripts/Cleanup.sh ]; then
+echo file $MCMS_MAIN_PATH/Scripts/Cleanup.sh is not exist
+exit -1
+fi
+
+# check existence of the AutoTestScripts directory
+if [ ! -d $AT_TOOLS_PATH ]; then
+echo directory $AT_TOOLS_PATH is not exist
+exit -1
+fi
+
+# check existence of the BuildTestEnv.sh file
+if [ ! -f $AT_TOOLS_PATH/BuildTestEnv.sh ]; then
+echo directory $AT_TOOLS_PATH/BuildTestEnv.sh is not exist
+exit -1
+fi</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="6" passwait="N" inline="N" threadable="N" access="6" active="Y" passnotify="0" description="build-project" onfail="H" failnotify="0" envId="0">
+      <command>echo build-project
+
+cd $MCMS_MAIN_PATH
+
+Scripts/Cleanup.sh
+
+make active
+make -j50</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="7" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test001" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="8" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test002" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="9" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test003" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="10" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test004" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="11" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test005" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="12" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test006" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="13" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test007" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="14" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test008" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="15" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test009" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="16" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test010" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="17" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test011" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="18" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test012" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="19" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test013" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="20" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test014" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="21" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test015" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="22" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test016" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="23" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test017" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="24" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test018" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="25" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test019" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="26" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test020" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="27" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test021" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="28" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test022" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="29" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test023" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="30" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test024" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="31" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test025" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="32" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test026" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="33" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test027" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="34" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test028" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="35" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test029" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="36" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test030" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="37" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test031" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="38" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test032" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="39" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test033" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="40" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test034" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="41" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test035" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="42" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test036" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="43" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test037" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="44" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test038" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="45" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test039" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="46" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test040" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="47" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test041" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="48" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test042" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="49" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test043" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="50" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test044" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="51" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test045" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="52" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test046" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="53" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test047" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="54" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test048" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="55" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test049" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="56" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test050" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="57" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test051" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="58" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test052" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="59" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test053" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="60" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test054" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="61" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test055" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="62" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test056" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="63" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test057" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="64" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test058" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="65" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test059" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="66" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test060" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="67" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test061" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="68" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test062" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="69" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test063" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="70" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test064" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="71" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test065" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="72" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test066" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="73" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test067" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="74" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test068" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="75" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test069" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="76" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test070" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="77" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test071" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="78" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test072" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="79" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test073" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="80" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test074" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="81" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test075" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="82" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test076" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="83" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test077" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="84" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test078" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="85" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test079" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="86" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test080" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="87" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test081" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="88" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test082" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="89" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test083" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="90" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test084" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="91" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test085" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="92" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test086" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="93" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test087" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="94" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test088" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="95" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test089" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="96" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test090" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="97" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test091" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="98" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test092" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="99" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test093" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="100" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test094" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="101" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test095" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="102" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test096" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="103" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test097" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="104" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test098" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="105" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test099" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="106" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test100" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="107" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test101" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="108" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test102" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="109" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test103" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="110" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test104" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="111" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test105" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="112" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test106" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="113" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test107" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="114" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test108" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="115" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test109" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="116" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test110" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="117" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test111" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="118" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test112" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="119" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test113" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="120" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test114" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="121" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test115" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="122" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test116" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="123" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test117" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="124" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test118" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="125" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test119" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="126" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test120" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="127" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test121" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="128" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test122" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="129" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test123" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="130" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test124" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="131" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test125" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="132" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test126" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="133" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test127" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="134" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test128" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="135" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test129" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="136" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test130" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="137" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test131" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="138" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test132" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="139" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test133" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="140" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test134" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="141" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test135" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="142" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test136" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="143" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test137" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="144" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test138" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="145" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test139" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="146" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test140" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="147" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test141" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="148" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test142" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="149" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test143" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="150" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test144" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="151" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test145" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="152" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test146" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="153" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test147" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="154" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test148" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="155" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test149" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="156" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test150" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="157" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test151" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="158" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test152" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="159" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test153" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="160" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test154" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="161" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test155" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="162" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test156" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="163" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test157" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="164" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test158" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="165" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test159" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="166" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test160" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="167" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test161" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="168" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test162" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="169" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test163" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="170" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test164" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="171" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test165" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="172" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test166" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="173" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test167" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="174" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test168" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="175" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test169" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="176" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test170" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="177" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test171" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="178" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test172" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="179" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test173" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="180" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test174" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="181" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test175" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="182" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test176" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="183" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test177" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="184" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test178" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="185" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test179" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="186" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test180" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="187" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test181" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="188" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test182" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="189" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test183" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="190" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test184" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="191" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test185" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="192" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test186" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="193" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test187" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="194" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test188" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="195" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test189" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="196" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test190" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="197" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test191" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="198" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test192" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="199" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test193" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="200" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test194" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="201" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test195" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="202" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test196" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="203" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test197" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="204" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test198" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="205" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test199" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="206" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test200" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="207" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test201" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="208" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test202" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="209" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test203" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="210" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test204" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="211" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test205" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="212" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test206" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="213" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test207" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="214" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test208" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="215" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test209" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="216" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test210" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="217" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test211" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="218" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test212" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="219" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test213" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="220" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test214" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="221" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test215" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="222" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test216" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="223" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test217" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="224" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test218" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="225" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test219" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="226" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test220" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="227" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test221" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="228" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test222" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="229" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test223" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="230" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test224" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="231" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test225" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="232" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test226" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="233" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test227" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="234" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test228" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="235" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test229" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="236" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test230" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="237" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test231" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="238" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test232" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="239" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test233" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="240" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test234" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="241" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test235" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="242" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test236" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="243" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test237" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="244" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test238" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="245" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test239" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="246" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test240" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="247" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test241" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="248" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test242" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="249" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test243" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="250" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test244" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="251" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test245" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="252" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test246" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="253" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test247" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="254" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test248" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="255" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test249" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="256" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test250" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="257" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test251" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="258" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test252" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="259" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test253" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="260" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test254" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="261" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test255" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="262" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test256" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="263" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test257" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="264" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test258" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="265" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test259" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="266" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test260" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="267" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test261" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="268" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test262" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="269" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test263" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="270" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test264" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="271" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test265" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="272" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test266" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="273" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test267" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="274" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test268" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="275" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test269" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="276" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test270" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="277" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test271" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="278" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test272" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="279" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test273" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="280" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test274" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="281" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test275" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="282" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test276" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="283" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test277" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="284" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test278" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="285" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test279" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="286" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test280" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="287" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test281" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="288" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test282" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="289" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test283" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="290" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test284" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="291" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test285" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="292" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test286" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="293" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test287" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="294" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test288" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="295" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test289" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="296" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test290" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="297" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test291" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="298" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test292" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="299" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test293" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="300" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test294" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="301" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test295" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="302" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test296" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="303" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test297" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="304" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test298" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="305" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test299" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="306" passwait="N" inline="N" threadable="Y" access="6" active="Y" passnotify="0" description="test300" onfail="C" failnotify="0" envId="0">
+      <command>$AT_STEP_CMD</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="307" passwait="N" inline="N" threadable="N" access="6" active="Y" passnotify="0" description="run-report" onfail="H" failnotify="0" envId="0">
+      <command>echo run-report
+
+#$AT_TOOLS_PATH/RunReport.sh $RESULT_PATH $AT_TOOLS_PATH $CC_VERSION
+
+echo $AT_TOOLS_PATH/night_run_report.sh $RESULT_PATH $RESULT_PATH $AT_TOOLS_PATH tmpUdib $AT_MAIL_ADDR Carmel $RESULT_PATH $CC_VERSION
+$AT_TOOLS_PATH/night_run_report.sh $RESULT_PATH $RESULT_PATH $AT_TOOLS_PATH tmpUdib $AT_MAIL_ADDR Carmel $RESULT_PATH $CC_VERSION</command>
+    </step>
+    <step absolute="N" failwait="N" filterId="1" selectorId="" dir="/" broadcast="N" timeout="300" id="308" passwait="N" inline="N" threadable="N" access="6" active="N" passnotify="0" description="test" onfail="H" failnotify="0" envId="0">
+      <command>.bset env ".include = auto-test-list-env"
+
+echo $test001</command>
+    </step>
+  </project>
+  <class maxdays="0" access="6" entranceprojectId="0" name="Production" keepfiles="B" deletechangedata="N" purgeprojectId="0" exitProjectId="0" candidates="KeepPass" maxbuilds="10"></class>
+  <filter access="6" name="auto-test-log-filter" id="1">
+    <pattern pattern="Test FAILED" access="6" action="F"></pattern>
+    <pattern pattern="build error: " access="6" action="F"></pattern>
+    <pattern pattern="cleartool: Error: " access="6" action="N"></pattern>
+    <pattern pattern="make:.*Error" access="6" action="F"></pattern>
+  </filter>
+  <selector operator="" required="" access="6" value="" name="auto-test-selector" selectorId="" property=""></selector>
+  <selector operator="" required="" access="6" value="" name="auto-test-selector" selectorId="" property=""></selector>
+  <selector operator="" required="" access="6" value="" name="auto-test-selector" selectorId="" property=""></selector>
+  <selector operator="" required="" access="6" value="" name="auto-test-selector" selectorId="" property=""></selector>
+  <selector operator="&gt;&lt;" required="" access="6" value="lnx-vm-" name="auto-test-selector" selectorId="" property="BF_NAME"></selector>
+  <server authId="carmel" collectorId="Example" access="6" active="N" name="lnx-vm-36" path="/nethome/carmel" host="lnx-vm-36:5556" publish="none" minfree="" id="1" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="N" name="lnx-vm-37" path="/nethome/carmel" host="lnx-vm-37:5556" publish="none" minfree="" id="2" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-38" path="/nethome/carmel" host="lnx-vm-38:5556" publish="none" minfree="" id="3" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-39" path="/nethome/carmel" host="lnx-vm-39:5556" publish="none" minfree="" id="4" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-40" path="/nethome/carmel" host="lnx-vm-40:5556" publish="none" minfree="" id="5" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-41" path="/nethome/carmel" host="lnx-vm-41:5556" publish="none" minfree="" id="6" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-42" path="/nethome/carmel" host="lnx-vm-42:5556" publish="none" minfree="" id="7" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-43" path="/nethome/carmel" host="lnx-vm-43:5556" publish="none" minfree="" id="8" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-44" path="/nethome/carmel" host="lnx-vm-44:5556" publish="none" minfree="" id="9" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-45" path="/nethome/carmel" host="lnx-vm-45:5556" publish="none" minfree="" id="10" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-46" path="/nethome/carmel" host="lnx-vm-46:5556" publish="none" minfree="" id="11" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-47" path="/nethome/carmel" host="lnx-vm-47:5556" publish="none" minfree="" id="12" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-48" path="/nethome/carmel" host="lnx-vm-48:5556" publish="none" minfree="" id="13" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-49" path="/nethome/carmel" host="lnx-vm-49:5556" publish="none" minfree="" id="14" envId="0"></server>
+  <server authId="carmel" collectorId="Example" access="6" active="Y" name="lnx-vm-50" path="/nethome/carmel" host="lnx-vm-50:5556" publish="none" minfree="" id="15" envId="0"></server>
+  <auth level="6" password="ccdf2a436702033000f79cb0463a046d6e011397087c685993a10" name="carmel" username="carmel"></auth>
+  <environ access="6" name="auto-test-list-env" id="1">
+    <var mode="N" value="auto-test-env" position="1" action="S" name=".include" envId="2"></var>
+    <var mode="N" value="Add20ConferenceNew" position="2" action="S" name="test001"></var>
+    <var mode="N" value="AddConfMinParticipantsOverLimit" position="3" action="S" name="test002"></var>
+    <var mode="N" value="AddDelete38IvrServices" position="4" action="S" name="test003"></var>
+    <var mode="N" value="AddDeleteEqService" position="5" action="S" name="test004"></var>
+    <var mode="N" value="AddDeleteIpService" position="6" action="S" name="test005"></var>
+    <var mode="N" value="AddDeleteNewIvr" position="7" action="S" name="test006"></var>
+    <var mode="N" value="addH323PartyWithH263Cap" position="8" action="S" name="test007"></var>
+    <var mode="N" value="AddRemoveConfTemplateNew" position="9" action="S" name="test008"></var>
+    <var mode="N" value="AddRemoveConfWrongMonitorID" position="10" action="S" name="test009"></var>
+    <var mode="N" value="AddRemoveConfWrongNumericID" position="11" action="S" name="test010"></var>
+    <var mode="N" value="AddRemoveMrNew" position="12" action="S" name="test011"></var>
+    <var mode="N" value="AddRemoveOperator" position="13" action="S" name="test012"></var>
+    <var mode="N" value="AddRemovePartyConfMissing" position="14" action="S" name="test013"></var>
+    <var mode="N" value="AddRemoveProfile" position="15" action="S" name="test014"></var>
+    <var mode="N" value="AddRemoveResNew" position="16" action="S" name="test015"></var>
+    <var mode="N" value="AddUpdateDeleteIpService" position="17" action="S" name="test016"></var>
+    <var mode="N" value="AutoLayout" position="18" action="S" name="test017"></var>
+    <var mode="N" value="AutoRealVideo" position="19" action="S" name="test018"></var>
+    <var mode="N" value="AutoRealVideoDialInMixedV4V6" position="20" action="S" name="test019"></var>
+    <var mode="N" value="AutoRealVideoV6" position="21" action="S" name="test020"></var>
+    <var mode="N" value="AutoRealVoip" position="22" action="S" name="test021"></var>
+    <var mode="N" value="AutoScan" position="23" action="S" name="test022"></var>
+    <var mode="N" value="AwakeMrByUndef" position="24" action="S" name="test023"></var>
+    <var mode="N" value="AwakeMrByUndef" position="25" action="S" name="test024"></var>
+    <var mode="N" value="AwakeMrByUndefViaEntryQ" position="26" action="S" name="test025"></var>
+    <var mode="N" value="AwakeMrByUndefViaEntryQ" position="27" action="S" name="test026"></var>
+    <var mode="N" value="AwakeMRWithDefinedDialIn" position="28" action="S" name="test027"></var>
+    <var mode="N" value="AwakeMRWithDefinedDialIn" position="29" action="S" name="test028"></var>
+    <var mode="N" value="AwakeMRWithDefinedSipDialIn" position="30" action="S" name="test029"></var>
+    <var mode="N" value="AwakeMRWithDefinedSipDialIn" position="31" action="S" name="test030"></var>
+    <var mode="N" value="Capacity40UndefinedDialIn" position="32" action="S" name="test031"></var>
+    <var mode="N" value="ChangeExchangeModuleCfg" position="33" action="S" name="test032"></var>
+    <var mode="N" value="CheckGarbageCollector" position="34" action="S" name="test033"></var>
+    <var mode="N" value="CheckMultiTypesOfCalls" position="35" action="S" name="test034"></var>
+    <var mode="N" value="CheckTypesOfDialInCalls" position="36" action="S" name="test035"></var>
+    <var mode="N" value="CheckUnicodeDisplayName" position="37" action="S" name="test036"></var>
+    <var mode="N" value="ConfVideoLayout" position="38" action="S" name="test037"></var>
+    <var mode="N" value="ConfWithDifferentSARParticipants" position="39" action="S" name="test038"></var>
+    <var mode="N" value="ConnectPartiesToVSWConfViaEQ" position="40" action="S" name="test039"></var>
+    <var mode="N" value="ContentHighestCommon" position="41" action="S" name="test040"></var>
+    <var mode="N" value="ContentPresentation" position="42" action="S" name="test041"></var>
+    <var mode="N" value="Cop4CIF16x9ChangeConfLayout" position="43" action="S" name="test042"></var>
+    <var mode="N" value="Cop4CIF16X9ChangeSpeaker" position="44" action="S" name="test043"></var>
+    <var mode="N" value="Cop4CIF4x3ChangeConfLayout" position="45" action="S" name="test044"></var>
+    <var mode="N" value="Cop4CIF4x3ChangeSpeaker" position="46" action="S" name="test045"></var>
+    <var mode="N" value="CopHD1080ChangeConfLayout" position="47" action="S" name="test046"></var>
+    <var mode="N" value="CopHD1080ChangeSpeaker" position="48" action="S" name="test047"></var>
+    <var mode="N" value="CopHD1080LectureMode" position="49" action="S" name="test048"></var>
+    <var mode="N" value="CopHD720ChangeConfLayout" position="50" action="S" name="test049"></var>
+    <var mode="N" value="CopHD720ChangeSpeaker" position="51" action="S" name="test050"></var>
+    <var mode="N" value="Create5ConfWith3Participants" position="52" action="S" name="test051"></var>
+    <var mode="N" value="CreateAdHoc3BlastUndefParties" position="53" action="S" name="test052"></var>
+    <var mode="N" value="CreateCertificate" position="54" action="S" name="test053"></var>
+    <var mode="N" value="CreateConfWith3SipParticipants" position="55" action="S" name="test054"></var>
+    <var mode="N" value="CreateCPConfWith4DialInParticipants" position="56" action="S" name="test055"></var>
+    <var mode="N" value="CS_CardSocketDisconnect" position="57" action="S" name="test056"></var>
+    <var mode="N" value="CSStartupWithoutCSTest" position="58" action="S" name="test057"></var>
+    <var mode="N" value="CSStartupWithoutMFATest" position="59" action="S" name="test058"></var>
+    <var mode="N" value="DecisionMatrixConfsInMPMPlusBased" position="60" action="S" name="test059"></var>
+    <var mode="N" value="DefaultIvrServices" position="61" action="S" name="test060"></var>
+    <var mode="N" value="EncryConf" position="62" action="S" name="test061"></var>
+    <var mode="N" value="EncryConf" position="63" action="S" name="test062"></var>
+    <var mode="N" value="EncryDialIn" position="64" action="S" name="test063"></var>
+    <var mode="N" value="EncryDialIn" position="65" action="S" name="test064"></var>
+    <var mode="N" value="EncrypValidity" position="66" action="S" name="test065"></var>
+    <var mode="N" value="EncrypValidity" position="67" action="S" name="test066"></var>
+    <var mode="N" value="ExternalDB" position="68" action="S" name="test067"></var>
+    <var mode="N" value="ExternalDbOperations" position="69" action="S" name="test068"></var>
+    <var mode="N" value="ExternalDB_Simulation" position="70" action="S" name="test069"></var>
+    <var mode="N" value="ExternalDB_TLSSimulation" position="71" action="S" name="test070"></var>
+    <var mode="N" value="Faults_Test_1_full_faults_only" position="72" action="S" name="test071"></var>
+    <var mode="N" value="Faults_Test_2_is_both_faults_exist_in_the_2_lists" position="73" action="S" name="test072"></var>
+    <var mode="N" value="Faults_Test_4_is_old_short_faults_exist" position="74" action="S" name="test073"></var>
+    <var mode="N" value="Faults_Test_5_cyclic_faults_after_startup" position="75" action="S" name="test074"></var>
+    <var mode="N" value="FECCTokenTest" position="76" action="S" name="test075"></var>
+    <var mode="N" value="FooBar" position="77" action="S" name="test076"></var>
+    <var mode="N" value="FooBar2" position="78" action="S" name="test077"></var>
+    <var mode="N" value="FooBar3" position="79" action="S" name="test078"></var>
+    <var mode="N" value="ForceVideo" position="80" action="S" name="test079"></var>
+    <var mode="N" value="GetCardsMonitor" position="81" action="S" name="test080"></var>
+    <var mode="N" value="GetOperatorsMonitor" position="82" action="S" name="test081"></var>
+    <var mode="N" value="GW_1" position="83" action="S" name="test082"></var>
+    <var mode="N" value="GW_2" position="84" action="S" name="test083"></var>
+    <var mode="N" value="H264_H263_Content" position="85" action="S" name="test084"></var>
+    <var mode="N" value="HD" position="86" action="S" name="test085"></var>
+    <var mode="N" value="Hd1080Vsw" position="87" action="S" name="test086"></var>
+    <var mode="N" value="HD_connect_disconnect" position="88" action="S" name="test087"></var>
+    <var mode="N" value="HDCPConfs" position="89" action="S" name="test088"></var>
+    <var mode="N" value="HD_force" position="90" action="S" name="test089"></var>
+    <var mode="N" value="HD_force_party_level" position="91" action="S" name="test090"></var>
+    <var mode="N" value="HD_lecture_mode" position="92" action="S" name="test091"></var>
+    <var mode="N" value="HD_speaker_change" position="93" action="S" name="test092"></var>
+    <var mode="N" value="HD_switch_in_switch" position="94" action="S" name="test093"></var>
+    <var mode="N" value="HotSwapUtils" position="95" action="S" name="test094"></var>
+    <var mode="N" value="IPPartyMonitoring" position="96" action="S" name="test095"></var>
+    <var mode="N" value="IsActiveAlarmEmpty" position="97" action="S" name="test096"></var>
+    <var mode="N" value="ISDNConf" position="98" action="S" name="test097"></var>
+    <var mode="N" value="ISDN_ConfVideoLayout" position="99" action="S" name="test098"></var>
+    <var mode="N" value="ISDN_DialInDialOut" position="100" action="S" name="test099"></var>
+    <var mode="N" value="ISDN_DialOut" position="101" action="S" name="test100"></var>
+    <var mode="N" value="ISDN_DirectDialIn" position="102" action="S" name="test101"></var>
+    <var mode="N" value="ISDN_MaxCapacity" position="103" action="S" name="test102"></var>
+    <var mode="N" value="ISDN_Move" position="104" action="S" name="test103"></var>
+    <var mode="N" value="ISDN_MultiRate" position="105" action="S" name="test104"></var>
+    <var mode="N" value="ISDN_MultyTypeConf" position="106" action="S" name="test105"></var>
+    <var mode="N" value="ISDN_ReconnectParty" position="107" action="S" name="test106"></var>
+    <var mode="N" value="IvrChangeToChairAndChangePWs" position="108" action="S" name="test107"></var>
+    <var mode="N" value="IvrEntranceFeatures" position="109" action="S" name="test108"></var>
+    <var mode="N" value="LectureModes" position="110" action="S" name="test109"></var>
+    <var mode="N" value="LobbyRejectDialIn" position="111" action="S" name="test110"></var>
+    <var mode="N" value="LprModeChange" position="112" action="S" name="test111"></var>
+    <var mode="N" value="LprModeChange1" position="113" action="S" name="test112"></var>
+    <var mode="N" value="MAX_CP_RESOLUTIONFlagInMPMPlusBased" position="114" action="S" name="test113"></var>
+    <var mode="N" value="MFA_CardSocketDisconnectReconnect" position="115" action="S" name="test114"></var>
+    <var mode="N" value="MfaComponentFatal" position="116" action="S" name="test115"></var>
+    <var mode="N" value="MixAutoRealVideo" position="117" action="S" name="test116"></var>
+    <var mode="N" value="MixVideoModesMpmPlusBased" position="118" action="S" name="test117"></var>
+    <var mode="N" value="MixVideoProtocolsMpmPlusBased" position="119" action="S" name="test118"></var>
+    <var mode="N" value="Move" position="120" action="S" name="test119"></var>
+    <var mode="N" value="MuteVideo" position="121" action="S" name="test120"></var>
+    <var mode="N" value="MxN_AllProfiles" position="122" action="S" name="test121"></var>
+    <var mode="N" value="Ntp_Del_SystemTimeFile" position="123" action="S" name="test122"></var>
+    <var mode="N" value="PersonalLayout" position="124" action="S" name="test123"></var>
+    <var mode="N" value="PLC" position="125" action="S" name="test124"></var>
+    <var mode="N" value="PresentationMode" position="126" action="S" name="test125"></var>
+    <var mode="N" value="PSTN_1" position="127" action="S" name="test126"></var>
+    <var mode="N" value="PSTN_2" position="128" action="S" name="test127"></var>
+    <var mode="N" value="PSTN_3" position="129" action="S" name="test128"></var>
+    <var mode="N" value="PSTN_4" position="130" action="S" name="test129"></var>
+    <var mode="N" value="PSTN_5" position="131" action="S" name="test130"></var>
+    <var mode="N" value="PSTN_6" position="132" action="S" name="test131"></var>
+    <var mode="N" value="PSTNConf" position="133" action="S" name="test132"></var>
+    <var mode="N" value="PSTN_Move" position="134" action="S" name="test133"></var>
+    <var mode="N" value="RcrsDeficiencySD30MpmPlusBased" position="135" action="S" name="test134"></var>
+    <var mode="N" value="RCVR1_1_Test_manager_process_recovery_policy" position="136" action="S" name="test135"></var>
+    <var mode="N" value="RCVR1_2_Test_Manager_task_recovery_policy" position="137" action="S" name="test136"></var>
+    <var mode="N" value="RCVR1_3_Test_delay_between_failures_in_process_recovery_policy" position="138" action="S" name="test137"></var>
+    <var mode="N" value="RCVR1_4_Test_delay_between_failures_in_task_recovery_policy" position="139" action="S" name="test138"></var>
+    <var mode="N" value="RCVR1_Test_manager_process_recovery_policy" position="140" action="S" name="test139"></var>
+    <var mode="N" value="RCVR2_Test_Manager_task_recovery_policy" position="141" action="S" name="test140"></var>
+    <var mode="N" value="RCVR3_Test_delay_between_failures_in_process_recovery_policy" position="142" action="S" name="test141"></var>
+    <var mode="N" value="RCVR4_Test_delay_between_failures_in_task_recovery_policy" position="143" action="S" name="test142"></var>
+    <var mode="N" value="RCVR5_Run_last_to_del_RCVR_c_o_r_e_dumps" position="144" action="S" name="test143"></var>
+    <var mode="N" value="RCVR5_Run_last_to_del_RCVR_core_dumps" position="145" action="S" name="test144"></var>
+    <var mode="N" value="ReconnectParty" position="146" action="S" name="test145"></var>
+    <var mode="N" value="Resource2000RepeatedRes" position="147" action="S" name="test146"></var>
+    <var mode="N" value="Resource2Undef3RealParties" position="148" action="S" name="test147"></var>
+    <var mode="N" value="ResourceConfsFullCapacity" position="149" action="S" name="test148"></var>
+    <var mode="N" value="ResourceDetailParty" position="150" action="S" name="test149"></var>
+    <var mode="N" value="ResourceDisable" position="151" action="S" name="test150"></var>
+    <var mode="N" value="ResourceFullCapacity" position="152" action="S" name="test151"></var>
+    <var mode="N" value="ResourceHotSwap" position="153" action="S" name="test152"></var>
+    <var mode="N" value="ResourceHotSwapAA_MPM" position="154" action="S" name="test153"></var>
+    <var mode="N" value="ResourceHotSwapAA_MPMPlus" position="155" action="S" name="test154"></var>
+    <var mode="N" value="ResourceISDNDirectDialIn" position="156" action="S" name="test155"></var>
+    <var mode="N" value="ResourceMPMAutoMode" position="157" action="S" name="test156"></var>
+    <var mode="N" value="ResourceMPMAuto_ResMinParticipants" position="158" action="S" name="test157"></var>
+    <var mode="N" value="ResourceMPMPlusAdvanced" position="159" action="S" name="test158"></var>
+    <var mode="N" value="ResourceMPMPlusAdvanced2" position="160" action="S" name="test159"></var>
+    <var mode="N" value="ResourceMPMPlusAllocationPriorities" position="161" action="S" name="test160"></var>
+    <var mode="N" value="ResourceMPMPlusAutoMode" position="162" action="S" name="test161"></var>
+    <var mode="N" value="ResourceMPMPlusAuto_ResMinParticipants" position="163" action="S" name="test162"></var>
+    <var mode="N" value="ResourceMPMPlusAuto_ResMinParticipants" position="164" action="S" name="test163"></var>
+    <var mode="N" value="ResourceMPMPlusFixedMode" position="165" action="S" name="test164"></var>
+    <var mode="N" value="ResourceMPMPlusFixed_ResMinParticipants" position="166" action="S" name="test165"></var>
+    <var mode="N" value="ResourceMPMPlusPartiallyAssembly20" position="167" action="S" name="test166"></var>
+    <var mode="N" value="ResourceMPMPlusPartiallyAssembly40" position="168" action="S" name="test167"></var>
+    <var mode="N" value="ResourceMPMPlusPartyTypes" position="169" action="S" name="test168"></var>
+    <var mode="N" value="ResourceMPMPlusResCapacity" position="170" action="S" name="test169"></var>
+    <var mode="N" value="ResourceMPMPlusSwitchModesDynamicly" position="171" action="S" name="test170"></var>
+    <var mode="N" value="ResourceMultMoveUndef" position="172" action="S" name="test171"></var>
+    <var mode="N" value="ResourceNoScheduler" position="173" action="S" name="test172"></var>
+    <var mode="N" value="ResourceReadresDB" position="174" action="S" name="test173"></var>
+    <var mode="N" value="ResourceRepeatedPatterns" position="175" action="S" name="test174"></var>
+    <var mode="N" value="ResourceRepeatedRes" position="176" action="S" name="test175"></var>
+    <var mode="N" value="ResourceReservation" position="177" action="S" name="test176"></var>
+    <var mode="N" value="ResourceResolutionSlider" position="178" action="S" name="test177"></var>
+    <var mode="N" value="ResourceSharedRsrcList" position="179" action="S" name="test178"></var>
+    <var mode="N" value="ResourceUnitDetail" position="180" action="S" name="test179"></var>
+    <var mode="N" value="ResourceVideoPreview" position="181" action="S" name="test180"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxConfrencesTest" position="182" action="S" name="test181"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxEQsTest" position="183" action="S" name="test182"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxMixParticipantsTest" position="184" action="S" name="test183"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxProfilesTest" position="185" action="S" name="test184"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxSipFactoriesTest" position="186" action="S" name="test185"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxVideoParticipantsTest" position="187" action="S" name="test186"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxVideoPartiesInConf" position="188" action="S" name="test187"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxVoipParticipantsTest" position="189" action="S" name="test188"></var>
+    <var mode="N" value="RmxMpmPlus_ConfParty_MaxVoipPartiesInConf" position="190" action="S" name="test189"></var>
+    <var mode="N" value="RtmIsdnConfig_AddPhoneRange" position="191" action="S" name="test190"></var>
+    <var mode="N" value="RtmIsdnConfig_AddService" position="192" action="S" name="test191"></var>
+    <var mode="N" value="RtmIsdnConfig_DelPhoneRange" position="193" action="S" name="test192"></var>
+    <var mode="N" value="RtmIsdnConfig_DelService" position="194" action="S" name="test193"></var>
+    <var mode="N" value="RtmIsdnConfig_SetDefaultService" position="195" action="S" name="test194"></var>
+    <var mode="N" value="RtmIsdnConfig_SpanAttach" position="196" action="S" name="test195"></var>
+    <var mode="N" value="RtmIsdnConfig_SpanDetach" position="197" action="S" name="test196"></var>
+    <var mode="N" value="RtmIsdnConfig_UpdateService" position="198" action="S" name="test197"></var>
+    <var mode="N" value="SameLayout" position="199" action="S" name="test198"></var>
+    <var mode="N" value="SDDecisionMatrixConfs" position="200" action="S" name="test199"></var>
+    <var mode="N" value="SDFullCapaity" position="201" action="S" name="test200"></var>
+    <var mode="N" value="SDMixVideoModes" position="202" action="S" name="test201"></var>
+    <var mode="N" value="SDMixVideoProtocols" position="203" action="S" name="test202"></var>
+    <var mode="N" value="SDMotionConfsUndefDialInFullCapaity" position="204" action="S" name="test203"></var>
+    <var mode="N" value="SDResourcesTest" position="205" action="S" name="test204"></var>
+    <var mode="N" value="SDSharpnesConfsUndefDialInFullCapaity" position="206" action="S" name="test205"></var>
+    <var mode="N" value="ShortNoConnectionWithCS_Card" position="207" action="S" name="test206"></var>
+    <var mode="N" value="ShortNoConnectionWithMFA_Card" position="208" action="S" name="test207"></var>
+    <var mode="N" value="ShortNoConnectionWithSwitch_Card" position="209" action="S" name="test208"></var>
+    <var mode="N" value="ShortSocketDisconnectConnect" position="210" action="S" name="test209"></var>
+    <var mode="N" value="SimMfaComponentFatal" position="211" action="S" name="test210"></var>
+    <var mode="N" value="SipAutoRealVideo" position="212" action="S" name="test211"></var>
+    <var mode="N" value="SipAutoRealVoip" position="213" action="S" name="test212"></var>
+    <var mode="N" value="SipDialInToMR" position="214" action="S" name="test213"></var>
+    <var mode="N" value="SM_test" position="215" action="S" name="test214"></var>
+    <var mode="N" value="SocketDisconnectConnect" position="216" action="S" name="test215"></var>
+    <var mode="N" value="SpeakerChange" position="217" action="S" name="test216"></var>
+    <var mode="N" value="SysConfigSetMain" position="218" action="S" name="test217"></var>
+    <var mode="N" value="SysConfigSetWrongEunm" position="219" action="S" name="test218"></var>
+    <var mode="N" value="SysConfigSetWrongNumberRange" position="220" action="S" name="test219"></var>
+    <var mode="N" value="SysConfigSetWrongVal" position="221" action="S" name="test220"></var>
+    <var mode="N" value="TestActionTag" position="222" action="S" name="test221"></var>
+    <var mode="N" value="TestAddAlert" position="223" action="S" name="test222"></var>
+    <var mode="N" value="TestAuditFull" position="224" action="S" name="test223"></var>
+    <var mode="N" value="TestAutoExtend" position="225" action="S" name="test224"></var>
+    <var mode="N" value="TestCDRDisplayName" position="226" action="S" name="test225"></var>
+    <var mode="N" value="TestCDRGetLastId" position="227" action="S" name="test226"></var>
+    <var mode="N" value="TestCDRMonitoring" position="228" action="S" name="test227"></var>
+    <var mode="N" value="TestConfExist" position="229" action="S" name="test228"></var>
+    <var mode="N" value="TestDefaultRestore" position="230" action="S" name="test229"></var>
+    <var mode="N" value="TestMIBFile" position="231" action="S" name="test230"></var>
+    <var mode="N" value="TestNeatShutdown" position="232" action="S" name="test231"></var>
+    <var mode="N" value="TestPreventFaultFlooding" position="233" action="S" name="test232"></var>
+    <var mode="N" value="TestResetHistory" position="234" action="S" name="test233"></var>
+    <var mode="N" value="Test_Snmp_10_GK_Address__Snmp" position="235" action="S" name="test234"></var>
+    <var mode="N" value="Test_Snmp_11_Community__Name" position="236" action="S" name="test235"></var>
+    <var mode="N" value="Test_Snmp_12_Snmpd__recovery" position="237" action="S" name="test236"></var>
+    <var mode="N" value="Test_Snmp_13_Cold__Startup" position="238" action="S" name="test237"></var>
+    <var mode="N" value="Test_Snmp_14_RMX__Interfaces" position="239" action="S" name="test238"></var>
+    <var mode="N" value="Test_Snmp_3_redundant_community" position="240" action="S" name="test239"></var>
+    <var mode="N" value="Test_Snmp_4_check_cotent" position="241" action="S" name="test240"></var>
+    <var mode="N" value="Test_Snmp_5_disable_Snmp" position="242" action="S" name="test241"></var>
+    <var mode="N" value="Test_Snmp_6_disable_Trap" position="243" action="S" name="test242"></var>
+    <var mode="N" value="Test_Snmp_7_Security" position="244" action="S" name="test243"></var>
+    <var mode="N" value="Test_Snmp_8_Active_Alarm_Traps" position="245" action="S" name="test244"></var>
+    <var mode="N" value="Test_Snmp_9_Active_Alarm_Traps_v2" position="246" action="S" name="test245"></var>
+    <var mode="N" value="TestSyncMsgMechanism" position="247" action="S" name="test246"></var>
+    <var mode="N" value="TestSysCfg" position="248" action="S" name="test247"></var>
+    <var mode="N" value="TestUnicodeCutUtf8Strings" position="249" action="S" name="test248"></var>
+    <var mode="N" value="TestUnicodeExAsciiFile" position="250" action="S" name="test249"></var>
+    <var mode="N" value="TestUnicodeSnmp" position="251" action="S" name="test250"></var>
+    <var mode="N" value="TestUnicodeUnknownCharsets" position="252" action="S" name="test251"></var>
+    <var mode="N" value="TLSCommunicationMpm" position="253" action="S" name="test252"></var>
+    <var mode="N" value="TLSCommunicationMpmPlus" position="254" action="S" name="test253"></var>
+    <var mode="N" value="TU10UserChangePwToOtherUser" position="255" action="S" name="test254"></var>
+    <var mode="N" value="TU11ConnectUserWithWrongPassword" position="256" action="S" name="test255"></var>
+    <var mode="N" value="TU12CheckAddedUsersLongNamesAndWeirdChars" position="257" action="S" name="test256"></var>
+    <var mode="N" value="TU13Users_CaseSensitive" position="258" action="S" name="test257"></var>
+    <var mode="N" value="TU14CheckUsersDB-AfterReset" position="259" action="S" name="test258"></var>
+    <var mode="N" value="TU1CheckAddedUsersInListAndConnectThem" position="260" action="S" name="test259"></var>
+    <var mode="N" value="TU2UserAddUser" position="261" action="S" name="test260"></var>
+    <var mode="N" value="TU3ExceedUsersListsMaxNum" position="262" action="S" name="test261"></var>
+    <var mode="N" value="TU4ReconnectDeletedUser" position="263" action="S" name="test262"></var>
+    <var mode="N" value="TU5_UserDelUser" position="264" action="S" name="test263"></var>
+    <var mode="N" value="TU6DelLastAdmin" position="265" action="S" name="test264"></var>
+    <var mode="N" value="TU7ReconnectUserWithOldPwAfterChangePw" position="266" action="S" name="test265"></var>
+    <var mode="N" value="TU8ReconnectUserWithNewPwAfterChangePw" position="267" action="S" name="test266"></var>
+    <var mode="N" value="TU9Add2SameNameUsers" position="268" action="S" name="test267"></var>
+    <var mode="N" value="UndefinedDialIn" position="269" action="S" name="test268"></var>
+    <var mode="N" value="UndefinedSIPDialIn" position="270" action="S" name="test269"></var>
+    <var mode="N" value="UndefinedSIPDialIn" position="271" action="S" name="test270"></var>
+    <var mode="N" value="UndefSipInToEQ" position="272" action="S" name="test271"></var>
+    <var mode="N" value="UndefSipInToEQ" position="273" action="S" name="test272"></var>
+    <var mode="N" value="Unidirection" position="274" action="S" name="test273"></var>
+    <var mode="N" value="UpdateParty" position="275" action="S" name="test274"></var>
+    <var mode="N" value="UsersListCorrupted" position="276" action="S" name="test275"></var>
+    <var mode="N" value="UsersListDefaultUserAlert" position="277" action="S" name="test276"></var>
+    <var mode="N" value="UsersListNoFile" position="278" action="S" name="test277"></var>
+    <var mode="N" value="UsersPermission" position="279" action="S" name="test278"></var>
+    <var mode="N" value="VideoConfWith20Participants" position="280" action="S" name="test279"></var>
+    <var mode="N" value="VideoConfWith40Participants" position="281" action="S" name="test280"></var>
+    <var mode="N" value="VisualEffects" position="282" action="S" name="test281"></var>
+  </environ>
+  <environ access="6" name="auto-test-env" id="2">
+    <var mode="N" value="&quot;IsraelPTR&amp;DSoftware@polycom.co.il&quot;PCTCRMX2000@Polycom.com&quot;" position="1" action="S" name="AT_MAIL_ADDR"></var>
+    <var mode="N" value="cleartool" position="2" action="S" name="CT"></var>
+    <var mode="N" value="7.0" position="3" action="S" name="CC_VERSION"></var>
+    <var mode="N" value="10" position="4" action="S" name="KEEP_HISTORY"></var>
+    <var mode="N" value="MCMS-V${CC_VERSION}_int@/vob/polycom_pvob" position="5" action="S" name="CC_STREAM_NAME"></var>
+    <var mode="N" value="build" position="6" action="S" name="BUILD_PATH"></var>
+    <var mode="N" value="test" position="7" action="S" name="TEST_PATH"></var>
+    <var mode="N" value="result" position="8" action="S" name="RESULT_PATH"></var>
+    <var mode="N" value="AutoTest_" position="9" action="S" name="CC_VIEW_NAME_PREFIX"></var>
+    <var mode="N" value="_MCMS-V${CC_VERSION}_int" position="10" action="S" name="CC_VIEW_NAME_POSTFIX"></var>
+    <var mode="N" value="${CC_VIEW_NAME_PREFIX}${B}${CC_VIEW_NAME_POSTFIX}" position="11" action="S" name="CC_VIEW_NAME"></var>
+    <var mode="N" value="$BUILD_PATH/$CC_VIEW_NAME/vob/MCMS/Main" position="12" action="S" name="MCMS_MAIN_PATH"></var>
+    <var mode="N" value="$MCMS_MAIN_PATH/AutoTestScripts" position="13" action="S" name="AT_SCRIPTS_PATH"></var>
+    <var mode="N" value="$AT_SCRIPTS_PATH/Tools" position="14" action="S" name="AT_TOOLS_PATH"></var>
+    <var mode="N" value="BuildTestEnv.sh" position="15" action="S" name="AT_BUILDER_NAME"></var>
+    <var mode="N" value="/nethome/drabkin/drabkin_MCMS-V${CC_VERSION}_dev/vob/MCMS/Main" position="16" action="S" name="DRABKIN_MAIN_PATH"></var>
+    <var mode="N" value="120" position="17" action="S" name="AT_STEP_TIMEOUT"></var>
+    <var mode="N" value="MPMP|MPMX|MPM" position="18" action="S" name="AT_CARD_TYPE"></var>
+    <var mode="N" value="$AT_TOOLS_PATH/$AT_BUILDER_NAME ${$BF_STEPNAME} $MCMS_MAIN_PATH $TEST_PATH $RESULT_PATH $AT_CARD_TYPE $AT_STEP_TIMEOUT" position="19" action="S" name="AT_STEP_CMD"></var>
+  </environ>
+  <accessgroup domain="" access="5" name="Build Engineer" default="N" id="6"></accessgroup>
+</buildforge>

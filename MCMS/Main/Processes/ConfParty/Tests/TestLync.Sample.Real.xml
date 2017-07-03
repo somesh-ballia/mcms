@@ -1,0 +1,540 @@
+<conference-info xmlns="urn:ietf:params:xml:ns:conference-info" xmlns:msas="http://schemas.microsoft.com/rtc/2005/08/asconfinfoextensions" xmlns:msav="http://schemas.microsoft.com/rtc/2005/08/avconfinfoextensions" xmlns:msci="http://schemas.microsoft.com/rtc/2005/08/confinfoextensions" xmlns:msdata="http://schemas.microsoft.com/rtc/2005/08/dataconfinfoextensions" xmlns:msim="http://schemas.microsoft.com/rtc/2005/08/imconfinfoextensions" xmlns:msci2="http://schemas.microsoft.com/rtc/2008/12/confinfoextensions" xmlns:msmcu="http://schemas.microsoft.com/rtc/2009/03/commonmcuextensions" xmlns:ci="urn:ietf:params:xml:ns:conference-info" xmlns:cis="urn:ietf:params:xml:ns:conference-info-separator" entity="sip:SIGUser50@dev13.std;gruu;opaque=app:conf:focus:id:W874KYDY" state="full" version="21" static="false">
+    <conference-description>
+        <conf-uris>
+            <entry>
+                <uri>sip:SIGUser50@dev13.std;gruu;opaque=app:conf:audio-video:id:W874KYDY</uri>
+                <display-text>audio-video</display-text>
+                <purpose>audio-video</purpose>
+            </entry>
+            <entry>
+                <uri>sip:SIGUser50@dev13.std;gruu;opaque=app:conf:chat:id:W874KYDY</uri>
+                <display-text>chat</display-text>
+                <purpose>chat</purpose>
+            </entry>
+            <entry>
+                <uri>sip:SIGUser50@dev13.std;gruu;opaque=app:conf:applicationsharing:id:W874KYDY</uri>
+                <display-text>applicationsharing</display-text>
+                <purpose>applicationsharing</purpose>
+            </entry>
+            <entry>
+                <uri>sip:SIGUser50@dev13.std;gruu;opaque=app:conf:data-conf:id:W874KYDY</uri>
+                <display-text>data-conf</display-text>
+                <purpose>data-conf</purpose>
+            </entry>
+            <entry>
+                <uri>sip:Dev13STD-FE.Dev13.STD@Dev13.STD;gruu;opaque=srvr:Microsoft.Rtc.Applications.Caa:hVjaOmJXKVOy_DvrBW9juAAA</uri>
+                <purpose>local-caa-uri</purpose>
+            </entry>
+        </conf-uris>
+        <msci:organizer>
+            <msci:entity>sip:SIGUser50@dev13.std</msci:entity>
+            <msci:display-name>SIGUser 50 dev13std</msci:display-name>
+        </msci:organizer>
+        <msci:admission-policy>anonymous</msci:admission-policy>
+        <cis:separator />
+        <msci:pstn-access>
+            <msci:id>547899</msci:id>
+        </msci:pstn-access>
+        <cis:separator />
+        <msci:lobby-capable>true</msci:lobby-capable>
+        <msci:anonymous-type-allowed>true</msci:anonymous-type-allowed>
+        <msci:join-url>https://meet.Dev13.STD/siguser50/W874KYDY</msci:join-url>
+        <msci:autopromote>2147516416</msci:autopromote>
+        <msci:autopromote-allowed>2147516416</msci:autopromote-allowed>
+        <msci:pstn-lobby-bypass>true</msci:pstn-lobby-bypass>
+        <msci:pstn-lobby-bypass-allowed>true</msci:pstn-lobby-bypass-allowed>
+        <msci:recording-allowed>true</msci:recording-allowed>
+        <msci:externaluser-recording-allowed>true</msci:externaluser-recording-allowed>
+        <msci:server-mode>14</msci:server-mode>
+        <msci:recording-notification>true</msci:recording-notification>
+        <cis:separator />
+        <msci:custom-invite>
+            <msci:logo-url></msci:logo-url>
+            <msci:legal-url></msci:legal-url>
+            <msci:help-url></msci:help-url>
+            <msci:custom-footer-text></msci:custom-footer-text>
+        </msci:custom-invite>
+        <msci:anonymous-dialout-allowed>false</msci:anonymous-dialout-allowed>
+        <msci:endorse-allowed>true</msci:endorse-allowed>
+        <msci:main-video-mute-allowed>true</msci:main-video-mute-allowed>
+        <msci:pano-video-mute-allowed>true</msci:pano-video-mute-allowed>
+        <msci:is-large-meeting>false</msci:is-large-meeting>
+    </conference-description>
+    <users state="full" msci:participant-count="4">
+        <user entity="sip:siguser50@dev13.std" state="full">
+            <display-text>SIGUser 50 dev13std</display-text>
+            <roles>
+                <entry>presenter</entry>
+            </roles>
+            <endpoint entity="{9BEA9E2B-2A46-45AB-875E-1F24FD1DA039}" msci:session-type="focus" msci:epid="ab85ae8db1" msci:endpoint-uri="sip:siguser50@dev13.std;opaque=user:epid:E91tKwt2Qlip2BMBu618ygAA;gruu">
+                <status>connected</status>
+                <msci:clientInfo>
+                    <cis:separator />
+                    <msci2:lobby-capable>true</msci2:lobby-capable>
+                </msci:clientInfo>
+            </endpoint>
+            <endpoint entity="{BA5328CC-C663-438C-BA63-F94FA4FF1D37}" state="full" msci:session-type="audio-video" msci:endpoint-uri="sip:siguser50@dev13.std;opaque=user:epid:E91tKwt2Qlip2BMBu618ygAA;gruu" msci:asserted-identity="&quot;SIGUser 50 dev13std&quot;&lt;sip:siguser50@dev13.std&gt;">
+                <status>connected</status>
+                <joining-method>dialed-in</joining-method>
+                <media id="1">
+                    <type>audio</type>
+                    <label>main-audio</label>
+                    <status>recvonly</status>
+                    <msci:media-ingress-filter>block</msci:media-ingress-filter>
+                    <cis:separator />
+                    <cis:separator />
+                    <cis:separator />
+                    <msci:media-source-id>2000000</msci:media-source-id>
+                    <msci:source-name>main-audio</msci:source-name>
+                </media>
+                <media id="2">
+                    <type>video</type>
+                    <label>main-video</label>
+                    <status>sendrecv</status>
+                    <cis:separator />
+                    <cis:separator />
+                    <cis:separator />
+                    <msci:media-source-id>2000256</msci:media-source-id>
+                    <msci:source-name>main-video</msci:source-name>
+                </media>
+                <call-info>
+                    <sip>
+                        <call-id></call-id>
+                        <from-tag></from-tag>
+                        <to-tag></to-tag>
+                    </sip>
+                </call-info>
+                <msci:roles>
+                    <entry>presenter</entry>
+                </msci:roles>
+                <msci:authMethod>enterprise</msci:authMethod>
+                <msci:accessMethod>external</msci:accessMethod>
+                <cis:separator />
+                <msci:languages>en-US</msci:languages>
+            </endpoint>
+            <endpoint entity="{2DF5574E-3BE5-4972-8158-B2B8B3CF7DF1}" state="full" msci:session-type="chat" msci:endpoint-uri="sip:siguser50@dev13.std;opaque=user:epid:E91tKwt2Qlip2BMBu618ygAA;gruu">
+                <status>connected</status>
+                <joining-method>dialed-in</joining-method>
+                <media id="1">
+                    <type>chat</type>
+                </media>
+                <call-info>
+                    <sip>
+                        <call-id></call-id>
+                        <from-tag></from-tag>
+                        <to-tag></to-tag>
+                    </sip>
+                </call-info>
+                <msci:authMethod>enterprise</msci:authMethod>
+                <msci:endpoint-capabilities>
+                    <msim:endpoint-capabilities>
+                        <msim:supported-im-formats>text/plain multipart/alternative image/gif text/rtf text/html application/x-ms-ink application/ms-imdn+xml text/x-msmsgsinvite</msim:supported-im-formats>
+                        <msim:user-agent>UCCAPI/15.0.4551.1005 OC/15.0.4551.1005 (Microsoft Lync)</msim:user-agent>
+                    </msim:endpoint-capabilities>
+                </msci:endpoint-capabilities>
+            </endpoint>
+        </user>
+        <user entity="sip:siguser55@dev13.std" state="full">
+            <display-text>SIGUser 55 dev13std</display-text>
+            <roles>
+                <entry>presenter</entry>
+            </roles>
+            <endpoint entity="{9514C2EA-813E-41A5-9C99-3E202ABBB147}" msci:session-type="focus" msci:epid="abd28b6248" msci:endpoint-uri="sip:siguser55@dev13.std;opaque=user:epid:HO6I3Fjv6l24UWgkMv4OdQAA;gruu">
+                <status>connected</status>
+                <msci:clientInfo>
+                    <cis:separator />
+                    <msci2:lobby-capable>true</msci2:lobby-capable>
+                </msci:clientInfo>
+            </endpoint>
+            <endpoint entity="{A516652B-786A-42C2-BA73-595AA49EBD05}" state="full" msci:session-type="audio-video" msci:endpoint-uri="sip:siguser55@dev13.std;opaque=user:epid:HO6I3Fjv6l24UWgkMv4OdQAA;gruu" msci:asserted-identity="&quot;SIGUser 55 dev13std&quot;&lt;sip:siguser55@dev13.std&gt;">
+                <status>connected</status>
+                <joining-method>dialed-in</joining-method>
+                <media id="1">
+                    <type>audio</type>
+                    <label>main-audio</label>
+                    <status>recvonly</status>
+                    <msci:media-ingress-filter>block</msci:media-ingress-filter>
+                    <cis:separator />
+                    <cis:separator />
+                    <cis:separator />
+                    <msci:media-source-id>2002048</msci:media-source-id>
+                    <msci:source-name>main-audio</msci:source-name>
+                </media>
+                <media id="2">
+                    <type>video</type>
+                    <label>main-video</label>
+                    <status>sendrecv</status>
+                    <cis:separator />
+                    <cis:separator />
+                    <cis:separator />
+                    <msci:media-source-id>2002304</msci:media-source-id>
+                    <msci:source-name>main-video</msci:source-name>
+                </media>
+                <call-info>
+                    <sip>
+                        <call-id></call-id>
+                        <from-tag></from-tag>
+                        <to-tag></to-tag>
+                    </sip>
+                </call-info>
+                <msci:roles>
+                    <entry>presenter</entry>
+                </msci:roles>
+                <msci:authMethod>enterprise</msci:authMethod>
+                <msci:accessMethod>external</msci:accessMethod>
+                <cis:separator />
+                <msci:languages>en-US</msci:languages>
+            </endpoint>
+            <endpoint entity="{3B7C977E-0576-45F4-AFB5-44512103FF7E}" state="full" msci:session-type="chat" msci:endpoint-uri="sip:siguser55@dev13.std;opaque=user:epid:HO6I3Fjv6l24UWgkMv4OdQAA;gruu">
+                <status>connected</status>
+                <joining-method>dialed-in</joining-method>
+                <media id="1">
+                    <type>chat</type>
+                </media>
+                <call-info>
+                    <sip>
+                        <call-id></call-id>
+                        <from-tag></from-tag>
+                        <to-tag></to-tag>
+                    </sip>
+                </call-info>
+                <msci:authMethod>enterprise</msci:authMethod>
+                <msci:endpoint-capabilities>
+                    <msim:endpoint-capabilities>
+                        <msim:supported-im-formats>text/plain multipart/alternative image/gif text/rtf text/html application/x-ms-ink application/ms-imdn+xml text/x-msmsgsinvite</msim:supported-im-formats>
+                        <msim:user-agent>UCCAPI/15.0.4454.1504 OC/15.0.4454.1506 (Microsoft Lync)</msim:user-agent>
+                    </msim:endpoint-capabilities>
+                </msci:endpoint-capabilities>
+            </endpoint>
+        </user>
+        <user entity="sip:user70@dev13.std" state="full">
+            <display-text>user 70 dev13std</display-text>
+            <roles>
+                <entry>presenter</entry>
+            </roles>
+            <endpoint entity="{E01D2C83-6217-443A-B09A-6C60338AEACF}" msci:session-type="focus" msci:epid="90c77f0f29" msci:endpoint-uri="sip:user70@dev13.std;opaque=user:epid:N15lOguuAVa3hV4DZExntwAA;gruu">
+                <status>connected</status>
+                <msci:clientInfo>
+                    <cis:separator />
+                    <msci2:lobby-capable>true</msci2:lobby-capable>
+                </msci:clientInfo>
+            </endpoint>
+            <endpoint entity="{4CAC1B79-D436-49C6-BA95-C2B0D4674978}" state="full" msci:session-type="audio-video" msci:endpoint-uri="sip:user70@dev13.std;opaque=user:epid:N15lOguuAVa3hV4DZExntwAA;gruu" msci:asserted-identity="&quot;user 70 dev13std&quot;&lt;sip:user70@dev13.std&gt;">
+                <status>connected</status>
+                <joining-method>dialed-in</joining-method>
+                <media id="1">
+                    <type>audio</type>
+                    <label>main-audio</label>
+                    <status>sendrecv</status>
+                    <cis:separator />
+                    <cis:separator />
+                    <cis:separator />
+                    <msci:media-source-id>2004096</msci:media-source-id>
+                    <msci:source-name>main-audio</msci:source-name>
+                </media>
+                <media id="2">
+                    <type>video</type>
+                    <label>main-video</label>
+                    <status>sendrecv</status>
+                    <cis:separator />
+                    <cis:separator />
+                    <cis:separator />
+                    <msci:media-source-id>2004352</msci:media-source-id>
+                    <msci:source-name>main-video</msci:source-name>
+                </media>
+                <call-info>
+                    <sip>
+                        <call-id></call-id>
+                        <from-tag></from-tag>
+                        <to-tag></to-tag>
+                    </sip>
+                </call-info>
+                <msci:roles>
+                    <entry>presenter</entry>
+                </msci:roles>
+                <msci:authMethod>enterprise</msci:authMethod>
+                <msci:accessMethod>internal</msci:accessMethod>
+                <cis:separator />
+                <msci:languages>en-US</msci:languages>
+            </endpoint>
+            <endpoint entity="{FE9D04C3-0170-44F8-AB75-C932A1F2D919}" state="full" msci:session-type="chat" msci:endpoint-uri="sip:user70@dev13.std;opaque=user:epid:N15lOguuAVa3hV4DZExntwAA;gruu">
+                <status>connected</status>
+                <joining-method>dialed-in</joining-method>
+                <media id="1">
+                    <type>chat</type>
+                </media>
+                <call-info>
+                    <sip>
+                        <call-id></call-id>
+                        <from-tag></from-tag>
+                        <to-tag></to-tag>
+                    </sip>
+                </call-info>
+                <msci:authMethod>enterprise</msci:authMethod>
+                <msci:endpoint-capabilities>
+                    <msim:endpoint-capabilities>
+                        <msim:supported-im-formats>text/plain multipart/alternative image/gif text/rtf text/html application/x-ms-ink application/ms-imdn+xml text/x-msmsgsinvite</msim:supported-im-formats>
+                        <msim:user-agent>UCCAPI/15.0.4551.1005 OC/15.0.4551.1005 (Microsoft Lync)</msim:user-agent>
+                    </msim:endpoint-capabilities>
+                </msci:endpoint-capabilities>
+            </endpoint>
+        </user>
+        <user entity="sip:sigconf52@dev13.std" state="full">
+            <display-text>SigConf 52 dev13std</display-text>
+            <roles>
+                <entry>presenter</entry>
+            </roles>
+            <endpoint entity="{0ff8c27f-a367-5be8-a16f-b06dec00352b}" msci:session-type="focus" msci:epid="0xca02e30a">
+                <status>connected</status>
+                <msci:clientInfo>
+                    <cis:separator />
+                    <msci2:lobby-capable>false</msci2:lobby-capable>
+                </msci:clientInfo>
+            </endpoint>
+        </user>
+    </users>
+    <msci:conference-view ci:state="full">
+        <msci:entity-view ci:state="full" entity="sip:SIGUser50@dev13.std;gruu;opaque=app:conf:focus:id:W874KYDY">
+            <msci:entity-state>
+                <msci:locked>false</msci:locked>
+            </msci:entity-state>
+        </msci:entity-view>
+        <msci:entity-view ci:state="full" entity="sip:SIGUser50@dev13.std;gruu;opaque=app:conf:applicationsharing:id:W874KYDY">
+            <msci:entity-capabilities>
+                <cis:separator />
+                <msas:capabilities>
+                    <msas:supports-application-desktop-sharing>desktop</msas:supports-application-desktop-sharing>
+                </msas:capabilities>
+            </msci:entity-capabilities>
+            <msci:entity-state>
+                <msci:locked>false</msci:locked>
+                <msci:media>
+                    <entry label="applicationsharing">
+                        <type>applicationsharing</type>
+                    </entry>
+                </msci:media>
+                <cis:separator />
+                <msas:session-ids>
+                    <msas:session-id>1</msas:session-id>
+                </msas:session-ids>
+                <cis:separator />
+                <msmcu:permissions>
+                    <msmcu:permission-type>
+                        <msmcu:name>AllowUserToScheduleMeetingsWithAppSharing</msmcu:name>
+                        <msmcu:value>True</msmcu:value>
+                    </msmcu:permission-type>
+                    <msmcu:permission-type>
+                        <msmcu:name>AttendeesCanShare</msmcu:name>
+                        <msmcu:value>False</msmcu:value>
+                    </msmcu:permission-type>
+                </msmcu:permissions>
+            </msci:entity-state>
+        </msci:entity-view>
+        <msci:entity-view ci:state="full" entity="sip:SIGUser50@dev13.std;gruu;opaque=app:conf:audio-video:id:W874KYDY">
+            <msci:entity-capabilities>
+                <msav:capabilities>
+                    <msav:supports-audio>true</msav:supports-audio>
+                    <msav:supports-video>true</msav:supports-video>
+                </msav:capabilities>
+            </msci:entity-capabilities>
+            <msci:entity-state>
+                <msci:mediaFiltersRules>
+                    <msci:mayModifyOwnFilters>
+                        <msci:role>default</msci:role>
+                        <msci:value>true</msci:value>
+                    </msci:mayModifyOwnFilters>
+                    <msci:initialFilters>
+                        <msci:role>default</msci:role>
+                        <msci:ingressFilter>unblock</msci:ingressFilter>
+                    </msci:initialFilters>
+                    <msav:type>audio</msav:type>
+                </msci:mediaFiltersRules>
+                <msci:media>
+                    <entry label="main-audio">
+                        <type>audio</type>
+                        <status>sendrecv</status>
+                    </entry>
+                    <entry label="main-video">
+                        <type>video</type>
+                        <status>sendrecv</status>
+                        <msci:modal-parameters>
+                            <msci:video-parameters>
+                                <msav:video-mode>dominant-speaker-switched</msav:video-mode>                            
+                            </msci:video-parameters>
+                        </msci:modal-parameters>
+                    </entry>
+                    <entry label="panoramic-video">
+                        <type>panoramic-video</type>
+                        <status>sendrecv</status>
+                        <msci:modal-parameters>
+                            <msci:video-parameters>
+                                <msav:video-mode>dominant-speaker-switched</msav:video-mode>                            
+                            </msci:video-parameters>
+                        </msci:modal-parameters>
+                    </entry>
+                </msci:media>
+                <cis:separator />
+                <cis:separator />
+                <msmcu:presentation-mode-capable>false</msmcu:presentation-mode-capable>
+                <msmcu:entry-exit-announcements>
+                    <msmcu:modifiable>true</msmcu:modifiable>
+                    <msmcu:enabled>false</msmcu:enabled>
+                </msmcu:entry-exit-announcements>
+                <cis:separator />
+                <msmcu:multi-view-capable>true</msmcu:multi-view-capable>
+                <msmcu:video-presentation-mode-capable>true</msmcu:video-presentation-mode-capable>
+                <msmcu:conf-media-filters-rules>
+                    <msci:mayModifyOwnFilters>
+                        <msci:role>default</msci:role>
+                        <msci:value>true</msci:value>
+                    </msci:mayModifyOwnFilters>
+                    <msci:initialFilters>
+                        <msci:role>default</msci:role>
+                        <msci:ingressFilter>unblock</msci:ingressFilter>
+                    </msci:initialFilters>
+                    <msav:type>video</msav:type>
+                </msmcu:conf-media-filters-rules>
+                <msmcu:conf-media-filters-rules>
+                    <msci:mayModifyOwnFilters>
+                        <msci:role>default</msci:role>
+                        <msci:value>true</msci:value>
+                    </msci:mayModifyOwnFilters>
+                    <msci:initialFilters>
+                        <msci:role>default</msci:role>
+                        <msci:ingressFilter>unblock</msci:ingressFilter>
+                    </msci:initialFilters>
+                    <msav:type>panoramic-video</msav:type>
+                </msmcu:conf-media-filters-rules>
+            </msci:entity-state>
+        </msci:entity-view>
+        <msci:entity-view ci:state="full" entity="sip:SIGUser50@dev13.std;gruu;opaque=app:conf:chat:id:W874KYDY">
+            <msci:entity-state>
+                <msci:locked>false</msci:locked>
+                <msci:mediaFiltersRules>
+                    <msci:mayModifyOwnFilters>
+                        <msci:role>presenter</msci:role>
+                        <msci:value>false</msci:value>
+                    </msci:mayModifyOwnFilters>
+                    <msci:mayModifyOwnFilters>
+                        <msci:role>default</msci:role>
+                        <msci:value>false</msci:value>
+                    </msci:mayModifyOwnFilters>
+                    <msci:initialFilters>
+                        <msci:role>presenter</msci:role>
+                        <msci:ingressFilter>unblock</msci:ingressFilter>
+                    </msci:initialFilters>
+                    <msci:initialFilters>
+                        <msci:role>default</msci:role>
+                        <msci:ingressFilter>unblock</msci:ingressFilter>
+                    </msci:initialFilters>
+                </msci:mediaFiltersRules>
+                <msci:media>
+                    <entry label="chat">
+                        <type>chat</type>
+                    </entry>
+                </msci:media>
+                <cis:separator />
+                <cis:separator />
+                <msmcu:presentation-mode-capable>true</msmcu:presentation-mode-capable>
+            </msci:entity-state>
+        </msci:entity-view>
+        <msci:entity-view ci:state="full" entity="sip:SIGUser50@dev13.std;gruu;opaque=app:conf:data-conf:id:W874KYDY">
+            <msci:entity-capabilities>
+                <cis:separator />
+                <msdata:capabilities>
+                    <msdata:supported-content-type>Content.Poll</msdata:supported-content-type>
+                    <msdata:supported-content-type>Content.Ppt</msdata:supported-content-type>
+                    <msdata:supported-content-type>Content.NativeFileOnly</msdata:supported-content-type>
+                    <msdata:supported-content-type>Content.Whiteboard</msdata:supported-content-type>
+                    <msdata:supported-content-type>Content.SharedNotes</msdata:supported-content-type>
+                    <msdata:supported-content-type>Content.PptWac</msdata:supported-content-type>
+                    <msdata:supported-content-type>Content.Qna</msdata:supported-content-type>
+                </msdata:capabilities>
+            </msci:entity-capabilities>
+            <msci:entity-state application="101511fa-90b5-4fa2-9fbf-fa99afef9e9a">
+                <msci:locked>false</msci:locked>
+                <msci:media>
+                    <entry label="data-conf">
+                        <type>data-conf</type>
+                    </entry>
+                </msci:media>
+                <cis:separator />
+                <cis:separator />
+                <msdata:data-mcu-state>
+                    <msdata:hasContent>false</msdata:hasContent>
+                    <msdata:hasContentInMeeting>false</msdata:hasContentInMeeting>
+                    <msdata:hasPresentedContent>false</msdata:hasPresentedContent>
+                    <msmcu:hasWacConnectivity>true</msmcu:hasWacConnectivity>
+                </msdata:data-mcu-state>
+                <msmcu:permission-options>
+                    <msmcu:permission-option>
+                        <msmcu:name>PptAnnotationsAllowedPresenter</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                        <msmcu:mutable>true</msmcu:mutable>
+                    </msmcu:permission-option>
+                    <msmcu:permission-option>
+                        <msmcu:name>PptAnnotationsAllowedAttendee</msmcu:name>
+                        <msmcu:value>false</msmcu:value>
+                        <msmcu:mutable>true</msmcu:mutable>
+                    </msmcu:permission-option>
+                    <msmcu:permission-option>
+                        <msmcu:name>AsynchronousBrowsingAllowedPresenter</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                        <msmcu:mutable>true</msmcu:mutable>
+                    </msmcu:permission-option>
+                    <msmcu:permission-option>
+                        <msmcu:name>AsynchronousBrowsingAllowedAttendee</msmcu:name>
+                        <msmcu:value>false</msmcu:value>
+                        <msmcu:mutable>true</msmcu:mutable>
+                    </msmcu:permission-option>
+                </msmcu:permission-options>
+                <msmcu:permissions>
+                    <msmcu:permission-type>
+                        <msmcu:name>EnableDataCollaboration</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                    </msmcu:permission-type>
+                    <msmcu:permission-type>
+                        <msmcu:name>AllowAnnotations</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                    </msmcu:permission-type>
+                    <msmcu:permission-type>
+                        <msmcu:name>AllowExternalUsersToSaveContent</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                    </msmcu:permission-type>
+                    <msmcu:permission-type>
+                        <msmcu:name>AllowPolls</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                    </msmcu:permission-type>
+                    <msmcu:permission-type>
+                        <msmcu:name>AllowSharedNotes</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                    </msmcu:permission-type>
+                    <msmcu:permission-type>
+                        <msmcu:name>AllowQna</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                    </msmcu:permission-type>
+                    <msmcu:permission-type>
+                        <msmcu:name>EnableFileTransfer</msmcu:name>
+                        <msmcu:value>true</msmcu:value>
+                    </msmcu:permission-type>
+                </msmcu:permissions>
+            </msci:entity-state>
+        </msci:entity-view>
+    </msci:conference-view>
+    <cis:separator />
+    <msci:trusted-entities state="full">
+        <user entity="sip:CASsiguser50.20be7b7c-a150-49be-a399-13d61db367c0@dev13.std" state="full">
+            <display-text>CAS-siguser50</display-text>
+            <roles>
+                <entry>presenter</entry>
+            </roles>
+            <endpoint entity="{ce126e16-03d0-411d-bfca-e8bb2982e48f}" msci:session-type="focus" msci:epid="1A66DEC7E1" msci:endpoint-uri="sip:Dev13STD-FE.Dev13.STD@Dev13.STD;gruu;opaque=srvr:Microsoft.Rtc.Applications.Cas:lR9Elxu4jl6bGLo3b685fwAA">
+                <status>connected</status>
+                <msci:clientInfo>
+                    <cis:separator />
+                    <msci2:lobby-capable>true</msci2:lobby-capable>
+                </msci:clientInfo>
+            </endpoint>
+        </user>
+    </msci:trusted-entities>
+</conference-info>

@@ -1,0 +1,63 @@
+
+
+{
+   <http://developer.spikesource.com/errorbuddy/source/zlib-1.2.3/FAQ>
+   Memcheck:Cond
+   obj:/usr/lib/libz.so.1.2.1
+   obj:/usr/lib/libz.so.1.2.1
+   fun:deflate
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Cond
+   fun:strlen 
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Cond
+   fun:index
+}
+
+
+{
+   <insert a suppression name here>
+   Memcheck:Cond
+   fun:strcat
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Cond
+   fun:strlen
+}
+
+
+{
+   <insert a suppression name here>
+   Memcheck:Cond
+   fun:rindex
+}
+
+
+
+{
+   <insert a suppression name here>
+   Memcheck:Param
+   write(buf)
+   obj:/lib/libpthread-2.3.5.so
+}
+
+
+{
+   <insert>
+   Memcheck:Cond
+   fun:_dl_relocate_object
+   fun:dl_main
+   fun:_dl_sysdep_start
+   fun:_dl_start
+   obj:/lib/ld-2.3.5.so
+}
+
+

@@ -1,0 +1,602 @@
+<API >
+	<ENUM name="TransferRateType">
+		<VALUE tag="64"/>
+		<VALUE tag="96"/>
+		<VALUE tag="128"/>
+		<VALUE tag="192"/>
+		<VALUE tag="256"/>
+		<VALUE tag="320"/>
+		<VALUE tag="384"/>
+		<VALUE tag="512"/>
+		<VALUE tag="768"/>
+		<VALUE tag="832"/>
+		<VALUE tag="1024"/>
+		<VALUE tag="1152"/>
+		<VALUE tag="1280"/>
+		<VALUE tag="1472"/>
+		<VALUE tag="1536"/>
+		<VALUE tag="1728"/>
+		<VALUE tag="1920"/>
+		<VALUE tag="2048"/>
+		<VALUE tag="2560"/>
+		<VALUE tag="3072"/>
+		<VALUE tag="3584"/>
+		<VALUE tag="4096"/>
+		<VALUE tag="6144"/>
+		<VALUE tag="8192"/>
+	</ENUM>
+
+	<ENUM name="RestrictModeType" base_value="-1">
+		<VALUE tag="restricted"/>
+		<VALUE tag="derestricted"/>
+		<VALUE tag="auto"/>
+	</ENUM>
+
+	<ENUM name="VideoSessionType" base_value="-1">
+		<VALUE tag="switching"/>
+		<VALUE tag="continuous_presence"/>
+		<VALUE tag="cop"/>
+	</ENUM>
+
+	<ENUM name="VideoFormatType">
+		<VALUE tag="qcif"/>
+		<VALUE tag="cif"/>
+		<VALUE tag="4cif"/>
+		<VALUE tag="16cif"/>
+		<VALUE tag="vga"/>
+		<VALUE tag="svga"/>
+		<VALUE tag="xga"/>
+		<VALUE tag="ntsc"/>
+		<VALUE tag="auto"/>
+	</ENUM>
+
+	<ENUM name="FrameRateType">
+		<VALUE tag="60"/>
+		<VALUE tag="50"/>
+		<VALUE tag="30"/>
+		<VALUE tag="25"/>
+		<VALUE tag="15"/>
+		<VALUE tag="10"/>
+		<VALUE tag="12.5"/>
+		<VALUE tag="7.5"/>
+		<VALUE tag="auto"/>
+	</ENUM>
+
+	<ENUM name="VideoProtocolType" base_value="-1">
+		<VALUE tag="auto"/>
+		<VALUE tag="h261"/>
+		<VALUE tag="h263"/>
+		<VALUE tag="h26L"/>
+		<VALUE tag="h264"/>
+		<VALUE tag="h264_high_profile"/>
+		<VALUE tag="rtv"/>
+	</ENUM>
+
+
+
+	<ENUM name="LectureModeType">
+		<VALUE tag="lecture_none"/>
+		<VALUE tag="lecture_mode"/>
+		<VALUE tag="lecture_presentation"/>
+	</ENUM>
+
+	<CLASS name="NumericType" ns="nsTypeDefs" tag="NumericType">
+		<MEMBER ns="nsTypeDefs" tag="NumericType" type="opt string"/>
+	</CLASS>
+
+	<ENUM name="CallContentType">
+		<VALUE tag="framed"/>
+		<VALUE tag="voice"/>
+	</ENUM>
+
+	<ENUM name="NetworkLineType" base_value="-1">
+		<VALUE tag="unknown"/>
+		<VALUE tag="international"/>
+		<VALUE tag="national"/>
+		<VALUE tag="network-specific"/>
+		<VALUE tag="subscriber"/>
+		<VALUE tag="abbreviated"/>
+		<VALUE tag="taken-from-service"/>
+	</ENUM>
+
+	<ENUM name="MeetMeMethodeType" base_value="-1">
+		<VALUE tag="mcu-conference"/>
+		<VALUE tag="party"/>
+		<VALUE tag="channel"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<ENUM name="NetChannelNumType" base_value="-1">
+		<VALUE tag="auto"/>
+		<VALUE tag="channel-1"/>
+		<VALUE tag="channel-2"/>
+		<VALUE tag="channel-3"/>
+		<VALUE tag="channel-4"/>
+		<VALUE tag="channel-5"/>
+		<VALUE tag="channel-6"/>
+		<VALUE tag="channel-8"/>
+		<VALUE tag="channel-12"/>
+		<VALUE tag="channel-18"/>
+		<VALUE tag="channel-23"/>
+		<VALUE tag="channel-24"/>
+		<VALUE tag="channel-30"/>
+	</ENUM>
+
+	<CLASS name="Ipv4AddressType" ns="nsTypeDefs" tag="Ipv4AddressType">
+		<MEMBER ns="nsTypeDefs" tag="Ipv4AddressType" type="class" type_ref="T0"/>
+	</CLASS>
+
+	<ENUM name="IdentMethodType" base_value="-1">
+		<VALUE tag="password"/>
+		<VALUE tag="called_phone_number"/>
+		<VALUE tag="calling_phone_number"/>
+	</ENUM>
+
+	<ENUM name="NodeType" base_value="-1">
+		<VALUE tag="mcu"/>
+		<VALUE tag="terminal"/>
+	</ENUM>
+
+	<ENUM name="SipAddressType">
+		<VALUE tag="uri-type"/>
+		<VALUE tag="tel-url-type"/>
+	</ENUM>
+
+	<ENUM name="BoolAutoType">
+		<VALUE tag="yes"/>
+		<VALUE tag="no"/>
+		<VALUE tag="auto"/>
+	</ENUM>
+
+	<ENUM name="InitiatorType" base_value="-1">
+     	<VALUE tag="mcu"/>
+		<VALUE tag="party"/>
+		<VALUE tag="undefined"/>
+	</ENUM>
+
+	<ENUM name="EndPointType" base_value="-1">
+		<VALUE tag="terminal"/>
+		<VALUE tag="gateway"/>
+		<VALUE tag="mcu"/>
+		<VALUE tag="gatekeeper"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<ENUM name="ConfPartyResolutionType">
+		<VALUE tag="auto"/>
+		<VALUE tag="cif"/>
+		<VALUE tag="sd"/>
+		<VALUE tag="hd_720"/>
+		<VALUE tag="hd_1080"/>
+	</ENUM>
+
+	<ENUM name="ConfEndCauseType">
+		<VALUE tag="ongoing"/>
+		<VALUE tag="cause_operator_terminate"/>
+		<VALUE tag="end_time_terminate"/>
+		<VALUE tag="auto_termination"/>
+		<VALUE tag="never_started"/>
+		<VALUE tag="conf_problem"/>
+		<VALUE tag="mcu_completed"/>
+		<VALUE tag="terminated_by_participant"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<ENUM name="ConnectionType">
+		<VALUE tag="dial-out"/>
+		<VALUE tag="dial-in"/>
+		<VALUE tag="direct"/>
+	</ENUM>
+
+	<ENUM name="BondingType" base_value="-1">
+		<VALUE tag="auto"/>
+		<VALUE tag="enabled"/>
+		<VALUE tag="disabled"/>
+	</ENUM>
+
+	<ENUM name="SvcPartyStatusType">
+		<VALUE tag="idle"/>
+		<VALUE tag="connected"/>
+		<VALUE tag="disconnected"/>
+		<VALUE tag="waiting_for_dial_in"/>
+		<VALUE tag="connecting"/>
+		<VALUE tag="disconnecting"/>
+		<VALUE tag="partially_connected"/>
+		<VALUE tag="deleted_by_user"/>
+		<VALUE tag="secondary"/>
+		<VALUE tag="connected_with_problem"/>
+		<VALUE tag="redialing"/>
+	</ENUM>
+
+	<ENUM name="RelayCodecType">
+		<VALUE tag="H264"/>
+		<VALUE tag="H264SVC"/>
+		<VALUE tag="SAC"/>
+		<VALUE tag="G711"/>
+		<VALUE tag="G722"/>
+		<VALUE tag="G722_1"/>
+	</ENUM>
+
+	<ENUM name="SignallingType">
+		<VALUE tag="H323"/>
+		<VALUE tag="SIP"/>
+		<VALUE tag="ISDN"/>
+	</ENUM>
+
+	<ENUM name="CdrNumPlanType">
+		<VALUE tag="isdn"/>
+		<VALUE tag="telephony"/>
+		<VALUE tag="private"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<CLASS name="DateAndTime" ns="nsTypeDefs" tag="DateAndTime">
+		<MEMBER ns="nsTypeDefs" tag="DateAndTime" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="DtmfCodeFailure" ns="nsTypeDefs" tag="dtmf-code-failure">
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="The NAME element contains the participant name"/>
+		<MEMBER ns="nsTypeDefs" tag="id" type="opt short" description="The ID element contains the participant's ID"/>
+		<MEMBER ns="nsTypeDefs" tag="dtmf-code" type="opt string" description="The incorrect DTMF code entered by the participant, or NULL if the participant did not press any key"/>
+		<MEMBER ns="nsTypeDefs" tag="right-data" type="opt string" description="The correct DTMF code, that is, the code that the participant should have entered"/>
+		<MEMBER ns="nsTypeDefs" tag="failure-state" type="enum" type_ref="FailureState" description="The type of DTMF failure that occurred"/>
+	</CLASS>
+
+	<ENUM name="FailureState" base_value="-1">
+		<VALUE tag="ivr_conf_password"/>
+		<VALUE tag="ivr_conf_leader"/>
+		<VALUE tag="ivr_numeric_conf_id"/>
+	</ENUM>
+
+	<CLASS name="NetChannelDisconnect" ns="nsTypeDefs" tag="net-channel-disconnect">
+		<MEMBER ns="nsTypeDefs" tag="q931-disconnection-cause" type="class" type_ref="StatusContent"/>
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="nsTypeDefs" tag="party-id" type="opt short" description="The ID of the participant as assigned by the MCU"/>
+		<MEMBER ns="nsTypeDefs" tag="channel-id" type="opt short" description="The channel identifier. This is a number assigned to the channel by the system, according to the order in which the channels connect. The initial channel is always 1"/>
+		<MEMBER ns="nsTypeDefs" tag="initiator" type="enum" type_ref="InitiatorType" description="Indicates who initiated the operation. Enumeration value"/>
+		<MEMBER ns="nsTypeDefs" tag="disconnect-coding" type="enum" type_ref="DisconnectCoding"/>
+		<MEMBER ns="nsTypeDefs" tag="disconnect-location" type="enum" type_ref="DisconnectLocation"/>
+	</CLASS>
+
+	<ENUM name="DisconnectLocation">
+		<VALUE tag="user"/>
+		<VALUE tag="private_local"/>
+		<VALUE tag="public_local"/>
+		<VALUE tag="transit_net"/>
+		<VALUE tag="public_remote"/>
+		<VALUE tag="private_remote"/>
+		<VALUE tag="international"/>
+		<VALUE tag="beyond_intrwork"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<ENUM name="DisconnectCoding">
+		<VALUE tag="ccit"/>
+		<VALUE tag="national"/>
+		<VALUE tag="specific"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<CLASS name="NetChannelConnect" ns="nsTypeDefs" tag="net-channel-connect">
+		<MEMBER ns="nsTypeDefs" tag="called-party" type="class" type_ref="CalledPartyContent" description="The called participant"/>
+		<MEMBER ns="nsTypeDefs" tag="calling-party" type="class" type_ref="CallingPartyContent" description="The calling participant. The PHONE1 element contains the telephone number used for dial in"/>
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="nsTypeDefs" tag="party-id" type="opt short" description="The ID of the participant as assigned by the MCU"/>
+		<MEMBER ns="nsTypeDefs" tag="channel-id" type="opt short" description="The channel identifier. This is a number assigned to the channel by the system, according to the order in which the channels connect. The initial channel is always 1"/>
+		<MEMBER ns="nsTypeDefs" tag="channel-num" type="opt short" description="Only applicable to MultiRate calls. The total number of channels being connected for this participant. For 2xB calls the value is always 1"/>
+		<MEMBER ns="nsTypeDefs" tag="initiator" type="enum" type_ref="InitiatorType" description="Indicates who initiated the operation. Enumeration value"/>
+		<MEMBER ns="nsTypeDefs" tag="net-specific" type="enum" type_ref="NetSpecific" description="The network service program used by a service provider (carrier), if present"/>
+		<MEMBER ns="nsTypeDefs" tag="perferred" type="enum" type_ref="Perferred" description="The value of the preferred/exclusive field for B channel selection"/>
+		<MEMBER ns="nsTypeDefs" tag="call-type" type="enum" type_ref="CallType" description="The type of call"/>
+	</CLASS>
+
+	<ENUM name="CallType" base_value="-1">
+		<VALUE tag="voice"/>
+		<VALUE tag="modem"/>
+		<VALUE tag="56k"/>
+		<VALUE tag="64k"/>
+		<VALUE tag="64k_restrict"/>
+		<VALUE tag="384k"/>
+		<VALUE tag="384k_restrict"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<ENUM name="Perferred" base_value="-1">
+		<VALUE tag="none"/>
+		<VALUE tag="preferred"/>
+		<VALUE tag="exclusive"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<ENUM name="NetSpecific" base_value="-1">
+		<VALUE tag="none"/>
+		<VALUE tag="att_sdn"/>
+		<VALUE tag="nti_private"/>
+		<VALUE tag="ati_megacom"/>
+		<VALUE tag="nti_outwats"/>
+		<VALUE tag="nti_fx"/>
+		<VALUE tag="nti_tie_trunk"/>
+		<VALUE tag="att_accunet"/>
+		<VALUE tag="att_1800"/>
+		<VALUE tag="nti_tro"/>
+		<VALUE tag="unknown"/>
+		<VALUE tag="att_megacom"/>
+		<VALUE tag="att_Megacom_800"/>
+		<VALUE tag="nti_inwats"/>
+		<VALUE tag="val"/>
+		<VALUE tag="att_multiquest"/>
+	</ENUM>
+
+	<CLASS name="CalledPartyContent" ns="nsTypeDefs" tag="called-party-content">
+		<MEMBER ns="nsTypeDefs" tag="num-type" type="enum" type_ref="NetworkLineType"/>
+		<MEMBER ns="nsTypeDefs" tag="plan-type" type="enum" type_ref="CdrNumPlanType"/>
+		<MEMBER ns="nsTypeDefs" tag="phone1" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="CallingPartyContent" ns="nsTypeDefs" tag="calling-party-content">
+		<MEMBER ns="nsTypeDefs" tag="num-type" type="enum" type_ref="NetworkLineType"/>
+		<MEMBER ns="nsTypeDefs" tag="plan-type" type="enum" type_ref="CdrNumPlanType"/>
+		<MEMBER ns="nsTypeDefs" tag="presentation-indicator" type="enum" type_ref="PresentationIndicator"/>
+		<MEMBER ns="nsTypeDefs" tag="screen-indicator" type="enum" type_ref="ScreenIndicator"/>
+		<MEMBER ns="nsTypeDefs" tag="phone1" type="opt string"/>
+	</CLASS>
+
+	<ENUM name="ScreenIndicator" base_value="-1">
+		<VALUE tag="not_screened"/>
+		<VALUE tag="user_ver_passed"/>
+		<VALUE tag="user_ver_failed"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<ENUM name="PresentationIndicator" base_value="-1">
+		<VALUE tag="allowed"/>
+		<VALUE tag="restricted"/>
+		<VALUE tag="not_available"/>
+		<VALUE tag="unknown"/>
+	</ENUM>
+
+	<CLASS name="UserDefinedInformation" ns="nsTypeDefs" tag="user-defined-information">
+		<MEMBER ns="nsTypeDefs" tag="contact-info-list" type="class" type_ref="ContactInfoListContent" description="Contains the contents of multiple Info fields"/>
+		<MEMBER ns="nsTypeDefs" tag="vip" type="opt bool" description="Indicates whether a participant is a VIP participant or a standard participant"/>
+	</CLASS>
+
+	<CLASS name="RemoteComunicationMode" ns="nsTypeDefs" tag="remote-comunication-mode">
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="nsTypeDefs" tag="party-id" type="opt short" description="The ID of the participant as assigned by the MCU"/>
+		<MEMBER ns="nsTypeDefs" tag="remote-comm-mode" type="opt string" description="The remote H.221 capabilities"/>
+	</CLASS>
+
+	<CLASS name="GatekeeperInformation" ns="nsTypeDefs" tag="gatekeeper-information">
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name."/>
+		<MEMBER ns="nsTypeDefs" tag="id" type="opt short" description="The conference or the fault ID."/>
+		<MEMBER ns="nsTypeDefs" tag="gk-call-id" type="opt byte" description="The call ID in the gatekeeper records."/>
+	</CLASS>
+
+	<CLASS name="AddPartyDetailsContent" ns="nsTypeDefs" tag="add-party-details-content">
+		<MEMBER ns="nsTypeDefs" tag="mcu-phone-list" type="class" type_ref="PhoneListType" description="A list of the telephone numbers that are assigned to the MCU for dial-in participants."/>
+		<MEMBER ns="nsTypeDefs" tag="phone-list" type="class" type_ref="PhoneListType" description="A list of the telephone numbers that are assigned to a participant"/>
+		<MEMBER ns="nsTypeDefs" tag="alias" type="class" type_ref="AliasContent" description="Alias name and alias type."/>
+		<MEMBER ns="nsTypeDefs" tag="connection" type="enum" type_ref="Connection" description="The type of connection to be used by a participant to connect to a conference."/>
+		<MEMBER ns="nsTypeDefs" tag="bonding" type="enum" type_ref="Bonding" description="Indicates whether bonding is enabled or disabled."/>
+		<MEMBER ns="nsTypeDefs" tag="service-name" type="opt string" description="The name of the Network, IVR, or GW service."/>
+		<MEMBER ns="nsTypeDefs" tag="sub-service-name" type="opt string" description="Only applicable for dial-out participants. The name of the network sub-service as defined in the system. An empty string ."/>
+		<MEMBER ns="nsTypeDefs" tag="resrtict-mode" type="enum" type_ref="RestrictModeType" description="This type indicates whether the conference is set as restricted line rate (56 kbps) or normal line rate (64 kbps)"/>
+		<MEMBER ns="nsTypeDefs" tag="call-content" type="enum" type_ref="CallContentType" description="The connection line rate."/>
+		<MEMBER ns="nsTypeDefs" tag="num-type" type="enum" type_ref="NetworkLineType" description="Indicates the type of telephone number."/>
+		<MEMBER ns="nsTypeDefs" tag="meet-me-method" type="enum" type_ref="MeetMeMethodeType" description="Only applicable for dial-in participants. The type of Meet-me conference."/>
+		<MEMBER ns="nsTypeDefs" tag="transfer-rate" type="enum" type_ref="TransferRateType" description="The connection line rate."/>
+		<MEMBER ns="nsTypeDefs" tag="net-channel-number" type="enum" type_ref="NetChannelNumType" description="The number of network channels."/>
+		<MEMBER ns="nsTypeDefs" tag="chair" type="opt bool" description="Not supported: Indicates whether the participant is the current chairperson of the conference"/>
+		<MEMBER ns="nsTypeDefs" tag="ip-address" type="opt string" description="The IP address"/>
+		<MEMBER ns="nsTypeDefs" tag="signalling-port" type="opt short" description="Only applicable to IP participants. The signaling port"/>
+		<MEMBER ns="nsTypeDefs" tag="video-protocol" type="enum" type_ref="VideoProtocolType" description="TThe video protocol."/>
+		<MEMBER ns="nsTypeDefs" tag="video-bit-rate" type="opt string" description="The video rate"/>
+		<MEMBER ns="nsTypeDefs" tag="volume" type="opt short"/>		
+		<MEMBER ns="nsTypeDefs" tag="signalling-type" type="enum" type_ref="SignallingType" description="Not supported in RMX. Call signalling type."/>
+		<MEMBER ns="nsTypeDefs" tag="identification-method" type="enum" type_ref="IdentMethodType" description="The method by which the destination conference is identified"/>
+		<MEMBER ns="nsTypeDefs" tag="password" type="opt string" description="The chairperson password"/>
+		<MEMBER ns="nsTypeDefs" tag="undefined" type="opt bool" description="Indicates whether or not the participant is an undefined participant"/>
+		<MEMBER ns="nsTypeDefs" tag="video-session" type="enum" type_ref="VideoSessionType" description="The video session mode."/>
+		<MEMBER ns="nsTypeDefs" tag="node-type" type="enum" type_ref="NodeType" description="Indicates the type of node."/>
+		<MEMBER ns="nsTypeDefs" tag="bonding-phone" type="opt string" description="The bonding phone number"/>
+		<MEMBER ns="nsTypeDefs" tag="sip-address" type="opt string" description="Only applicable to SIP participants. The SIP address."/>
+		<MEMBER ns="nsTypeDefs" tag="sip-address-type" type="enum" type_ref="SipAddressType" description="Only applicable to SIP participants. The SIP address type."/>
+		<MEMBER ns="nsTypeDefs" tag="operator-name" type="opt string" description="The name of the user."/>
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name."/>
+		<MEMBER ns="nsTypeDefs" tag="id" type="opt short" description="The conference or the fault ID."/>
+		<MEMBER ns="nsTypeDefs" tag="conference-correlation-id" type="opt string" description="Indicates which conference the participant is a member of."/>
+	</CLASS>
+
+	<CLASS name="ConfId" ns="ns8" tag="ConfId" description="">
+	<MEMBER  ns="nsTypeDefs" tag="ConfId" type="opt string" description=""/>
+	</CLASS>
+	
+	<ENUM name="Bonding" base_value="-1">
+		<VALUE tag="auto"/>
+		<VALUE tag="enabled"/>
+		<VALUE tag="disabled"/>
+	</ENUM>
+
+	<ENUM name="Connection" base_value="-1">
+		<VALUE tag="dial-out"/>
+		<VALUE tag="dial-in"/>
+	</ENUM>
+
+	<CLASS name="SvcSipParticipantConnectedContent" ns="nsTypeDefs" tag="svc-sip-participant-connected-content">
+		<MEMBER ns="nsTypeDefs" tag="transmit-line-rate" type="class" type_ref="LineRateContent"/>
+		<MEMBER ns="nsTypeDefs" tag="receive-line-rate" type="class" type_ref="LineRateContent"/>
+		<MEMBER ns="nsTypeDefs" tag="svc-party-status" type="enum" type_ref="SvcPartyStatusType"/>
+		<MEMBER ns="nsTypeDefs" tag="uplink-video-capabilites" type="class" type_ref="UplinkVideoCapabilites"/>
+		<MEMBER ns="nsTypeDefs" tag="audio-codec" type="enum" type_ref="RelayCodecType"/>
+	</CLASS>
+
+	<CLASS name="UplinkVideoCapabilites" ns="nsTypeDefs" tag="uplink-video-capabilites">
+		<MEMBER ns="nsTypeDefs" tag="stream3" type="class" type_ref="StreamContent"/>
+		<MEMBER ns="nsTypeDefs" tag="stream2" type="class" type_ref="StreamContent"/>
+		<MEMBER ns="nsTypeDefs" tag="stream1" type="class" type_ref="StreamContent"/>
+	</CLASS>
+
+	<CLASS name="StreamContent" ns="nsTypeDefs" tag="stream-content">
+		<MEMBER ns="nsTypeDefs" tag="resolution-width" type="opt short"/>
+		<MEMBER ns="nsTypeDefs" tag="resolution-hight" type="opt short"/>
+		<MEMBER ns="nsTypeDefs" tag="relay-max-frame-rate" type="opt short"/>
+		<MEMBER ns="nsTypeDefs" tag="relay-max-bit-rate" type="opt short"/>
+	</CLASS>
+
+	<CLASS name="LineRateContent" ns="nsTypeDefs" tag="line-rate-content">
+		<MEMBER ns="nsTypeDefs" tag="negotiated" type="opt short"/>
+		<MEMBER ns="nsTypeDefs" tag="min" type="opt short"/>
+		<MEMBER ns="nsTypeDefs" tag="max" type="opt short"/>
+	</CLASS>
+
+	<CLASS name="ParticipantMaxUsage" ns="nsTypeDefs" tag="participant-max-usage">
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="nsTypeDefs" tag="party-id" type="opt int" description="The ID of the participant as assigned by the MCU"/>
+		<MEMBER ns="nsTypeDefs" tag="max-rate" type="opt int" description="The maximum line rate that can be achieved by the participant"/>
+		<MEMBER ns="nsTypeDefs" tag="max-resolution" type="opt string" description="Indicates the maximum resolution set for the participant"/>
+		<MEMBER ns="nsTypeDefs" tag="max-frame-rate" type="opt string" description="This element contains the participant maximum frame rate"/>
+		<MEMBER ns="nsTypeDefs" tag="address" type="opt string" description="This element contains the IP address of the participant"/>
+		<MEMBER ns="nsTypeDefs" tag="number-of-screens" type="opt int" description="This element contains the number of screens"/>
+	</CLASS>
+
+	<CLASS name="ParticipantConnectionRate" ns="nsTypeDefs" tag="participant-connection-rate">
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="nsTypeDefs" tag="party-id" type="opt int" description="The ID of the participant as assigned by the MCU"/>
+		<MEMBER ns="nsTypeDefs" tag="participant-current-rate" type="opt int" description="The participant current connection rate"/>
+	</CLASS>
+
+	<CLASS name="VisualNameData" ns="nsTypeDefs" tag="visual-name-data">
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="nsTypeDefs" tag="id" type="opt int" description="The conference or the fault ID"/>
+		<MEMBER ns="nsTypeDefs" tag="visual-name" type="opt string" description="The name of the participant after it has been modified by a user during a conference or the file name as it is displayed to the user"/>
+	</CLASS>
+
+	<CLASS name="StatusContent" ns="nsTypeDefs" tag="status-content">
+		<MEMBER ns="nsTypeDefs" tag="id" type="opt int" description="The conference or the fault ID."/>
+		<MEMBER ns="nsTypeDefs" tag="description" type="opt string" description="The description of the fault."/>
+		<MEMBER ns="nsTypeDefs" tag="your-token1" type="opt string" description="When sending a transaction, use YOUR_TOKEN1 to save a token or pointer or any 32 bit data."/>
+		<MEMBER ns="nsTypeDefs" tag="your-token2" type="opt string" description="When sending a transaction, use YOUR_TOKEN2 to save a token or pointer or any 32 bit data."/>
+		<MEMBER ns="nsTypeDefs" tag="warning" type="opt bool" description="Indicates whether or not the MCU returned a warning in the DESCRIPTION element"/>
+		<MEMBER ns="nsTypeDefs" tag="message-id" type="opt int" description="The transaction ID."/>
+		<MEMBER ns="nsTypeDefs" tag="description-ex" type="opt string" description="An additional description field of the fault"/>
+	</CLASS>
+
+	<CLASS name="PhoneListType" ns="nsTypeDefs" tag="phone-list-type">
+		<MEMBER ns="nsTypeDefs" tag="phone1" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="phone2" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="phone3" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="phone4" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="phone5" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="phone6" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="phone-list-ex-list" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="AliasContent" ns="nsTypeDefs" tag="alias-content">
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="alias-type" type="enum" type_ref="AliasType"/>
+	</CLASS>
+
+	<ENUM name="AliasType" base_value="-1">
+		<VALUE tag="none"/>
+		<VALUE tag="323_id"/>
+		<VALUE tag="e164"/>
+		<VALUE tag="url_id"/>
+		<VALUE tag="email_id"/>
+		<VALUE tag="transport_id"/>
+		<VALUE tag="party_number"/>
+	</ENUM>
+
+	<CLASS name="ContactInfoListContent" ns="nsTypeDefs" tag="contact-info-list-content">
+		<MEMBER ns="nsTypeDefs" tag="contact-info" type="opt string" description="The contents of the first Info field"/>
+		<MEMBER ns="nsTypeDefs" tag="contact-info-2" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="contact-info-3" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="contact-info-4" type="opt string"/>
+		<MEMBER ns="nsTypeDefs" tag="additional-info" type="opt string" description="An additional participant text field that can be used for storing information"/>
+	</CLASS>
+
+	<CLASS name="LectureModeContent" ns="nsTypeDefs" tag="lecture-mode-content">
+		<MEMBER ns="nsTypeDefs" tag="on" type="opt bool" description="Indicates whether to enable or disable a feature"/>
+		<MEMBER ns="nsTypeDefs" tag="timer" type="opt bool" description="Indicates whether to enable or disable the automatic switching between participants"/>
+		<MEMBER ns="nsTypeDefs" tag="interval" type="opt short" description="The number of seconds a participant is to be displayed in the lecturer window before switching to the next participant."/>
+		<MEMBER ns="nsTypeDefs" tag="audio-activated" type="bool" description="Indicates whether the lecturer is to be audio activated"/>
+		<MEMBER ns="nsTypeDefs" tag="lecture-name" type="opt string" description="The name of the participant who is the lecturer"/>
+		<MEMBER ns="nsTypeDefs" tag="lecture-mode" type="enum" type_ref="LectureModeType" description="The name of the participant who is the lecturer"/>
+	</CLASS>
+
+	<CLASS name="ResourceForceContent" ns="nsTypeDefs" tag="resource-force-content">
+		<MEMBER ns="nsTypeDefs" tag="audio-board" type="opt string" description="The slot number of the Audio card handling the participant call"/>
+		<MEMBER ns="nsTypeDefs" tag="video-board" type="opt string" description="The slot number of the video card handling the participant call"/>
+		<MEMBER ns="nsTypeDefs" tag="data-board" type="opt string" description="The slot number of the data card handling the participant call"/>
+		<MEMBER ns="nsTypeDefs" tag="data-unit" type="opt string" description="The number of the unit on the Data card handling the participant call"/>
+		<MEMBER ns="nsTypeDefs" tag="audio-unit" type="opt string" description="The number of the unit on the audio card handling the participant call"/>
+		<MEMBER ns="nsTypeDefs" tag="video-unit" type="opt string" description="The number of the unit on the video card handling the participant call"/>
+	</CLASS>
+
+	<CLASS name="MeetMePerConfContent" ns="nsTypeDefs" tag="meet-me-per-conf-content">
+		<MEMBER ns="nsTypeDefs" tag="on" type="opt bool" description="Indicates whether to enable or disable the meet-me"/>
+		<MEMBER ns="nsTypeDefs" tag="min-num-of-parties" type="class" type_ref="MinNumOfParties" description="Min number of video participants for which the system should reserve resources"/>
+		<MEMBER ns="nsTypeDefs" tag="min-num-of-audio-parties" type="class" type_ref="MinNumOfAudioParties" description="Min number of audio participants for which the system should reserve resources"/>
+		<MEMBER ns="nsTypeDefs" tag="service-name-for-min-parties" type="opt string" description="Indicates the IP Network Service that will be used for dialing out to participants for which resources are reserved on the MCU"/>
+	</CLASS>
+
+	<CLASS name="MinNumOfAudioParties" ns="nsTypeDefs" tag="MinNumOfAudioParties">
+		<MEMBER ns="nsTypeDefs" tag="MinNumOfAudioParties" type="opt short"/>
+	</CLASS>
+
+	<CLASS name="MinNumOfParties" ns="nsTypeDefs" tag="MinNumOfParties">
+		<MEMBER ns="nsTypeDefs" tag="MinNumOfParties" type="opt short"/>
+	</CLASS>
+
+	<CLASS name="ServiceContent" ns="nsTypeDefs" tag="service-content">
+		<MEMBER ns="nsTypeDefs" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="nsTypeDefs" tag="phone1" type="opt string" description="Contains the phone number or the first phone number in the list of phone numbers"/>
+		<MEMBER ns="nsTypeDefs" tag="phone2" type="opt string" description="Contains the phone number or the first phone number in the list of phone numbers"/>
+		<MEMBER ns="nsTypeDefs" tag="phone-list-ex" type="opt string" description="Contains tadditional phone number"/>
+		<MEMBER ns="nsTypeDefs" tag="user-service-phones-as-range" type="opt bool" description="When set to true,RMX uses the two dial-in numbers as the dial-in numbers range."/>
+		<MEMBER ns="nsTypeDefs" tag="service-phones-prefix-forward" type="opt string" description="The DMA or RMX prefix in the Gatekeeper is used in automatic dial string generation."/>
+		<MEMBER ns="nsTypeDefs" tag="service-phones-num-digits-forward" type="opt byte" description="The DMA or RMX prefix in the Gatekeeper is used in automatic dial string generation."/>
+	</CLASS>
+
+	<CLASS name="AutoTerminateContent" ns="nsTypeDefs" tag="auto-terminate-content">
+		<MEMBER ns="nsTypeDefs" tag="on" type="opt bool" description="Indicates whether to enable or disable the auto terminate feature"/>
+		<MEMBER ns="nsTypeDefs" tag="time-before-first-join" type="class" type_ref="TimeBeforeFirstJoin" description="The number of minutes after which, if no participant has joined the conference, the conference is automatically terminated"/>
+		<MEMBER ns="nsTypeDefs" tag="after-last-quit" type="class" type_ref="AfterLastQuit" description="The number of minutes waiting after the last participant has disconnected before the conference is automatically terminated"/>
+		<MEMBER ns="nsTypeDefs" tag="last-quit-type" type="enum" type_ref="LastQuitType" description="Contains the configuration options to automatically end the conference"/>
+	</CLASS>
+
+	<ENUM name="LastQuitType">
+		<VALUE tag="after_last_quit"/>
+		<VALUE tag="when_last_participant_remainsv"/>
+	</ENUM>
+
+	<CLASS name="AfterLastQuit" ns="nsTypeDefs" tag="AfterLastQuit">
+		<MEMBER ns="nsTypeDefs" tag="AfterLastQuit" type="opt string"/>
+	</CLASS>
+<!-- This class is redefined later on in CdrPersistApi.xml
+	<CLASS name="TimeBeforeFirstJoin" ns="nsTypeDefs" tag="TimeBeforeFirstJoin">
+		<MEMBER ns="nsTypeDefs" tag="TimeBeforeFirstJoin" type="opt string"/>
+	</CLASS>
+-->
+	<CLASS name="CascadeContent" ns="nsTypeDefs" tag="cascade-content">
+		<MEMBER ns="nsTypeDefs" tag="cascade-role" type="enum" type_ref="CascadeRole" description="Indicates the cascading link type"/>
+		<MEMBER ns="nsTypeDefs" tag="cascade-links-number" type="opt int"/>
+		<MEMBER ns="nsTypeDefs" tag="link-type" type="enum" type_ref="LinkType"/>
+		<MEMBER ns="nsTypeDefs" tag="master-name" type="opt string" description="Only applicable in a cascading conference. The name of the participant who acts as the link to the Master conference."/>
+	</CLASS>
+
+	<ENUM name="LinkType">
+		<VALUE tag="regular"/>
+		<VALUE tag="sub-link"/>
+		<VALUE tag="main_link"/>
+	</ENUM>
+
+	<ENUM name="CascadeRole">
+		<VALUE tag="none"/>
+		<VALUE tag="master"/>
+		<VALUE tag="slave"/>
+	</ENUM>
+
+	<CLASS name="T0" ns="nsTypeDefs" tag="T0">
+		<MEMBER ns="nsTypeDefs" tag="T0" type="opt string"/>
+	</CLASS>
+</API>

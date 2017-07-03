@@ -1,0 +1,15 @@
+#ifndef __IPMI_CONSTS_H__
+#define __IPMI_CONSTS_H__
+
+#define CNTL_BOARD_NAME "NINJA_CNTL"
+#define NETRA_DSP_BOARD_NAME "DSP Card"
+#define NETRA_DSP_BOARD1_NAME "DSP Card 1"
+#define NETRA_DSP_BOARD2_NAME "DSP Card 2"
+#define NETRA_DSP_BOARD3_NAME "DSP Card 3"
+#define NETRA_RTM_ISDN_NAME "RTM ISDN"
+
+#define INVALID_FLOAT_READING ((float)(0x12345678))
+#define INVALID_READING_STR "na"
+
+#endif
+

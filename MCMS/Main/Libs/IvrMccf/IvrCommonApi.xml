@@ -1,0 +1,335 @@
+<API name="msc ivr mccf package">
+
+	<NAMESPACE value="urn:ietf:params:xml:ns:msc-ivr"/>
+	<NAMESPACE tag="xml" value="http://www.w3.org/XML/1998/namespace"/>
+
+	<CLASS name="msc ivr" tag="mscivr" root="true">
+		<PROPERTY tag="version" type="opt string"/>
+		<PROPERTY name="desc lang" tag="desclang" type="opt string"/>
+		<MEMBER type="choice" name="response type">
+			<CHOICE type_ref="dialog prepare"/>
+			<CHOICE type_ref="dialog start"/>
+			<CHOICE type_ref="msc ivr response"/>
+			<CHOICE type_ref="event"/>
+		</MEMBER>
+	</CLASS>
+
+	<ENUM name="codec sub type">
+		<VALUE name="h 264" tag="H264"/>
+		<VALUE name="h 264 svc" tag="H264SVC"/>
+		<VALUE name="sac" tag="SAC"/>
+		<VALUE name="g711" tag="G711"/>
+		<VALUE name="g722" tag="G722"/>
+		<VALUE name="g722 1" tag="G722_1"/>
+		<VALUE name="g722 1c" tag="G722_1C"/>
+	</ENUM>
+
+	<CLASS name="dtmfsub element type">
+		<PROPERTY name="matchmode" tag="matchmode" type="opt string" description="controls which DTMF input is subscribed to"/>
+	</CLASS>
+
+	<CLASS name="media element type">
+		<PROPERTY tag="loc" type="opt string"/>
+		<PROPERTY tag="type" type="opt string"/>
+		<PROPERTY name="fetch time out" tag="fetchtimeout" type="opt string"/>
+		<PROPERTY name="sound level" tag="soundLevel" type="opt string"/>
+		<PROPERTY name="clip begin" tag="clipBegin" type="opt string"/>
+		<PROPERTY name="clip end" tag="clipEnd" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="record element type" description="The record element specifies how media input is recorded">
+		<PROPERTY name="timeout" tag="timeout" type="opt string"/>
+		<PROPERTY name="vad initial" tag="vadinitial" type="opt bool"/>
+		<PROPERTY name="vad final" tag="vadfinal" type="opt bool"/>
+		<PROPERTY name="dtmf term" tag="dtmfterm" type="opt bool"/>
+		<PROPERTY name="max time" tag="maxtime" type="opt string"/>
+		<PROPERTY name="beep" tag="beep" type="opt bool"/>
+		<PROPERTY name="final silence" tag="finalsilence" type="opt string"/>
+		<PROPERTY name="append" tag="append" type="opt bool"/>
+		<MEMBER name="media" tag="media" type="class" type_ref="media element type" description="specifies the location and type of the media resource for uploading recorded data"/>
+	</CLASS>
+
+	<CLASS name="grammar element type" description="The grammar element allows a custom grammar, inline or external, to be specified">
+		<PROPERTY name="src" tag="src" type="opt string"/>
+		<PROPERTY name="type" tag="type" type="opt string"/>
+		<PROPERTY name="fetch time out" tag="fetchtimeout" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="collect element type">
+		<PROPERTY name="clear digit buffer" tag="cleardigitbuffer" type="opt bool"/>
+		<PROPERTY name="time out" tag="timeout" type="opt string"/>
+		<PROPERTY name="inter digit time out" tag="interdigittimeout" type="opt string"/>
+		<PROPERTY name="term time out" tag="termtimeout" type="opt string"/>
+		<PROPERTY name="escape key" tag="escapekey" type="opt string"/>
+		<PROPERTY name="term char" tag="termchar" type="opt string"/>
+		<PROPERTY name="max digits" tag="maxdigits" type="opt uint"/>
+		<MEMBER name="grammar" tag="grammar" type="class" type_ref="grammar element type" description="indicates a custom grammar format"/>
+	</CLASS>
+
+	<CLASS name="control element type">
+		<PROPERTY name="go to start key" tag="gotostartkey" type="opt string"/>
+		<PROPERTY name="go to end key" tag="gotoendkey" type="opt string"/>
+		<PROPERTY name="skip interval" tag="skipinterval" type="opt string"/>
+		<PROPERTY name="ff key" tag="ffkey" type="opt string"/>
+		<PROPERTY name="rw key" tag="rwkey" type="opt string"/>
+		<PROPERTY name="pause interval" tag="pauseinterval" type="opt string"/>
+		<PROPERTY name="pause key" tag="pausekey" type="opt string"/>
+		<PROPERTY name="resume key" tag="resumekey" type="opt string"/>
+		<PROPERTY name="volume interval" tag="volumeinterval" type="opt string"/>
+		<PROPERTY name="vol up key" tag="volupkey" type="opt string"/>
+		<PROPERTY name="vol dn key" tag="voldnkey" type="opt string"/>
+		<PROPERTY name="speed interval" tag="speedinterval" type="opt string"/>
+		<PROPERTY name="speed up key" tag="speedupkey" type="opt string"/>
+		<PROPERTY name="speed dn key" tag="speeddnkey" type="opt string"/>
+		<PROPERTY name="external" tag="external" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="param element type" tag="paramElementType">
+		<PROPERTY name="name" tag="name" type="opt string"/>
+		<PROPERTY name="type" tag="type" type="opt string"/>
+		<PROPERTY name="encoding" tag="encoding" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="variable element type" tag="variableElementType">
+		<PROPERTY name="type" tag="type" type="opt string"/>
+		<PROPERTY name="value" tag="value" type="opt string"/>
+		<PROPERTY name="format" tag="format" type="opt string"/>
+		<PROPERTY name="gender" tag="gender" type="opt string"/>
+		<PROPERTY name="lang" tag="lang" ns="xml" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="dtmf element type" tag="dtmfElementType">
+		<PROPERTY name="digits" tag="digits" type="opt string"/>
+		<PROPERTY name="level" tag="level" type="opt int"/>
+		<PROPERTY name="duration" tag="duration" type="opt string"/>
+		<PROPERTY name="interval" tag="interval" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="seq element type">
+		<MEMBER name="media" tag="media" type="class" type_ref="media element type"/>
+		<MEMBER name="variable" tag="variable" type="class" type_ref="variable element type"/>
+		<MEMBER name="dtmf" tag="dtmf" type="class" type_ref="dtmf element type"/>
+	</CLASS>
+
+	<CLASS name="par element type">
+		<PROPERTY name="end sync" tag="endsync" type="opt string"/>
+		<MEMBER name="seq" tag="seq" type="class" type_ref="seq element type"/>
+		<MEMBER name="media" tag="media" type="class" type_ref="media element type"/>
+		<MEMBER name="variable" tag="variable" type="class" type_ref="variable element type"/>
+		<MEMBER name="dtmf" tag="dtmf" type="class" type_ref="dtmf element type"/>
+	</CLASS>
+
+	<CLASS name="prompt element type">
+		<PROPERTY name="base" tag="base" ns="xml" type="opt string"/>
+		<PROPERTY name="bargein" tag="bargein" type="opt bool"/>
+		<MEMBER name="media" tag="media" type="class" type_ref="media element type" container="list"/>
+		<MEMBER name="variable" tag="variable" type="class" type_ref="variable element type"/>
+		<MEMBER name="dtmf" tag="dtmf" type="class" type_ref="dtmf element type"/>
+		<MEMBER name="par" tag="par" type="class" type_ref="par element type"/>
+	</CLASS>
+
+	<CLASS name="dialog element type">
+		<PROPERTY name="repeat count" tag="repeatCount" type="opt uint"/>
+		<PROPERTY name="repeat dur" tag="repeatDur" type="opt string"/>
+		<PROPERTY name="repeat until complete" tag="repeatUntilComplete" type="opt bool"/>
+		<MEMBER name="prompt" tag="prompt" type="class" type_ref="prompt element type"/>
+		<MEMBER name="control" tag="control" type="class" type_ref="control element type"/>
+		<MEMBER name="collect" tag="collect" type="class" type_ref="collect element type"/>
+		<MEMBER name="record" tag="record" type="class" type_ref="record element type"/>
+	</CLASS>
+
+	<CLASS name="params element type">
+		<MEMBER name="param" tag="param" type="class" type_ref="param element type"/>
+	</CLASS>
+
+	<CLASS name="stream element type">
+		<PROPERTY name="media" tag="media" type="opt string" description="a string indicating the type of media associated with the stream."/>
+		<PROPERTY name="label" tag="label" type="opt string" description="a string indicating the SDP label associated with a media stream"/>
+		<PROPERTY name="direction" tag="direction" type="opt string" description="a string indicating the direction of the media flow relative to the endpoint conference or connection."/>
+		<MEMBER name="region" tag="region" type="opt int" description="an element to specify the area within a mixer video layout where a media stream is displayed"/>
+		<MEMBER name="priority" tag="priority" type="opt uint" description="an element to configure priority associated with the stream in the conference mix"/>
+	</CLASS>
+
+	<CLASS name="subscribe element type" tag="subscribeElementType">
+		<MEMBER name="dtmf sub" tag="dtmfsub" type="class" type_ref="dtmfsub element type" description="Subscription to DTMF input during the dialog"/>
+	</CLASS>
+
+	<CLASS name="controlmatch element type" tag="controlmatchElementType" description="describing an individual runtime control match.">
+		<PROPERTY name="dtmf" tag="dtmf" type="opt string" description="DTMF input triggering the runtime control."/>
+		<PROPERTY name="time stamp" tag="timestamp" type="opt string" description="indicates the time (on the MS) at which the control was triggered."/>
+	</CLASS>
+
+	<CLASS name="mediainfo element type" tag="mediainfoElementType" description="The mediainfo element reports information about a recorded media resource.">
+		<PROPERTY name="loc" tag="loc" type="opt string" description="indicates the location of the media resource."/>
+		<PROPERTY name="type" tag="type" type="opt string" description="indicates the format of the media resource."/>
+		<PROPERTY name="size" tag="size" type="opt uint" description="indicates the size of the media resource in bytes."/>
+	</CLASS>
+
+	<CLASS name="recordinfo element type" tag="recordinfoElementType">
+		<PROPERTY name="term mode" tag="termmode" type="opt string" description="indicates how playback was terminated."/>
+		<PROPERTY name="duration" tag="duration" type="opt uint" description="indicates the duration of prompt playback in milliseconds"/>
+		<MEMBER name="media info" tag="mediainfo" type="class" type_ref="mediainfo element type" description="indicates information about a recorded media resource"/>
+	</CLASS>
+
+	<CLASS name="collectinfo element type" tag="collectinfoElementType" description="The collectinfo element reports the information about collect execution.">
+		<PROPERTY name="dtmf" tag="dtmf" type="opt string" description="DTMF input collected from the user."/>
+		<PROPERTY name="term mode" tag="termmode" type="opt string" description="indicates how collection was terminated."/>
+	</CLASS>
+
+	<CLASS name="controlinfo element type" tag="controlinfoElementType" description="The controlinfo element reports information about control execution.">
+		<MEMBER name="control match" tag="controlmatch" type="class" type_ref="controlmatch element type"/>
+	</CLASS>
+
+	<CLASS name="promptinfo element type" tag="promptinfoElementType" description="The promptinfo element reports the information about prompt execution.">
+		<PROPERTY name="duration" tag="duration" type="opt uint" description="indicates the duration of prompt playback in milliseconds"/>
+		<PROPERTY name="term mode" tag="termmode" type="opt string" description="indicates how playback was terminated."/>
+	</CLASS>
+
+	<CLASS name="dialogexit element type" tag="dialogexitElementType" description="The dialogexit event indicates that a prepared or active dialog has exited because it is complete, it has been terminated, or an error occurred during execution">
+		<PROPERTY name="status" tag="status" type="opt uint" description="a status code indicating the status of the dialog when it exits."/>
+		<PROPERTY name="reason" tag="reason" type="opt string" description="a textual description that the MS SHOULD use to provide a reason for the status code."/>
+		<PROPERTY name="desc lang" tag="desclang" type="opt string" description="specifies the language used in the value of the reason attribute."/>
+		<MEMBER name="prompt info" tag="promptinfo" type="class" type_ref="promptinfo element type" description="report information about the prompt execution in an IVR dialog"/>
+		<MEMBER name="control info" tag="controlinfo" type="class" type_ref="controlinfo element type" description="reports information about the control execution in an IVR dialog."/>
+		<MEMBER name="collect info" tag="collectinfo" type="class" type_ref="collectinfo element type" description="reports information about the collect execution in an IVR dialog."/>
+		<MEMBER name="record info" tag="recordinfo" type="class" type_ref="recordinfo element type" description="reports information about the record execution in an IVR dialog."/>
+		<MEMBER name="params" tag="params" type="class" type_ref="params element type" description="reports exit parameters or a dialog language defined outside this specification."/>
+	</CLASS>
+
+	<CLASS name="dtmfnotify element type">
+		<PROPERTY name="match mode" tag="matchmode" type="opt string" description="indicates the matching mode specified in the subscription request."/>
+		<PROPERTY name="dtmf" tag="dtmf" type="opt string" description="DTMF key presses received according to the matchmode."/>
+		<PROPERTY name="time stamp" tag="timestamp" type="opt string" description="indicates the time (on the MS) at which the last key press occurred according to the matchmode."/>
+	</CLASS>
+
+	<CLASS name="codec element type" description="The codec element describes a codec on the MS.">
+		<PROPERTY name="name" tag="name" type="opt string" description="indicates the type name of the codec’s media format"/>
+		<MEMBER name="subtype" tag="format" type="enum" type_ref="codec sub type" description="element whose content model describes the subtype of the codec’s media format"/>
+		<MEMBER name="params" tag="params" type="class" type_ref="params element type" description="element describing additional information about the codec."/>
+	</CLASS>
+
+	<CLASS name="codecs element type" description="The codecs provides audit information about codecs.">
+		<MEMBER name="codec" tag="codec" type="class" type_ref="codec element type" description="audit information for a codec"/>
+	</CLASS>
+
+	<CLASS name="format element type">
+		<PROPERTY name="desc" tag="desc" type="opt string" description="a string providing some textual description of the type and format."/>
+		<PROPERTY name="desc lang" tag="desclang" type="opt string" description="specifies the language used in the value of the desc attribute."/>
+	</CLASS>
+
+	<CLASS name="variabletype element type" description="The variabletype element describes the formats supported for variable supported type.">
+		<PROPERTY name="type" tag="type" type="opt int" description="indicates a supported value associated with the type attribute of the variable element."/>
+		<PROPERTY name="desc" tag="desc" type="opt string" description="a string providing some textual description of the type and format."/>
+		<PROPERTY name="desc lang" tag="desclang" type="opt string" description="specifies the language used in the value of the desc attribute."/>
+		<MEMBER name="format" tag="format" type="class" type_ref="format element type"/>
+	</CLASS>
+<!--
+	<CLASS name="max prepared duration">
+	</CLASS>
+
+	<CLASS name="max record duration">
+	</CLASS>
+-->
+	<CLASS name="variables element type" description="The variables element provides information about types and formats for the variable element supported by the package.">
+		<MEMBER name="variable type" tag="variabletype" type="class" type_ref="variabletype element type" description="element describing the formats support for a given type."/>
+	</CLASS>
+
+	<CLASS name="prompttypes element type" description="The prompttypes element provides information about media resource format types of prompt supported by the package">
+		<MEMBER name="mime type" tag="mimetype" type="string" description="element whose content model describes a MIME media type associated with a supported dialog language."/>
+	</CLASS>
+
+	<CLASS name="recordtypes element type" description="The recordtypes element provides information about media resource format types of record supported by the package">
+		<MEMBER name="mime type" tag="mimetype" type="string" description="element whose content model describes a MIME media type associated with a supported dialog language."/>
+	</CLASS>
+
+	<CLASS name="grammartypes element type" description="The grammartypes element provides information about grammar format types supported by the package.">
+		<MEMBER name="mime type" tag="mimetype" type="string" description="element whose content model describes a MIME media type associated with a supported dialog language."/>
+	</CLASS>
+
+	<CLASS name="dialoglanguages element type" description="The dialoglanguages element provides information about additional dialog languages supported by the package.">
+		<MEMBER name="mime type" tag="mimetype" type="string" description="element whose content model describes a MIME media type associated with a supported dialog language."/>
+	</CLASS>
+
+	<CLASS name="capabilities element type" description="The capabilities element provides audit information about package capabilities.">
+		<MEMBER name="dialog languages" tag="dialoglanguages" type="class" type_ref="dialoglanguages element type" description="element describing additional dialog languages supported by the MS."/>
+		<MEMBER name="grammar types" tag="grammartypes" type="class" type_ref="grammartypes element type" description="element describing supported grammar format types."/>
+		<MEMBER name="record types" tag="recordtypes" type="class" type_ref="recordtypes element type" description="element describing media format types supported for record"/>
+		<MEMBER name="prompt types" tag="prompttypes" type="class" type_ref="prompttypes element type" description="element (Section 4.4.2.2.4) describing supported media format types for playback within a prompt"/>
+		<MEMBER name="variables" tag="variables" type="class" type_ref="variables element type" description="element describing supported types and formats for the variable element"/>
+		<!--
+		<MEMBER name="max prepared duration" tag="maxpreparedduration" type="class" type_ref="max prepared duration" description="element describing the supported maximum duration for a prepared dialog following a dialogprepare request."/>
+		<MEMBER name="max record duration" tag="maxrecordduration" type="class" type_ref="max record duration" description="element describing the supported maximum duration for a recording record request."/>
+		-->
+		<MEMBER name="codecs" tag="codecs" type="class" type_ref="codecs element type" description="element describing codecs available to the package."/>
+	</CLASS>
+
+	<CLASS name="dialogaudit element type" description="audit information for a dialog">
+		<PROPERTY name="dialog id" tag="dialogid" type="opt string" description="string identifying the dialog."/>
+		<PROPERTY name="state" tag="state" type="opt string" description="string indicating the state of the dialog."/>
+		<PROPERTY name="connection id" tag="connectionid" type="opt string" description="string identifying the SIP dialog connection associated with the dialog"/>
+		<PROPERTY name="conference id" tag="conferenceid" type="opt string" description="string identifying the conference associated with the dialog"/>
+		<MEMBER name="codecs" tag="codecs" type="class" type_ref="codecs element type" description="element describing codecs used in the dialog."/>
+	</CLASS>
+
+	<CLASS name="dialogs element type" tag="dialogsElementType" description="The dialogs element provides audit information about dialogs.">
+		<MEMBER name="dialog audit" tag="dialogaudit" type="class" type_ref="dialogaudit element type" description="audit information for a dialog"/>
+	</CLASS>
+
+	<CLASS tag="event" name="event" description="Response from the MS if the conference was successfully created.">
+		<PROPERTY name="dialog id" tag="dialogid" type="string" description="string identifying the dialog that generated the event."/>
+		<MEMBER name="dialog exit" tag="dialogexit" type="class" type_ref="dialogexit element type" description="indicates that the dialog has exited"/>
+		<MEMBER name="dtmf notify" tag="dtmfnotify" type="class" type_ref="dtmfnotify element type" description="indicates that a DTMF key press occurred"/>
+	</CLASS>
+
+	<CLASS tag="auditresponse" name="audit response" description="The auditresponse element describes a response to an audit request.">
+		<PROPERTY name="status" tag="status" type="opt int" description="numeric code indicating the audit response status"/>
+		<PROPERTY name="reason" tag="reason" type="opt string" description="a textual description providing a reason for the status code"/>
+		<PROPERTY name="desc lang" tag="desclang" type="opt string" description="specifies the language used in the value of the the reason"/>
+		<MEMBER name="capabilities" tag="capabilities" type="class" type_ref="capabilities element type"  description="describing capabilities of the package"/>
+		<MEMBER name="dialogs" tag="dialogs" type="class" type_ref="dialogs element type"  description="describing information about managed dialogs"/>
+	</CLASS>
+
+	<CLASS tag="audit" name="audit" description="The audit request element is sent to the MS to request information about the capabilities of, and dialogs currently managed with, this Control Package. Capabilities include supported dialog languages,grammar formats, record and media types, as well as codecs. Dialog information includes the status of managed dialogs as well as codecs.">
+		<PROPERTY name="capabilities" tag="capabilities" type="opt bool" description="indicates whether package capabilities are to be audited"/>
+		<PROPERTY name="dialogs" tag="dialogs" type="opt bool" description="indicates whether dialogs currently managed by the package are to be audited."/>
+		<PROPERTY name="dialog id" tag="dialogid" type="opt string" description="string identifying a specific dialog to audit"/>
+	</CLASS>
+
+	<CLASS name="dialog terminate" tag="dialogterminate" description="A dialog can be terminated by sending a dialogterminate request element to the MS.">
+		<PROPERTY name="dialog id" tag="dialogid" type="string" description="string identifying the dialog to terminate."/>
+		<PROPERTY name="immediate" tag="immediate" type="opt bool" description="indicates whether or not a dialog in the STARTED state is to be terminated immediately"/>
+	</CLASS>
+
+	<CLASS name="dialog start" tag="dialogstart" description="The dialog prepare element is sent to the MS to request preparation of a dialog.">
+		<PROPERTY name="src" tag="src" type="opt string" description="specifies the location of an external dialog document to start."/>
+		<PROPERTY name="type" tag="type" type="opt string" description="specifies the type of the external dialog document indicated in the ’src’ attribute."/>
+		<PROPERTY name="max age" tag="maxage" type="opt uint" description="Used to set the max-age value of the ’Cache-Control’ header in conjunction with an external dialog document fetched using HTTP."/>
+		<PROPERTY name="max stale" tag="maxstale" type="opt uint" description="Used to set the max-stale value of the ’Cache-Control’ header in conjunction with an external dialog document fetched using HTTP,"/>
+		<PROPERTY name="fetch timeout" tag="fetchtimeout" type="opt string" description="the maximum timeout interval to wait when fetching an external dialog document."/>
+		<PROPERTY name="dialog id" tag="dialogid" type="string" description="string indicating a unique name for the dialog."/>
+		<PROPERTY name="prepared dialog id" tag="prepareddialogid" type="string" description="string identifying a dialog previously prepared using a dialogprepare request."/>
+		<PROPERTY name="connection id" tag="connectionid" type="string" description="string identifying the SIP dialog connection on which this dialog is to be started."/>
+		<PROPERTY name="conference id" tag="conferenceid" type="string" description="string identifying the conference on which this dialog is to be started."/>
+		<MEMBER name="dialog" tag="dialog" type="class" type_ref="dialog element type" description="an IVR dialog to prepare"/>
+		<MEMBER name="subscribe" tag="subscribe" type="class" type_ref="subscribe element type" description="specifies subscriptions to dialog events"/>
+		<MEMBER name="params" tag="params" type="class" type_ref="params element type" description="specifies input parameters for dialog languages defined outside this specification."/>
+		<MEMBER name="stream" tag="stream" type="class" type_ref="stream element type" description="determines the media stream(s) associated with the connection or conference on which the dialog is executed."/>
+	</CLASS>
+
+	<CLASS name="dialog prepare" tag="dialogprepare" description="The dialog prepare element is sent to the MS to request preparation of a dialog.">
+		<PROPERTY name="src" tag="src" type="opt string" description="specifies the location of an external dialog document to prepare."/>
+		<PROPERTY name="type" tag="type" type="opt string" description="specifies the type of the external dialog document indicated in the ’src’ attribute."/>
+		<PROPERTY name="max age" tag="maxage" type="opt uint" description="Used to set the max-age value of the ’Cache-Control’ header in conjunction with an external dialog document fetched using HTTP."/>
+		<PROPERTY name="max stale" tag="maxstale" type="opt uint" description="Used to set the max-stale value of the ’Cache-Control’ header in conjunction with an external dialog document fetched using HTTP,"/>
+		<PROPERTY name="fetch timeout" tag="fetchtimeout" type="opt string" description="the maximum timeout interval to wait when fetching an external dialog document."/>
+		<PROPERTY name="dialog id" tag="dialogid" type="opt string" description="string indicating a unique name for the dialog."/>
+		<MEMBER name="dialog" tag="dialog" type="class" type_ref="dialog element type" description="an IVR dialog to prepare"/>
+		<MEMBER name="params" tag="params" type="class" type_ref="params element type" description="specifies input parameters for dialog languages defined outside this specification."/>
+	</CLASS>
+
+	<CLASS name="msc ivr response" tag="response">
+		<PROPERTY name="status" tag="status" type="opt uint"/>
+		<PROPERTY name="dialog id" tag="dialogid" type="opt string"/>
+	</CLASS>
+
+</API>

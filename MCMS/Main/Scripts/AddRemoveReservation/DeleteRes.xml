@@ -1,0 +1,13 @@
+ 
+    <TRANS_RES_2>
+      <TRANS_COMMON_PARAMS>
+        <MCU_TOKEN>3</MCU_TOKEN>
+        <MCU_USER_TOKEN>3</MCU_USER_TOKEN>
+        <MESSAGE_ID>249</MESSAGE_ID>
+      </TRANS_COMMON_PARAMS>
+      <ACTION>
+        <TERMINATE_RES>
+          <ID>15</ID>
+        </TERMINATE_RES>
+      </ACTION>
+    </TRANS_RES_2>

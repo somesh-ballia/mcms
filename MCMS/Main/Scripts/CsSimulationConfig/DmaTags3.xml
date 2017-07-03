@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="Basic Sipstone UAC">
+
+  <send retrans="500">
+    <![CDATA[
+
+      INVITE sip:[service]@[remote_ip]:[remote_port] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: sipp <sip:sipp@[local_ip]:[local_port]>;tag=[pid]SIPpTag00[call_number]
+      To: sut <sip:[service]@[remote_ip]:[remote_port]>
+      Call-ID: [call_id]
+      X-Plcm-Require: sdp-rtp sdp-audio sdp-video-main sdp-fecc
+      CSeq: 1 INVITE
+      Contact: sip:sipp@127.0.0.1:[local_port]
+      Max-Forwards: 70
+      Subject: Performance Test
+      Content-Length: 0
+
+
+    ]]>
+  </send>
+
+
+<recv response="180" optional="true"></recv>
+
+<recv response="200" rtd="true"></recv>
+
+  <send>
+    <![CDATA[
+
+      ACK sip:[service]@[remote_ip]:[remote_port] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: sipp <sip:sipp@[local_ip]:[local_port]>;tag=[pid]SIPpTag00[call_number]
+      To: sut <sip:[service]@[remote_ip]:[remote_port]>[peer_tag_param]
+      Call-ID: [call_id]
+      CSeq: 1 ACK
+      Contact: sip:sipp@127.0.0.1:[local_port]
+      Max-Forwards: 70
+      Content-Type: application/sdp
+      Content-Length: [len]
+
+	v=0
+	o=- 1312883896 1 IN IP4 135.27.153.193
+	s=-
+	c=IN IP4 135.27.152.133
+	b=AS:1000
+	t=0 0
+	m=audio 60448 RTP/AVP 8 101
+	a=rtpmap:8 PCMA/8000
+	a=rtpmap:101 telephone-event/8000
+	m=video 60450 RTP/AVP 96 97 34
+        b=TIAS:910000
+        a=rtpmap:96 H264/90000
+        a=fmtp:96 profile-level-id=42801f;max-mbps=230500;max-fs=3840;packetization-mode=1
+        a=rtpmap:97 H263-1998/90000
+        a=fmtp:97 CIF4=1;CIF=1;QCIF=1
+        a=rtpmap:34 H263/90000
+        a=fmtp:34 CIF4=1;CIF=1;QCIF=1
+        a=content:main
+        a=rtcp-fb:* ccm fir
+        a=rtcp-fb:* nack pli
+        a=rtcp-fb:* ccm tmmbr
+
+
+    ]]>
+  </send>
+
+<!-- To: sut <sip:[service]@[remote_ip]:[remote_port]>;tag=[pid]SIPpTag00[call_number] -->
+
+
+<recv request="INVITE" rrs="true" crlf="true"></recv>
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      Call-ID: [call_id]
+      [last_CSeq:]
+      Contact: sip:sipp@127.0.0.1:[local_port]
+      Max-Forwards: 70
+      Content-Type: application/sdp
+      Content-Length: [len]
+
+	v=0
+	o=- 1312883896 1 IN IP4 135.27.153.193
+	s=-
+	c=IN IP4 135.27.152.133
+	b=AS:1000
+	t=0 0
+	m=audio 60448 RTP/AVP 8 101
+	a=rtpmap:8 PCMA/8000
+	a=rtpmap:101 telephone-event/8000
+        m=video 60450 RTP/AVP 96 97 34
+        b=TIAS:910000
+        a=rtpmap:96 H264/90000
+        a=fmtp:96 profile-level-id=42801f;max-mbps=230500;max-fs=3840;packetization-mode=1
+        a=rtpmap:97 H263-1998/90000
+        a=fmtp:97 CIF4=1;CIF=1;QCIF=1
+        a=rtpmap:34 H263/90000
+        a=fmtp:34 CIF4=1;CIF=1;QCIF=1
+        a=content:main
+        a=rtcp-fb:* ccm fir
+        a=rtcp-fb:* nack pli
+        a=rtcp-fb:* ccm tmmbr
+
+
+    ]]>
+  </send>
+
+<recv request="ACK" rrs="true" crlf="true"></recv>
+
+<recv request="BYE">  </recv>
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:127.0.0.1:[local_port];transport=[transport]>
+      Content-Length: 0
+
+    ]]>
+  </send>
+ 
+
+  <!-- definition of the response time repartition table (unit is ms)   -->
+  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
+
+  <!-- definition of the call length repartition table (unit is ms)     -->
+  <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
+  
+
+</scenario>

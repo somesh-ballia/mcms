@@ -1,0 +1,20 @@
+<API name="CdrConfig" >
+
+	<NAMESPACE tag="ns3" default="urn:com:polycom:api:rest:plcm-cdr-client-config"/>		
+	<NAMESPACE default="http://www.w3.org/2005/Atom"/>
+
+	<CLASS name="plcm-cdr-client-config" ns="ns3" tag="plcm-cdr-client-config" root="true">		
+		<MEMBER  ns="ns3" tag="enable-cdr" type="bool" />
+		<MEMBER  ns="ns3" tag="server-address" type="string"/>		
+		<MEMBER  ns="ns3" tag="server-port" type="string"/>
+		<MEMBER  ns="ns3" tag="login-name" type="string"/>
+		<MEMBER  ns="ns3" tag="login-password" type="string"/>
+		<MEMBER  ns="ns3" tag="entity-tag" type="uint" />
+	</CLASS>
+
+</API>
+
+
+
+
+

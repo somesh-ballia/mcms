@@ -1,0 +1,562 @@
+{
+   <Sagi: this is related to uninitilized memory written into the pipe, probably bug in valgrind>
+   Memcheck:Param
+   write(buf)
+   obj:/lib/tls/libc-2.3.4.so
+   fun:_ZNK8COsQueue5WriteEPKciPj
+}
+
+{
+   <Sagi: this is related to uninitilized memory written into the unix domain sockets, probably bug in valgrind>
+   Memcheck:Param
+   write(buf)
+   obj:/lib/tls/libc-2.3.4.so
+   fun:_ZNK8COsQueue13WriteToSocketEPKciPj
+}
+
+{
+   <http://developer.spikesource.com/errorbuddy/source/zlib-1.2.3/FAQ>
+   Memcheck:Cond
+   obj:/usr/lib/libz.so.1.2.3
+   obj:/usr/lib/libz.so.1.2.3
+   fun:deflate
+}
+
+{
+   <http://developer.spikesource.com/errorbuddy/source/zlib-1.2.3/FAQ>
+   Memcheck:Cond
+   obj:/usr/lib/libz.so.1.2.3
+   obj:/usr/lib/libz.so.1.2.3
+   fun:deflate
+   fun:compress2
+}
+
+{
+   <http://developer.spikesource.com/errorbuddy/source/zlib-1.2.3/FAQ>
+   Memcheck:Cond
+   fun:_tr_flush_block
+   fun:deflate_fast
+   fun:deflate
+}
+
+{
+   <http://developer.spikesource.com/errorbuddy/source/zlib-1.2.3/FAQ>
+   Memcheck:Cond
+   fun:longest_match
+   fun:deflate_fast
+   fun:deflate
+}
+
+{
+   <http://developer.spikesource.com/errorbuddy/source/zlib-1.2.3/FAQ>
+   Memcheck:Cond
+   fun:fill_window
+   fun:deflate_fast
+   fun:deflate
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Param
+   execve(envp)
+   fun:execve
+   fun:execl
+   fun:_IO_proc_open@@GLIBC_2.1
+   fun:_IO_popen@@GLIBC_2.1
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Param
+   execve(envp[i])
+   fun:execve
+   fun:execl
+   fun:_IO_proc_open@@GLIBC_2.1
+   fun:_IO_popen@@GLIBC_2.1
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Cond
+   fun:readproc
+   fun:__libc_start_main
+   obj:/bin/ps
+}
+
+{
+   <httpd uninitilized memory usage>
+   Memcheck:Param
+   socketcall.sendto(msg)
+   fun:sendto
+   fun:getaddrinfo
+   obj:/usr/lib/libapr-0.so.0.9.4
+   obj:/usr/lib/libapr-0.so.0.9.4
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Cond
+   obj:/usr/lib/libz.so.1.2.3
+   fun:deflate
+   fun:_ZN11CZipWrapper7DeflateEPhiS0_i
+   fun:_ZN15CRequestHandler7PostXmlEPKcjR8COsQueuePS2_jt
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Value4
+   obj:/usr/lib/libz.so.1.2.3
+   fun:_tr_flush_block
+   obj:/usr/lib/libz.so.1.2.3
+   fun:deflate
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Param
+   execve(envp[i])
+   fun:execve
+   fun:execl
+   fun:_Z16SystemRunCommandPKcS0_h
+}
+
+{
+   <insert a suppression name here>
+   Memcheck:Param
+   execve(envp)
+   fun:execve
+   fun:execl
+   fun:_Z16SystemRunCommandPKcS0_h
+}
+
+{
+   <suppress OsQueue::Send2>
+   Memcheck:Addr4
+   fun:_ZNK8CTaskApi4SendEP8CSegmentjPK22StateMachineDescriptorPK8COsQueueS4_
+   fun:_ZNK8CTaskApi7SendMsgEP8CSegmentjPK8COsQueuePK22StateMachineDescriptor
+}
+
+{
+   <syscall param write(buf)>
+   Memcheck:Param
+   write(buf)
+   obj:/lib/libpthread-2.5.so
+   fun:_ZNK8COsQueue4SendEP8CSegmentjPKS_PK22StateMachineDescriptorS6_12eMessageTypehj
+   fun:_ZNK8CTaskApi4SendEP8CSegmentjPK22StateMachineDescriptorPK8COsQueueS4_
+   fun:_ZNK8CTaskApi7SendMsgEP8CSegmentjPK8COsQueuePK22StateMachineDescriptor
+}
+
+{
+   <Class string suppression>
+   Memcheck:Leak
+   fun:*Znwj
+   fun:_ZNSs4_Rep9_S_createEjjRKSaIcE
+   fun:_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag   
+}
+
+{
+   <XXXEntryPoint suppression>
+   Memcheck:Leak
+   fun:*alloc
+   fun:_dl_allocate_tls
+   fun:pthread_create@@GLIBC_2.1
+   fun:_ZN7COsTask6CreateEP8CTaskApp
+   fun:_ZN8CTaskApp12CreateOsTaskEv
+   fun:_ZN8CTaskApp6CreateER8CSegmentt   
+}
+
+{
+   <XXXEntryPoint suppression 2>
+   Memcheck:Leak
+   fun:*Znwj
+   fun:_ZN8CTaskApp12CreateOsTaskEv
+   fun:_ZN8CTaskApp6CreateER8CSegmentt
+}
+
+{
+   <suppression for new in COsQueue::Receive>
+   Memcheck:Leak
+   fun:*Znwj
+   fun:_ZNK8COsQueue7ReceiveER14CMessageHeader11CSystemTicki
+}
+
+{
+  <suppression for pthread_kill> 
+  Memcheck:Addr4
+  fun:pthread_kill
+  fun:_ZN7COsTask10SendSignalEji
+  fun:_ZN17CConfPartyManager22OnConfUpdateTaskFailedEP8CSegment
+}
+
+{
+   <syscall param write(buf)>
+   Memcheck:Param
+   write(buf)
+   obj:/lib/libc-2.*.so
+   fun:_ZNK8COsQueue4SendEP8CSegmentjPKS_PK22StateMachineDescriptorS6_12eMessageTypehj
+   fun:_ZNK8CTaskApi4SendEP8CSegmentjPK22StateMachineDescriptorPK8COsQueueS*
+   fun:_ZNK8CTaskApi7SendMsgEP8CSegmentjPK8COsQueuePK22StateMachineDescript*
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Leak
+    fun:*Znwj
+    fun:_ZNSs4_Rep9_S_createEjjRKSaIcE
+    fun:_ZNSs4_Rep8_M_cloneERKSaIcEj
+    fun:_ZNSs7reserveEj
+    fun:_ZNSs6appendEPKcj
+    fun:_ZNSspLEPKc
+}
+
+{
+    <Vasily 12.09.13: suppress std::string.reserv() as known problem of stdlib memory pool optimization>
+    Memcheck:Leak
+    fun:_Znwj
+    fun:_ZNSs4_Rep9_S_createEjjRKSaIcE
+    fun:_ZNSs4_Rep8_M_cloneERKSaIcEj
+    fun:_ZNSs7reserveEj
+    fun:_ZN8CSegmentrsERSs
+}
+
+{
+    <Vasily 12.09.13: suppress std::ostringstream as known problem of stdlib memory pool optimization>
+    Memcheck:Leak
+    fun:_Znwj
+    fun:_ZNSs4_Rep9_S_createEjjRKSaIcE
+    fun:_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag
+    fun:_ZNSsC1IPcEET_S1_RKSaIcE
+    fun:_ZNKSt19basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Leak
+    fun:*Znwj
+    fun:_ZNSs4_Rep9_S_createEjjRKSaIcE
+    fun:_ZNSs9_M_mutateEjjj
+    fun:_ZNSs15_M_replace_safeEjjPKcj
+    fun:_ZNSs6assignEPKcj
+    fun:_ZNSsaSEPKc
+}
+
+{
+     <insert a suppression name here>
+     Memcheck:Cond
+     fun:_ZSt13*
+     fun:_ZNKSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE13_M_insert_intImEES3_S3_RSt8ios_basecT_
+     fun:_ZNKSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE6do_putES3_RSt8ios_basecm
+     fun:_ZNSo9_M_insertImEERSoT_
+     fun:_ZNSolsEj
+     fun:_ZNK14CMediaModeH3234DumpERSo
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Value4
+    fun:_ZSt13*
+    fun:_ZNKSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE13_M_insert_intImEES3_S3_RSt8ios_basecT_
+    fun:_ZNKSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE6do_putES3_RSt8ios_basecm
+    fun:_ZNSo9_M_insertImEERSoT_
+    fun:_ZNSolsEj
+    fun:_ZNK14CMediaModeH3234DumpERSo
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Leak
+    fun:_vgrZU_libcZdsoZa_malloc
+    fun:netsnmp_unix_recv
+    fun:netsnmp_transport_recv
+    fun:_sess_read
+    fun:snmp_sess_read2
+    fun:snmp_read2
+    fun:snmp_read
+    fun:agent_check_and_process
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Addr4
+    fun:netsnmp_send_traps
+    fun:send_enterprise_trap_vars
+    fun:send_trap_vars
+    fun:send_v2trap
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Free
+    fun:_vgrZU_libcZdsoZa_free
+    fun:remove_trap_session
+    fun:handle_agentx_packet
+    fun:_sess_read
+    fun:snmp_sess_read2
+    fun:snmp_read2
+    fun:snmp_read
+    fun:agent_check_and_process
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Free
+    fun:_vgrZU_libcZdsoZa_free
+    fun:free_mem
+    fun:__libc_freeres
+    fun:_vgnU_freeres
+    fun:poll
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Free
+    fun:_vgrZU_libcZdsoZa_free
+    fun:free_mem
+    fun:__libc_freeres
+    fun:_vgnU_freeres
+    fun:_Exit
+    fun:__libc_start_main
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Addr4
+    fun:_ZN8COsQueueC1ERKS_
+    fun:_ZN8CTaskApi13CreateOnlyApiERK8COsQueueRK22StateMachineDescriptorPSt4listI14CMessageHeaderSaIS7_EEtj
+    fun:_ZN8CTaskApi13CreateOnlyApiERK8COsQueueP13CStateMachinePSt4listI14CMessageHeaderSaIS6_EEtj
+    fun:_ZN8CTaskApiC1E12eProcessType23eOtherProcessQueueEntry
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Leak
+    fun:*Znwj
+    fun:_ZNK8CTaskApi7SendMsgEP8CSegmentjPK8COsQueuePK22StateMachineDescriptortj
+    fun:_ZN8CConfApi8UpdateDBEP8CTaskApptjtP8CSegment
+    fun:_ZN10CH323Party21H323EndChannelConnectEP8CSegmentPh
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Leak
+    fun:*Znwj
+    fun:_ZN24CConfPartyDispatcherTask14HandleMPLEventEP8CSegment
+    fun:_ZN24CConfPartyDispatcherTask15TaskHandleEventEP8CSegmentjj
+}
+{
+    <insert a suppression name here>
+    Memcheck:Leak
+    fun:*Znwj
+    fun:_ZNK12CProcessBase20GetOtherProcessQueueE12eProcessType23eOtherProcessQueueEntry
+    fun:_ZN8CTaskApiC1E12eProcessType23eOtherProcessQueueEntry
+    fun:_ZN6CTrace10OutMessageERK14TRACE_HEADER_SRK19MCMS_TRACE_HEADER_SRKSs
+    fun:_Z15OutTraceMessagePKcttPK8CPObjectS0_S0_jS0_jjjjS0_
+}
+{
+    <insert a suppression name here>
+    Memcheck:Leak
+    fun:*Znwj
+    fun:_ZN21CVideoBridgePartyCntl19StartMessageOverlayEP19CMessageOverlayInfo
+    fun:_ZN14CVideoBridgeCP45SendMessageOverlayToNewConnectedPartyIfNeededEP8CSegment
+    fun:_ZN12CVideoBridge26OnEndPartyConnectCONNECTEDEP8CSegment
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Free
+    fun:_vgrZU_libcZdsoZa_free
+    fun:free_mem
+    fun:__libc_freeres
+    fun:_vgnU_freeres
+    fun:pthread_join
+    fun:_ZN7COsTask4JoinEj
+    fun:_ZN12CProcessBase3RunEv
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Free
+    fun:free
+    obj:/lib/libc-2.5.so
+    obj:/lib/libc-2.5.so
+    fun:_vgnU_freeres
+    obj:/lib/libc-2.5.so
+}
+
+{
+    <insert a suppression name here>
+    Memcheck:Addr4
+    fun:snmp_sess_async_send
+    fun:snmp_async_send
+    fun:send_trap_to_sess
+    fun:netsnmp_send_traps
+    fun:send_enterprise_trap_vars
+    fun:send_trap_vars
+    fun:send_v2trap
+}
+{
+    <insert a suppression name here>
+    Memcheck:Value4
+    fun:snmp_sess_async_send
+    fun:snmp_async_send
+    fun:send_trap_to_sess
+    fun:netsnmp_send_traps
+    fun:send_enterprise_trap_vars
+    fun:send_trap_vars
+    fun:send_v2trap
+}
+{
+    <insert a suppression name here>
+    Memcheck:Leak
+    fun:*alloc
+    fun:snmp_sess_async_send
+    fun:snmp_async_send
+    fun:send_trap_to_sess
+    fun:netsnmp_send_traps
+    fun:send_enterprise_trap_vars
+    fun:send_trap_vars
+    fun:send_v2trap
+}
+{
+    <insert a suppression name here>
+    Memcheck:Cond
+    fun:fips_get_entropy
+}
+{
+    <insert a suppression name here>
+    Memcheck:Value4
+    fun:fips_aes_encrypt
+}
+{
+    <insert a suppression name here>
+    Memcheck:Cond
+    fun:_ZNKSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE13_M_insert_intIlEES3_S3_RSt8ios_basecT_
+    fun:_ZSt13__int_to_charIcmEiPT_T0_PKS0_St13_Ios_Fmtflagsb
+}
+{
+    <insert a suppression name here>
+    Memcheck:Value4
+    fun:_ZSt13__int_to_charIcmEiPT_T0_PKS0_St13_Ios_Fmtflagsb
+}
+
+{
+    <kobi - suppress httpd lib leak on nsslookup http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=273051 >
+    Memcheck:Leak
+    fun:malloc
+    fun:nss_parse_service_list
+    fun:__nss_database_lookup  
+    obj:*
+    obj:*
+    fun:getpwnam_r@@GLIBC_2.1.2
+    fun:getpwnam
+    fun:ap_uname2id
+    fun:unixd_set_user
+    fun:invoke_cmd
+    fun:ap_walk_config_sub
+    fun:ap_walk_config
+}
+
+{
+    <kobi - suppress libcrypto lib leak on malloc http://developerweb.net/viewtopic.php?id=6828 >
+    Memcheck:Leak
+    fun:malloc
+    fun:default_malloc_ex
+}
+
+{
+    <clark - std::string::append() suppression >
+    Memcheck:Leak
+    fun:_Znwj
+    fun:_ZNSs4_Rep9_S_createEjjRKSaIcE
+    fun:_ZNSs4_Rep8_M_cloneERKSaIcEj
+    fun:_ZNSs7reserveEj
+    fun:_ZNSs6appendEPKcj
+}
+
+{
+    <clark - suppress libc http://stackoverflow.com/questions/16628841/strange-error-while-using-valgrind-a-bug-maybe>
+    Memcheck:Free
+    fun:free
+    fun:free_mem
+    fun:__libc_freeres
+    fun:_vgnU_freeres
+    fun:_Exit
+}
+
+{
+   <Tsahi - suppress std::ostringstream as known problem of stdlib memory pool optimization>
+   Memcheck:Leak
+   fun:_Znwj
+   fun:_ZNSs4_Rep9_S_createEjjRKSaIcE
+   fun:_ZNSs4_Rep8_M_cloneERKSaIcEj
+   fun:_ZNSs7reserveEj
+}
+
+{
+   <openssl-1.0.1h needs to ignore this>
+   Memcheck:Value4
+   fun:_sse_AES_encrypt_compact
+}
+
+{
+    <clark - std::string related suppression >
+    Memcheck:Addr1
+    ...
+    fun:_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+    fun:_ZNK14CLogFltElement4DumpERSo
+}
+
+{
+    <clark - std::string related suppression >
+    Memcheck:Addr4
+    ...
+    fun:_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+    fun:_ZNK14CLogFltElement4DumpERSo
+}
+{
+   <yaela - ldap error supression>
+   Memcheck:Param
+   poll(timeout)
+   fun:poll
+   fun:ldap_int_poll
+   fun:ldap_pvt_connect
+   fun:ldap_connect_to_host
+   fun:ldap_int_open_connection
+   fun:ldap_new_connection
+   fun:ldap_open_defconn
+   fun:ldap_send_initial_request
+   fun:ldap_sasl_bind
+}
+{
+   <yaela ldap error supression>
+   Memcheck:Cond
+   fun:ldap_int_poll
+   fun:ldap_pvt_connect
+   fun:ldap_connect_to_host
+   fun:ldap_int_open_connection
+   fun:ldap_new_connection
+   fun:ldap_open_defconn
+   fun:ldap_send_initial_request
+   fun:ldap_sasl_bind
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:calloc
+   fun:_dl_allocate_tls
+   fun:pthread_create@@GLIBC_2.1
+   fun:_Z22plcmThreadStart_detachP11_PLs_THREAD
+   fun:_ZN10PLc_THREAD14ActivateDeTachEv
+   fun:_ZN19cPLCM_DnsUdpRecvThrC1EPv
+   fun:_ZN9cPLCM_DNS9bActivateEv
+   fun:_ZN9cPLCM_DNS9bActivateEP8COsQueue
+   fun:_ZN16CDNSAgentManager27ManagerPostInitActionsPointEv
+   fun:_ZN12CManagerTask8InitTaskEv
+   fun:_ZN8CTaskApp15DummyStartTask4EPS_
+   fun:_ZN8CTaskApp15DummyStartTask3EPS_
+}
+
+
+
+

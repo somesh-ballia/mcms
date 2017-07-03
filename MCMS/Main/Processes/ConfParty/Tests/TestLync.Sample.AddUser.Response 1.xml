@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<response 
+	xmlns="urn:ietf:params:xml:ns:cccp"
+	xmlns:ci="urn:ietf:params:xml:ns:conference-info"
+	requestId="24788755472"
+	C3PVersion="1"
+	from="sip:sqa02@ilw15a.polycom.eng;gruu;opaque=app:conf:focus:id:57GYYC88"
+	to="sip:sqa04@ilw15a.polycom.eng"
+	code="success">
+    <addUser>
+        <conferenceKeys confEntity="sip:sqa02@ilw15a.polycom.eng;gruu;opaque=app:conf:focus:id:57GYYC88" />
+        <ci:user entity="sip:sqa04@ilw15a.polycom.eng">
+            <ci:roles>
+                <ci:entry>presenter</ci:entry>
+            </ci:roles>
+        </ci:user>
+    </addUser>
+</response>

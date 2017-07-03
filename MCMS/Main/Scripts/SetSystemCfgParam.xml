@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TRANS_CFG>
+  <TRANS_COMMON_PARAMS>
+    <MCU_TOKEN>166</MCU_TOKEN>
+    <MCU_USER_TOKEN>166</MCU_USER_TOKEN>
+    <MESSAGE_ID>1984</MESSAGE_ID>
+  </TRANS_COMMON_PARAMS>
+  <ACTION>
+    <SET_CFG_PARAM>
+      <CFG_TYPE>user</CFG_TYPE>
+      <SYSTEM_CFG>
+        <CFG_SECTION>
+          <NAME>MCMS_PARAMETERS_USER</NAME>
+          <CFG_PAIR>
+            <KEY>MAX_NUMBER_OF_MANAGEMENT_SESSIONS_PER_USER</KEY>
+            <DATA>20</DATA>
+          </CFG_PAIR>
+        </CFG_SECTION>
+      </SYSTEM_CFG>
+    </SET_CFG_PARAM>
+  </ACTION>
+</TRANS_CFG>

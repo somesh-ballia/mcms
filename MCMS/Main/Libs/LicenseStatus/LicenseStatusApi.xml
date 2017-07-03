@@ -1,0 +1,87 @@
+<API name="LicenseStatus" >
+    <NAMESPACE tag="ns5" default="urn:com:polycom:api:rest:plcm-license-status"/>
+	<NAMESPACE tag="ns4" default="urn:com:polycom:api:rest:plcm-license-authority-config"/>
+	<NAMESPACE tag="ns3" default="urn:com:polycom:api:rest:plcm-server-address"/>
+	<NAMESPACE tag="ns2" default="urn:com:polycom:api:rest:plcm-license-feature"/>
+	<NAMESPACE tag="ns1" default="urn:com:polycom:api:rest:plcm-license-feature-list"/>	
+	<NAMESPACE default="http://www.w3.org/2005/Atom"/>
+
+	<CLASS ns="ns5" tag="plcm-license-status" root="true">
+		<MEMBER  ns="ns5" tag="connection-status" type="enum" type_ref="connection-status" description="Defines the valid license server connection statuses."/>
+		<MEMBER  ns="ns5" tag="licensing-status" type="enum" type_ref="licensing-status" description="Defines the valid license statuses."/>
+		<MEMBER  ns="ns5" tag="last-successful-date" type="opt string"/>
+		<MEMBER  ns="ns5" tag="last-attempt-date" type="opt string"/>
+		<MEMBER  ns="ns5" tag="plcm-license-feature-list" type="class" type_ref="plcm-license-feature-list" description="List construct for license features"/>																		
+		<MEMBER  ns="ns5" tag="plcm-license-authority-config" type="class" type_ref="plcm-license-authority-config" description="The license authority config currently being used by the product"/>
+		<MEMBER  ns="ns5" tag="entity-tag" type="uint" />			
+	</CLASS>
+	
+	
+	<CLASS ns="ns4" tag="plcm-license-authority-config" root="true">		
+		<MEMBER  ns="ns4" tag="main-server-address" type="class" type_ref="main-server-address"/>
+		<MEMBER  ns="ns4" tag="use-auto-discovery" type="bool"/>
+		<MEMBER  ns="ns4" tag="current-status" type="string"/>				
+	</CLASS>
+	
+	<CLASS ns="ns3" tag="main-server-address">
+		<MEMBER ns="ns3" tag="host" type="string"/>		
+		<MEMBER ns="ns3" tag="port-number" type="uint"/>
+	</CLASS>
+	
+	<ENUM name="connection-status">
+		<VALUE tag="CONNECTION_NOT_ATTEMPTED"/>
+		<VALUE tag="CONNECTING"/>
+		<VALUE tag="CONNECT_SUCCESS"/>
+		<VALUE tag="CONNECT_FAILURE"/>
+		<VALUE tag="UNKNOWN"/>
+	</ENUM>
+	
+	<ENUM name="licensing-status">
+		<VALUE tag="VALID"/>
+		<VALUE tag="INVALID"/>
+		<VALUE tag="VALID_SYSTEM_RESTART_REQUIRED"/>
+		<VALUE tag="UNKNOWN"/>
+	</ENUM>
+	
+	<CLASS name="plcm-license-feature-list" tag="plcm-license-feature-list" ns="ns1" root="true">
+		<MEMBER name="plcm-license-feature" tag="plcm-license-feature" ns="ns2" type="class" type_ref="plcm-license-feature" container="list"/>
+	</CLASS>
+
+	<CLASS  ns="ns2" name="plcm-license-feature" tag="plcm-license-feature">
+		<MEMBER  ns="ns2" tag="name"            type="opt string"/>
+		<MEMBER  ns="ns2" tag="plcm-license-feature-status" type="enum" type_ref="license-feature-status" description="Indicates the current status of the license feature."/>
+		<MEMBER  ns="ns2" tag="plcm-license-feature-version" type="class" type_ref="plcm-license-feature-version" description="Object used to describe the feature version."/>	
+		<MEMBER  ns="ns2" tag="perpetual"       type="bool"/>
+		<MEMBER  ns="ns2" tag="start-date"      type="opt string"/>
+		<MEMBER  ns="ns2" tag="expiration-date" type="opt string"/>
+		<MEMBER  ns="ns2" tag="counted"         type="bool"/>
+		<MEMBER  ns="ns2" tag="count"           type="uint"/>
+	</CLASS>
+	
+	
+	<ENUM name="license-feature-status">
+		<VALUE tag="VALID"/>
+		<VALUE tag="EXPIRED"/>
+		<VALUE tag="HOST_ID_MISMATCH"/>
+		<VALUE tag="NOT_STARTED"/>
+		<VALUE tag="WINDBACK_DETECTED"/>
+		<VALUE tag="VENDOR_NAME_INVALID"/>
+		<VALUE tag="SIGNATURE_INVALID"/>
+		<VALUE tag="GENERAL_FEATURE_ERROR"/>
+		<VALUE tag="TS_HOST_ID_MISMATCH"/>
+		<VALUE tag="UNKNOWN_KEYWORD"/>
+		<VALUE tag="UNSUPPORTED_KEYWORD"/>
+		<VALUE tag="UNKNOWN"/>
+	</ENUM>
+	
+	
+	
+	<CLASS ns="ns2" tag="plcm-license-feature-version" >		
+		<MEMBER  ns="ns2" tag="major-id" type="uint"/>
+		<MEMBER  ns="ns2" tag="minor-id" type="uint"/>			
+	</CLASS>
+	
+
+
+ 	
+</API>

@@ -1,0 +1,17 @@
+#
+#    how to use this file to remote debug the target
+#    --------------------------------------------------
+#1.  on the target: gdbserver 1.2.3.4:9999 --attach XXXX
+#    (XXXX is the PID of the process that we want to debug)
+#2.  go to the mcms sources file (cd /Carmel-Versions/StableBuild/Carmel_1_0_0_008/mcms)
+#3.  open neteclipse and import a project from the mcms folder.
+#4.  create new C/C++ local application debugging configuration
+#    under debugger put: /opt/polycom/carmel/tool_chain/v5/bin/i686-polycom-linux-gnu-gdb
+#    under command file put: Scripts/gdb.txt   (this file)
+#    under Connection select TCP
+#    under Host name or IP address put the target IP
+#    under port use 9999 (the same port the gdbserver listens to)
+#
+set solib-absolute-prefix /dev/null
+set solib-search-path /opt/polycom/carmel/tool_chain/v6/gcc-3.4.2-glibc-2.3.5/i686-polycom-linux-gnu/i686-polycom-linux-gnu/lib:/opt/polycom/carmel/tool_chain/v6/i686-polycom-linux-gnu/lib:Bin
+handle SIGSTOP nopass

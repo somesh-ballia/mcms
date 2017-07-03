@@ -1,0 +1,30 @@
+<Resource_Settings>
+	<SETTING_PAIR>
+		<KEY>allocation_mode</KEY>
+		<DATA>auto</DATA>
+	</SETTING_PAIR>
+	<SETTING_PAIR>
+		<KEY>audio</KEY>
+		<DATA>0</DATA>
+	</SETTING_PAIR>
+	<SETTING_PAIR>
+		<KEY>video</KEY>
+		<DATA>40</DATA>
+	</SETTING_PAIR>
+	<SETTING_PAIR>
+		<KEY>audioEnhanced</KEY>
+		<DATA>0</DATA>
+	</SETTING_PAIR>
+	<SETTING_PAIR>
+		<KEY>cif</KEY>
+		<DATA>0</DATA>
+	</SETTING_PAIR>
+	<SETTING_PAIR>
+		<KEY>hd720</KEY>
+		<DATA>0</DATA>
+	</SETTING_PAIR>
+	<SETTING_PAIR>
+		<KEY>sd30</KEY>
+		<DATA>15</DATA>
+	</SETTING_PAIR>	
+</Resource_Settings>

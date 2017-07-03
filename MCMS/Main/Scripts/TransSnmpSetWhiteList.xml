@@ -1,0 +1,51 @@
+<TRANS_SNMP>
+  <TRANS_COMMON_PARAMS>
+    <MCU_TOKEN>3</MCU_TOKEN>
+    <MCU_USER_TOKEN>3</MCU_USER_TOKEN>
+    <MESSAGE_ID>11955</MESSAGE_ID>
+  </TRANS_COMMON_PARAMS>
+  <ACTION>
+    <UPDATE>
+      <SNMP_DATA>
+        <SNMP_ENABLED>true</SNMP_ENABLED>
+        <LOCATION />
+        <CONTACT_NAME>123</CONTACT_NAME>
+        <SYSTEM_NAME />
+        <SECURITY>
+          <ACCEPT_ALL_REQUESTS>true</ACCEPT_ALL_REQUESTS>
+          <SEND_AUTHENTICATION_TRAPS>true</SEND_AUTHENTICATION_TRAPS>
+          <TRAP_DESTINATION_LIST>
+            <TRAP_DESTINATION>
+              <IP>1.2.3.4</IP>
+              <COMMUNITY_NAME>shlomit</COMMUNITY_NAME>
+            </TRAP_DESTINATION>
+            <TRAP_DESTINATION>
+              <IP>3.4.5.6</IP>
+              <COMMUNITY_NAME>shlomit</COMMUNITY_NAME>
+            </TRAP_DESTINATION>
+            <TRAP_DESTINATION>
+              <IP>2.2.2.2</IP>
+              <COMMUNITY_NAME>porat</COMMUNITY_NAME>
+            </TRAP_DESTINATION>
+            <TRAP_DESTINATION>
+              <IP>1.1.1.22</IP>
+              <COMMUNITY_NAME>popo</COMMUNITY_NAME>
+            </TRAP_DESTINATION>
+            <TRAP_DESTINATION>
+              <IP>4.5.6.7</IP>
+              <COMMUNITY_NAME>public</COMMUNITY_NAME>
+            </TRAP_DESTINATION>
+          </TRAP_DESTINATION_LIST>
+          <TRAP_VERSION>snmpv1</TRAP_VERSION>
+          <REQUEST_SOURCE_LIST />
+          <COMMUNITY_PERMISSION_LIST>
+            <COMMUNITY_PERMISSION>
+              <COMMUNITY_PERMISSION_SPECIFIC>snmp_read_only</COMMUNITY_PERMISSION_SPECIFIC>
+              <COMMUNITY_NAME>public</COMMUNITY_NAME>
+            </COMMUNITY_PERMISSION>
+          </COMMUNITY_PERMISSION_LIST>
+        </SECURITY>
+      </SNMP_DATA>
+    </UPDATE>
+  </ACTION>
+</TRANS_SNMP>

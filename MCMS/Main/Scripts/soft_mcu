@@ -1,0 +1,251 @@
+#!/bin/bash
+#
+# /etc/init.d/soft_mcu
+#
+# description: This is the management script of the mrm service.
+#
+# chkconfig: 345 99 01
+# 
+### BEGIN INIT INFO
+# Provides:          soft_mcu
+# Required-Start:    network
+# Required-Stop:     network
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: soft_mcu
+# Description:       /etc/init.d/soft_mcu
+### END INIT INFO
+
+
+export MCU_HOME_DIR=$(grep MCU_HOME_DIR /home/mcms/.bashrc | cut -d'=' -f2 | awk 'NR==1')
+
+# Service statuses 
+SERVICE_IS_UP_OR_RUNNING=0
+SERVICE_IS_DOWN=3
+SERVICE_IS_UNAVAILIBLE=4
+SERVICE_HAS_STARTUP_ISSUES=5
+SERVICE_IS_UNKNOWN=6
+SERVICE_OUTPUT_LOG=$MCU_HOME_DIR/tmp/startup_logs/soft_mcu_service_output
+
+if [ -f $MCU_HOME_DIR/tmp/stop_watcher_arg ]; then
+        rm -f $MCU_HOME_DIR/tmp/stop_watcher_arg &> /dev/null
+        export STOP_WATCHER="NO"
+else
+        export STOP_WATCHER="YES"
+fi
+
+verify() {
+	#Verify no one currently uses this command, to refrain from collisions (one starting, the other stopping)
+	#Note that during restart user mcms might run it with sudo command
+        if [[ $(ps -ef | grep 'service soft_mcu' | egrep -v "grep|sudo" | wc -l) -gt 1 && ! -f $MCU_HOME_DIR/tmp/SERVICE_RESTART.cmd ]]; then
+		echo "ERROR: service soft_mcu command is being used in parallel currently."
+		echo "Wait until it finishes and retry."
+		exit 1
+	fi
+}
+#
+
+start() {
+	if [[ `stat -c "%U" $MCU_HOME_DIR/mcms` != 'mcms' ]]; then
+		BadUser=`stat -c "%u" $MCU_HOME_DIR/mcms`
+		find $MCU_HOME_DIR/tmp -user $BadUser -exec rm -rf {} \;
+		chown -R mcms.mcms $MCU_HOME_DIR/mcms
+		pkill LinuxSysCallProcess 2> /dev/null
+		ipcs -m | tail -n +4 | grep $BadUser | tr -s ' ' | cut -d' ' -f2 | xargs -i ipcrm -m {}
+		ipcs -q | tail -n +4 | grep $BadUser | tr -s ' ' | cut -d' ' -f2 | xargs -i ipcrm -q {}
+		ipcs -s | tail -n +4 | grep $BadUser | tr -s ' ' | cut -d' ' -f2 | xargs -i ipcrm -s {}
+	fi
+
+	echo "Starting soft_mcu" | tee -a $SERVICE_OUTPUT_LOG
+	if [ "$1" != "" ]; then
+	   echo "running $1 under Valgrind"
+	fi	
+
+    #clean tmp
+    find $MCU_HOME_DIR/tmp -user mcms | grep -i queue | xargs rm -rf &> /dev/null
+	
+#	rm $MCU_HOME_DIR/tmp/cloudIp
+	cd $MCU_HOME_DIR/mcms
+	. $MCU_HOME_DIR/mcms/Scripts/SoftMcuExports.sh
+	./Scripts/soft.sh target $1 &> /dev/null
+	if [[ -s $SERVICE_OUTPUT_LOG ]];then
+		cat $SERVICE_OUTPUT_LOG
+	fi
+    
+    #get ProductType
+    PRODUCT_TYPE=$(<"$MCU_HOME_DIR/mcms/ProductType")
+
+    #wait up to 120 seconds for service to start
+    kwait=20
+    count=1
+    until [ "`service soft_mcu status`" == $SERVICE_IS_UP_OR_RUNNING ] || [ $count -gt $kwait ]    
+    do
+        sleep 6
+        let count=count+1
+    done
+    if [[ $count -gt $kwait ]];then
+        echo $SERVICE_HAS_STARTUP_ISSUES
+    else
+	#MFW: display IP Mapping for interfaces
+        if [ "SOFT_MCU_MFW" == "$PRODUCT_TYPE" ]
+	then
+	    IP_TYPE=`grep IP_TYPE $MCU_HOME_DIR/mcms/Cfg/NetworkCfg_Management.xml | awk -F'<|>' '{if(NF>3) {print $3} }'| head -1`
+	    Mng_eth=`grep NETWORK_INTERFACE $MCU_HOME_DIR/mcms/Cfg/NetworkCfg_Management.xml | awk -F'<|>' '{if(NF>3) {print $3} }'| head -1`
+	    Mng_IP=`ifconfig $Mng_eth | grep 'inet addr' | cut -d':' -f2 | cut -d' ' -f1 | awk 'NR==1'`
+	    Mng_IPV6=`ifconfig $Mng_eth|grep 'Scope:Global'|awk -F' ' '{print$3}'`
+	    Signaling_eth=`grep NETWORK_INTERFACE $MCU_HOME_DIR/mcms/Cfg/IPServiceListTmp.xml | awk -F'<|>' '{if(NF>3) {print $3} }' | head -1`
+	    Signaling_IP=`ifconfig $Signaling_eth | grep 'inet addr' | cut -d':' -f2 | cut -d' ' -f1 | awk 'NR==1'`
+	    Signaling_IPV6=`ifconfig $Signaling_eth|grep 'Scope:Global'|awk -F' ' '{print$3}'`
+	    Media_eth=`grep NETWORK_INTERFACE $MCU_HOME_DIR/mcms/Cfg/IPServiceListTmp.xml | awk -F'<|>' '{if(NF>3) {print $3} }' | head -2 | tail -1`
+	    Media_IP=`ifconfig $Media_eth | grep 'inet addr' | cut -d':' -f2 | cut -d' ' -f1 | awk 'NR==1'`
+	    Media_IPV6=`ifconfig $Media_eth|grep 'Scope:Global'|awk -F' ' '{print$3}'`
+	    echo "$PRODUCT_TYPE IP Mapping:"		
+	    if [ "both" == "$IP_TYPE" ]
+	    then
+		echo "Mnagement IP_TYPE=$IP_TYPE"		
+	    	echo "Management IP: $Mng_eth  IPV4:$Mng_IP  IPV6:$Mng_IPV6"
+	    	echo "Signaling  IP: $Signaling_eth  IPV4:$Signaling_IP  IPV6:$Signaling_IPV6"
+	    	echo "Media      IP: $Media_eth  IPV4:$Media_IP  IPV6:$Media_IPV6"
+	    else
+		if [ "ipv4" == "$IP_TYPE" ]
+		then
+			echo "Management IP_TYPE=$IP_TYPE"
+			echo "Management IP: $Mng_eth  IPV4:$Mng_IP"
+			echo "Signaling  IP: $Signaling_eth  IPV4:$Signaling_IP"
+			echo "Media      IP: $Media_eth  IPV4:$Media_IP"
+		else
+                        echo "Management IP_TYPE=$IP_TYPE"
+                        echo "Management IP: $Mng_eth  IPV6:$Mng_IPV6"
+                        echo "Signaling  IP: $Signaling_eth  IPV6:$Signaling_IPV6"
+                        echo "Media      IP: $Media_eth  IPV6:$Media_IPV6"			
+		fi	
+	    fi
+	fi
+    fi    
+}
+
+debug() {
+	echo "Debuging soft_mcu"
+	touch $MCU_HOME_DIR/tmp/stop_monitor
+	start $1
+}
+
+stop() {
+	echo "Stopping soft_mcu" | tee -a $SERVICE_OUTPUT_LOG
+	rm -f $MCU_HOME_DIR/tmp/stop_monitor
+	if [[ $STOP_WATCHER == "YES" ]];then
+		killall SoftMcuWatcher.sh 2> /dev/null
+	fi
+
+	su - mcms -c "cd $MCU_HOME_DIR/mcms ; . $MCU_HOME_DIR/mcms/Scripts/SoftMcuExports.sh ; nohup ./Scripts/soft.sh stop &> /dev/null"
+
+        rm -f $MCU_HOME_DIR/tmp/httpd.pid
+	/mrmx/kill-rmx1000.sh &> /dev/null
+	
+	#while ( netstat -t -n -p | grep "127.0.0.1:61002" | grep -E "mpproxy|TIME_WAIT" )
+	#do 
+	#	sleep 2
+	#	echo "wait for mpproxy (port 61002)"; 
+        #	$MCU_HOME_DIR/mrmx/kill-rmx1000.sh &> /dev/null
+	#done
+#	while ( ps -A | grep "video" )
+	while ( ps -A | grep "video$" )
+    	do 
+    		sleep 2
+        	echo "Wait for video processes"; 
+        	killall -9 video &> /dev/null
+   	done
+
+        #kill all mcms processes which are still alive 
+        pkill -u mcms 2> /dev/null
+
+	if [[ -f $MCU_HOME_DIR/tmp/SERVICE_RESTART.cmd ]]; then
+		echo "Starting soft_mcu" >> $MCU_HOME_DIR/tmp/SERVICE_RESTART.cmd
+		#service soft_mcu start
+		#echo "After service" >> $MCU_HOME_DIR/tmp/SERVICE_RESTART.cmd
+		cd $MCU_HOME_DIR/mcms
+		. $MCU_HOME_DIR/mcms/Scripts/SoftMcuExports.sh
+		./Scripts/soft.sh target $1 &> /dev/null
+		rm -f $MCU_HOME_DIR/tmp/SERVICE_RESTART.cmd
+	fi        
+
+	echo "Finshed soft_mcu stop " | tee -a $SERVICE_OUTPUT_LOG
+}
+
+restart() {
+	echo "Restarting soft_mcu"
+
+	stop
+	start
+}
+
+status() {
+
+	test=`pgrep soft.sh`
+	PRODUCT_TYPE=$(<"$MCU_HOME_DIR/mcms/ProductType")
+
+        if [[ $test != "" ]]; then
+	   if [[ $PRODUCT_TYPE == "SOFT_MCU_EDGE" ]]; then
+		echo $SERVICE_IS_UP_OR_RUNNING
+		exit 0
+	   else
+			SOCKET=`grep '^Listen' $MCU_HOME_DIR/tmp/httpd.listen.conf | head -1 | cut -d' ' -f2`
+			IP=`echo -n $SOCKET | cut -d':' -f1`
+	                PORT=`echo -n $SOCKET | cut -d':' -f2`
+	                IS_SECURE=`echo -n \`cat  $MCU_HOME_DIR/mcms/Cfg/NetworkCfg_Management.xml | grep '<IS_SECURED>true</IS_SECURED>'\``
+	                if [ "X$IS_SECURE" != 'X' -a $PORT == '443' ]; then
+	                        SOCKET="https://$IP"
+	                elif [ "X$IS_SECURE" != 'X' ]; then
+	                        SOCKET="https://$IP:$PORT"
+	                else
+	                        SOCKET="http://$IP:$PORT"
+	                fi
+			                      
+
+			CMD=`curl -1 -i -k -H "If-None-Match: -1" -H "Content-Type: application/vnd.plcm.dummy+xml" -H "Authorization: Basic U1VQUE9SVDpTVVBQT1JU" -G $SOCKET/plcm/mcu/api/1.0/health/status 2> /dev/null`
+			           	
+			if [[ $CMD =~ "200 OK"  || $CMD =~ "401 Unauthorized" ]] ;
+			then
+				echo $SERVICE_IS_UP_OR_RUNNING
+			else
+				echo $SERVICE_IS_UNAVAILIBLE
+			fi
+
+	   fi
+	else
+		echo $SERVICE_IS_DOWN
+	fi
+	exit 1
+}
+
+case $1 in 
+start)
+	if [[ `status` != $SERVICE_IS_DOWN ]];then
+     		echo $SERVICE_IS_UP_OR_RUNNING
+  	else
+		verify
+   		start $2
+  	fi
+	;;
+stop)
+	verify
+	stop
+	;;
+restart)
+	restart
+	;;
+status)
+	status
+	;;
+debug)
+	if [[ `status` != $SERVICE_IS_DOWN ]];then
+                echo $SERVICE_IS_UP_OR_RUNNING
+        else
+                debug $2
+        fi
+	;;
+*)
+	echo $SERVICE_IS_UNKNOWN
+
+esac
+

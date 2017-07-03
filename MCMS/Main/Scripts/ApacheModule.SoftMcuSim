@@ -1,0 +1,14 @@
+#!/bin/sh
+CMD='sudo env MCU_HOME_DIR= LD_LIBRARY_PATH=/usr/local/apache2/lib:/mcms/Bin /mcms/Bin/httpd'
+CFG=/mcms/StaticCfg/httpd.conf.sim
+LOG=/tmp/startup_logs/DaemonProcessesLoad.log
+sleep 1
+$CMD -f $CFG 2>&1 | tee -a $LOG
+while true; do
+  if [[ ! `stat -L /mcms/Bin/httpd 2> /dev/null` ]]; then
+	  rm -f /mcms/Bin/httpd
+	  ln -sf /usr/local/apache2/bin/httpd /mcms/Bin/httpd
+  fi
+  sleep 10
+  ps -e | grep -v grep | grep httpd >/dev/null || $CMD -f $CFG 2>&1 | tee -a $LOG
+done

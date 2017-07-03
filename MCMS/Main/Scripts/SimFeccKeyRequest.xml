@@ -1,0 +1,33 @@
+<TRANS_SIMULATION>
+	<TRANS_COMMON_PARAMS>
+		<MCU_TOKEN>2</MCU_TOKEN>
+		<MCU_USER_TOKEN>2</MCU_USER_TOKEN>
+		<ASYNC>
+			<YOUR_TOKEN1>0</YOUR_TOKEN1>
+			<YOUR_TOKEN2>0</YOUR_TOKEN2>
+		</ASYNC>
+		<MESSAGE_ID>47</MESSAGE_ID>
+	</TRANS_COMMON_PARAMS>
+	<ACTION>
+		<FECC_KEY_REQUEST>
+			<PARTY_NAME>party1</PARTY_NAME>
+			<FECC_KEY>0</FECC_KEY>   <!-- left-0 right-1 up-2 down-3 zoomin-4 zoomout-5 -->
+		</FECC_KEY_REQUEST>
+	</ACTION>
+</TRANS_SIMULATION>
+
+<!--
+typedef enum
+{
+	eFeccKeyLeft	= 0,	
+	eFeccKeyRight,
+	eFeccKeyUp,
+	eFeccKeyDown, 
+	eFeccKeyZoomIn, 
+	eFeccKeyZoomOut,
+	eFeccKeyFocusIn,	
+	eFeccKeyFocusOut,
+	eFeccKeyLast		// must be last
+
+} feccKeyEnum;
+-->

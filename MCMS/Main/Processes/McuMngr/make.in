@@ -1,0 +1,10 @@
+PROCESS_NAME="McuMngr"
+#sagi: we need to remove no-error
+COMMON_INCLUDES="\$(COMMONINCPATH) \$(CSAPIINC) \$(MPLAPIINC) -I ./Libs/TimeConfig -I ./Libs/LicenseStatus"
+UNIQUE_INCLUDES_VARS="ENCRYPTINC SNMPINC"
+ADDITIONAL_TEST_INCLUDES=""
+PLATFORMS="RMX SOFT"
+UNIQUE_DEPEND="libMcmsEncryption.so libSNMP.so libNDM.so libTimeConfig.so libLicenseStatus.so"
+ADDITIONAL_LINK="-lTimeConfig -lLicenseStatus"
+ADDITIONAL_LINK_UNIQUE="ENCRYPTLIB SNMPLIB NDMLIB"
+ADDITIONAL_TEST_LINK=""

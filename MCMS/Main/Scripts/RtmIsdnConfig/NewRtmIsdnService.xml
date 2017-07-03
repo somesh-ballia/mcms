@@ -1,0 +1,56 @@
+<TRANS_ISDN_SERVICE>
+  <TRANS_COMMON_PARAMS>
+    <MCU_TOKEN>4</MCU_TOKEN>
+    <MCU_USER_TOKEN>4</MCU_USER_TOKEN>
+    <MESSAGE_ID>646</MESSAGE_ID>
+  </TRANS_COMMON_PARAMS>
+  <ACTION>
+    <NEW_ISDN_SERVICE>
+      <ISDN_SERVICE>
+        <OBJ_TOKEN />
+        <CHANGED>false</CHANGED>
+        <COMMON_SERVICE_PARAMS>
+          <NAME>NewServiceForScripts</NAME>
+          <SPAN_DEFINITION>
+            <SPAN_TYPE>e1</SPAN_TYPE>
+            <SERVICE_TYPE>pri</SERVICE_TYPE>
+            <FRAMING>e1_febe</FRAMING>
+            <LINE_CODING>e1_hdb3</LINE_CODING>
+            <LINE_LENGTH>133ft</LINE_LENGTH>
+            <SWITCH_TYPE>euro_isdn</SWITCH_TYPE>
+            <SIDE>user_side_l2</SIDE>
+            <CALLS_SUPPORTED>unknown_call_type</CALLS_SUPPORTED>
+            <RCV_THRESHOLD>threshold_0</RCV_THRESHOLD>
+            <LEASED_PARTY_LIST />
+            <SIGNALING_MODEL>E_M_Wink_Start</SIGNALING_MODEL>
+          </SPAN_DEFINITION>
+          <NET_PHONE_LIST />
+          <GW_RANGE_MODE_LIST />
+          <SPAN_LIST />
+        </COMMON_SERVICE_PARAMS>
+        <PREFER_MODE>prefer_both_direct</PREFER_MODE>
+        <PORT_ALLOC_METHOD>mcu_low</PORT_ALLOC_METHOD>
+        <NFAS>false</NFAS>
+        <RESTRICT>false</RESTRICT>
+        <MASTER_D_CHANNEL_PORT>0</MASTER_D_CHANNEL_PORT>
+        <MASTER_NFAS_SPAN>0</MASTER_NFAS_SPAN>
+        <BACKUP_NFAS_SPAN>0</BACKUP_NFAS_SPAN>
+        <VOICE>1</VOICE>
+        <NUM_PLAN>isdn_plan</NUM_PLAN>
+        <DEFAULT_NUM_TYPE>unknown</DEFAULT_NUM_TYPE>
+        <DEFAULT_SUB_SERVICE_NAME />
+        <DIALING_CONSTRAINTS>
+          <LAST_DIAL_IN_SPAN>0</LAST_DIAL_IN_SPAN>
+          <LAST_DIAL_OUT_PORT>0</LAST_DIAL_OUT_PORT>
+          <ACCEPT_INVADING_DIAL_IN>false</ACCEPT_INVADING_DIAL_IN>
+          <DID>false</DID>
+        </DIALING_CONSTRAINTS>
+        <SUB_SERVICE_LIST />
+        <DIAL_IN_SERVICE_LIST />
+        <NET_SPECIFIC>none</NET_SPECIFIC>
+        <DIAL_OUT_PREFIX />
+        <MCU_CLI />
+      </ISDN_SERVICE>
+    </NEW_ISDN_SERVICE>
+  </ACTION>
+</TRANS_ISDN_SERVICE>

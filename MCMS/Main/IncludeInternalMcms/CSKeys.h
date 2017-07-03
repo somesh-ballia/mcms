@@ -1,0 +1,342 @@
+// CSKeys.h:
+//
+//
+//Date         Updated By         Description
+//
+//3/8/05	  Yuri Ratner		Keys for Communication with CS Module 
+//========   ==============   =====================================================================
+
+
+#ifndef __CSKEYS_H__
+#define __CSKEYS_H__
+
+
+
+
+
+#define CS_KEY_NEW_SERVICE \
+"NEW_SERVICE"
+
+#define CS_KEY_SERVICE_NAME \
+"SERVICE_NAME"
+
+#define CS_KEY_SERVICE_STAUTS \
+"SERVICE_STAUTS"
+
+#define CS_KEY_SERVICE_ID \
+"SERVICE_ID"
+
+#define CS_KEY_IS_PRIMARY \
+"IS_PRIMARY"
+
+#define CS_KEY_IP_INTERFACE \
+"IP_INTERFACE"
+
+#define CS_KEY_IF_NAME \
+"IF_NAME"
+
+#define CS_KEY_IF_STATE \
+"IF_STATE"
+
+#define CS_KEY_IPv4_ADDRESS \
+"IPv4_ADDRESS"
+
+#define CS_KEY_IPv4_CARD_ADDRESS \
+"IPv4_CARD_ADDRESS"
+
+#define CS_KEY_IP_DNS_ADDRESS_STRING \
+    "IP_DNS_ADDRESS_STRING"
+
+#define CS_KEY_IPv4_DEFAULT_GATEWAY \
+"IPv4_DEFAULT_GATEWAY"
+
+#define CS_KEY_IPv4_SUBNET_MASK \
+"IPv4_SUBNET_MASK"
+
+#define CS_KEY_IPv4_MTU \
+"IPv4_MTU"
+
+#define CS_KEY_SUPPORTED_PROTOCOLS \
+"SUPPORTED_PROTOCOLS"
+
+#define CS_KEY_H323 \
+"H323"
+
+#define CS_KEY_SIP \
+"SIP"
+
+#define CS_KEY_DHCP \
+"DHCP"
+
+#define CS_KEY_DHCP_ENABLED \
+"DHCP_ENABLED"
+
+#define CS_KEY_AUTO_IP_OBTAIN \
+"AUTO_IP_OBTAIN"
+
+#define CS_KEY_GET_SIP_PROXY_FROM_DHCP \
+"GET_SIP_PROXY_FROM_DHCP"
+
+#define CS_KEY_GET_GK_IP_FROM_DHCP \
+"GET_GK_IP_FROM_DHCP"
+
+#define CS_KEY_NAT \
+"NAT"
+
+#define CS_KEY_SUPPORTED \
+"SUPPORTED"
+
+#define CS_KEY_AUTODISCOVERY \
+"AUTODISCOVERY"
+
+#define CS_KEY_IP_ADDRESS \
+"IP_ADDRESS"
+
+#define CS_KEY_DNS_CFG \
+"DNS_CFG"
+
+#define CS_KEY_USE \
+"USE"
+
+#define CS_KEY_GET_FROM_DHCP \
+"GET_FROM_DHCP"
+
+#define CS_KEY_DNS_CALLS \
+"DNS_CALLS"
+
+#define CS_KEY_ACCEPT_DNS_CALLS \
+"ACCEPT_DNS_CALLS"
+
+#define CS_KEY_REGISTER_TO_DNS \
+"REGISTER_TO_DNS"
+
+#define CS_KEY_HOST_NAME \
+"HOST_NAME"
+
+#define CS_KEY_DNS_NAME \
+"DNS_NAME"
+
+//#define CS_KEY_GET_FROM_DHCP 
+//"GET_FROM_DHCP"
+
+//#define CS_KEY_DOMAIN_NAME 
+//"DOMAIN_NAME"
+
+//#define CS_KEY_HOST_NAME 
+//"HOST_NAME"
+
+#define CS_KEY_AUTHENTICATION_ENTRY \
+"AUTHENTICATION_ENTRY"
+
+#define CS_KEY_ACTION \
+"ACTION"
+
+#define CS_KEY_PROTOCOL \
+"PROTOCOL"
+
+#define CS_KEY_USER \
+"USER"
+
+#define CS_KEY_PASSWORD \
+"PASSWORD"
+
+#define CS_KEY_DOMAIN_NAME \
+"DOMAIN_NAME"
+
+#define CS_KEY_SERVER_NAME \
+"SERVER_NAME"
+
+#define CS_KEY_SERVER_IP_ADDRESS \
+"SERVER_IP_ADDRESS"
+
+#define CS_KEY_SIP_SPAN_TYPE \
+"SIP_SPAN_TYPE"
+
+#define CS_KEY_TYPE \
+"TYPE"
+
+#define CS_KEY_
+
+#define CS_KEY_NAME \
+"NAME"
+
+#define CS_KEY_IP_INFO \
+"IP_INFO"
+
+//#define CS_KEY_SERVICE_NAME 
+//"SERVICE_NAME"
+
+//#define CS_KEY_SERVICE_ID 
+//"SERVICE_ID"
+
+#define CS_KEY_STATUS \
+"STATUS"
+
+#define CS_KEY_IP_INFO \
+"IP_INFO"
+
+#define CS_KEY_IP_ADDRESS \
+"IP_ADDRESS"
+
+#define CS_KEY_SUBNET_MASK \
+"SUBNET_MASK"
+
+#define CS_KEY_DEFAULT_GATEWAY \
+"DEFAULT_GATEWAY"
+
+#define CS_KEY_DHCP_STATE \
+"DHCP_STATE"
+
+#define CS_KEY_DHCP_SERVER_IP \
+"DHCP_SERVER_IP"
+
+#define CS_KEY_NUM_OF_DNS_SERVERS \
+"NUM_OF_DNS_SERVERS"
+
+#define CS_KEY_DNS_SERVER_1 \
+"DNS_SERVER_1"
+
+#define CS_KEY_DNS_SERVER_2 \
+"DNS_SERVER_2"
+
+#define CS_KEY_DNS_SERVER_3 \
+"DNS_SERVER_3"
+
+//#define CS_KEY_DOMAIN_NAME 
+//"DOMAIN_NAME"
+
+#define CS_KEY_NAT_IP \
+"NAT_IP"
+
+#define CS_KEY_SIP_INFO \
+"SIP_INFO"
+
+#define CS_KEY_NUM_OF_PROXYS \
+"NUM_OF_PROXYS"
+
+#define CS_KEY_SIP_PROXY_1_IP \
+"SIP_PROXY_1_IP"
+
+#define CS_KEY_SIP_PROXY_1_NAME \
+"SIP_PROXY_1_NAME"
+
+#define CS_KEY_SIP_PROXY_2_IP \
+"SIP_PROXY_2_IP"
+
+#define CS_KEY_SIP_PROXY_2_NAME \
+"SIP_PROXY_2_NAME"
+
+#define CS_KEY_GK_INFO \
+"GK_INFO"
+
+#define CS_KEY_GK_OF_GKS \
+"GK_OF_GKS"
+
+#define CS_KEY_GK_1_IP \
+"GK_1_IP"
+
+#define CS_KEY_GK_1_NAME \
+"GK_1_NAME"
+
+#define CS_KEY_GK_2_IP \
+"GK_2_IP"
+
+#define CS_KEY_GK_2_NAME \
+"GK_2_NAME"
+
+#define CS_KEY_DHCP_STATE \
+"DHCP_STATE"
+
+#define CS_KEY_NUM_OF_GKS \
+"NUM_OF_GKS"
+
+#define CS_KEY_SECTION_NAME \
+"SECTION_NAME"
+
+#define CS_KEY_KEY \
+"KEY"
+
+#define CS_KEY_DATA \
+"DATA"
+
+#define CS_KEY_REASON \
+"REASON"
+
+#define CS_KEY_OK_NEW_SERVICE \
+"OK_NEW_SERVICE"
+
+#define CS_KEY_ERROR_NEW_SERVICE \
+"ERROR_SERVICE"
+
+#define CS_KEY_OK_SECTION \
+"OK_SECTION"
+
+#define CS_KEY_ERROR_SECTION \
+"ERROR_SECTION"
+
+#define CS_KEY_OK_END_SERVICE \
+"OK_END_SERVICE"
+
+#define CS_KEY_ERROR_END_SERVICE \
+"ERROR_SERVICE"
+
+#define CS_KEY_OK_DEL_SERVICE \
+"OK_DEL_SERVICE"
+
+#define CS_KEY_ERROR_DEL_SERVICE \
+"ERROR_SERVICE"
+
+#define CS_KEY_PORT_RANGE \
+"PORT_RANGE"
+
+#define CS_KEY_SIP_TRANSPORT_TYPE \
+"SIP_TRANSPORT_TYPE"
+
+#define CS_KEY_H323_RAS_IPV6 \
+"H323_RAS_IPV6"
+
+#define CS_KEY_TCP_FIRST_PORT \
+"TCP_FIRST_PORT"
+
+#define CS_KEY_TCP_NUM_PORTS \
+"TCP_NUM_PORTS"
+
+#define CS_KEY_VLAN_SUPPORT \
+"VLAN_SUPPORT"
+
+#define CS_KEY_VLAN_PRIORITY \
+"VLAN_PRIORITY"
+
+#define CS_KEY_VLAN_ID \
+"VLAN_ID"
+
+#define CS_KEY_IPv6_6to4_RELAY_ADDRESS \
+"IPv6_6to4_RELAY_ADDRESS"
+
+#define CS_KEY_IPv6_ADDRESS \
+"IPv6_ADDRESS"
+
+#define CS_KEY_IPv6_SUBNET_MASK \
+"IPv6_SUBNET_MASK"
+
+#define CS_KEY_IPv6_CONFIG_TYPE \
+"IPv6_CONFIG_TYPE"
+
+#define CS_KEY_IP_INTERFACE_TYPE \
+"IP_INTERFACE_TYPE"
+
+#define CS_KEY_END_SERVICE \
+"END_SERVICE"
+
+#define CS_KEY_DEL_SERVICE \
+"DEL_SERVICE"
+
+#define CS_KEY_MULTI_SRV_FLAG "MULTI_SRV_FLAG"
+
+#define CS_KEY_MULTI_SRV_IPv4_ADDRESS_EXT "MULTI_SRV_IPv4_ADDRESS_EXT"
+
+#define CS_KEY_MULTI_SRV_IPv6_ADDRESS_EXT "MULTI_SRV_IPv6_ADDRESS_EXT"
+
+
+
+#endif

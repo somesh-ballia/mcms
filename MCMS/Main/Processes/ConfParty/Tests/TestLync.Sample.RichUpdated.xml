@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conference-info xmlns="urn:ietf:params:xml:ns:conference-info" entity="sips:conf233@example.com" state="partial" version="6">
+    <conference-description>
+        <display-text>Weekly Sales Meeting</display-text>
+        <subject>Agenda: This month's goals</subject>
+        <free-text>We will start strict on time</free-text>
+        <keywords>sales meeting weekly</keywords>
+        <conf-uris>
+            <entry>
+                <uri>tel:+18005671234</uri>
+                <display-text>TTI Bridge</display-text>
+                <purpose>participation</purpose>
+            </entry>
+            <entry>
+                <uri>h323:conf545@h323.example.com</uri>
+                <purpose>participation</purpose>
+            </entry>
+            <entry>
+                <uri>http://real.streaming.com/54634/live.ram</uri>
+                <purpose>streaming</purpose>
+            </entry>
+        </conf-uris>
+        <service-uris>
+            <entry>
+                <uri>http://sharepoint/salesgroup/</uri>
+                <purpose>web-page</purpose>
+            </entry>
+            <entry>
+                <uri>http://quicktime.com/54634/recording.mov</uri>
+                <display-text>Quicktime</display-text>
+                <purpose>recording</purpose>
+            </entry>
+        </service-uris>
+        <maximum-user-count>100</maximum-user-count>
+        <available-media>
+            <entry label="34567">
+                <display-text>main audio</display-text>
+                <type>audio</type>
+                <status>sendrecv</status>
+            </entry>
+            <entry label="34569">
+                <display-text>main video</display-text>
+                <type>video</type>
+                <status>inactive</status>
+            </entry>
+        </available-media>
+    </conference-description>
+    <host-info>
+        <display-text>Sales Host</display-text>
+        <web-page>http://sharepoint/salesgroup/hosts/</web-page>
+        <uris>
+            <entry>
+                <uri>sip:sales@example.com</uri>
+            </entry>
+        </uris>
+    </host-info>
+    <conference-state>
+        <user-count>32</user-count>
+        <active>true</active>
+        <locked>false</locked>
+    </conference-state>
+    <users>
+        <user entity="sip:dmitry@example.com">
+            <display-text>Dmitry Krasnopolsky</display-text>
+		</user>
+        <user entity="sip:bob@example.com" state="deleted">
+            <display-text>Bob Hoskins</display-text>
+            <associated-aors>
+                <entry>
+                    <uri>mailto:bob@example.com</uri>
+                    <display-text>email</display-text>
+                </entry>
+            </associated-aors>
+            <roles>
+                <entry>participant</entry>
+            </roles>
+            <languages>en</languages>
+            <endpoint entity="sip:bob@pc33.example.com">
+                <display-text>Bob's Laptop</display-text>
+                <referred>
+                    <when>2005-03-04T20:00:00Z</when>
+                    <reason>expert required</reason>
+                    <by>sip:mike@example.com</by>
+                </referred>
+                <status>disconnecting</status>
+                <joining-method>dialed-out</joining-method>
+                <joining-info>
+                    <when>2005-03-04T20:00:00Z</when>
+                    <reason>invitation</reason>
+                    <by>sip:mike@example.com</by>
+                </joining-info>
+                <disconnection-method>booted</disconnection-method>
+                <disconnection-info>
+                    <when>2005-03-04T20:00:00Z</when>
+                    <reason>bad voice quality</reason>
+                    <by>sip:mike@example.com</by>
+                </disconnection-info>
+                <media id="1">
+                    <display-text>main audio</display-text>
+                    <type>audio</type>
+                    <label>34567</label>
+                    <src-id>432424</src-id>
+                    <status>sendrecv</status>
+                </media>
+                <call-info>
+                    <sip>
+                        <display-text>full info</display-text>
+                        <call-id>hsjh8980vhsb78</call-id>
+                        <from-tag>vav738dvbs</from-tag>
+                        <to-tag>8954jgjg8432</to-tag>
+                    </sip>
+                </call-info>
+            </endpoint>
+        </user>
+    </users>
+    <sidebars-by-ref state="partial">
+        <entry>
+            <uri>sips:conf233@example.com;grid=45</uri>
+            <display-text>sidebar with Carol</display-text>
+        </entry>
+        <entry>
+            <uri>sips:conf233@example.com;grid=21</uri>
+            <display-text>private with Peter</display-text>
+        </entry>
+    </sidebars-by-ref>
+    <sidebars-by-val state="partial">
+        <entry entity="sips:conf233@example.com;grid=77">
+            <users>
+                <user entity="sip:bob@example.com"/>
+                <user entity="sip:mark@example.com" />
+                <user entity="sip:dan@example.com" />
+            </users>
+        </entry>
+    </sidebars-by-val>
+</conference-info>

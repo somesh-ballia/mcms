@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Header>
+    <RequestServerVersion Version="Exchange2007_SP1" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+  </soap:Header>
+  <soap:Body>
+    <CreateItem MessageDisposition="SendOnly" xmlns="http://schemas.microsoft.com/exchange/services/2006/messages">
+      <Items>
+        <AcceptItem xmlns="http://schemas.microsoft.com/exchange/services/2006/types">
+          <Body BodyType="Text">Meeting Invitation Accepted</Body>
+          <IsReadReceiptRequested>false</IsReadReceiptRequested>
+          <IsDeliveryReceiptRequested>false</IsDeliveryReceiptRequested>
+          <ReferenceItemId Id="AAMkAGNlNjlhMTM3LTE5NGEtNDhiMC05YjMyLWYzMjBlNjUzMzFmNQBGAAAAAACUECrIla7BQb0D/U9fgCnLBwA8ttd2tcThRpOXnmwn7M7tAAKcsJxNAAA8ttd2tcThRpOXnmwn7M7tAEpOkAMWAAA=" ChangeKey="DwAAABYAAAA8ttd2tcThRpOXnmwn7M7tAEpOkEc/" />
+        </AcceptItem>
+      </Items>
+    </CreateItem>
+  </soap:Body>
+</soap:Envelope>

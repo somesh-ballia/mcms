@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types">
+  <soap:Header>
+    <RequestServerVersion Version="Exchange2007_SP1" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+  </soap:Header>
+  <soap:Body>
+    <GetItem xmlns="http://schemas.microsoft.com/exchange/services/2006/messages">
+      <ItemShape>
+        <BaseShape xmlns="http://schemas.microsoft.com/exchange/services/2006/types">Default</BaseShape>
+        <t:BodyType>Text</t:BodyType>
+        <AdditionalProperties xmlns="http://schemas.microsoft.com/exchange/services/2006/types">
+          <FieldURI FieldURI="item:ItemClass"/>
+          <FieldURI FieldURI="calendar:MyResponseType"/>
+          <FieldURI FieldURI="calendar:Start"/>
+          <FieldURI FieldURI="calendar:End"/>
+          <FieldURI FieldURI="calendar:Organizer"/>
+          <FieldURI FieldURI="item:Subject"/>
+          <FieldURI FieldURI="item:Body"/>
+          <FieldURI FieldURI="calendar:UID"/>
+        </AdditionalProperties>
+      </ItemShape>
+      <ItemIds>
+        <ItemId Id="AAMkAGNlNjlhMTM3LTE5NGEtNDhiMC05YjMyLWYzMjBlNjUzMzFmNQBGAAAAAACUECrIla7BQb0D/U9fgCnLBwA8ttd2tcThRpOXnmwn7M7tAAKcsJxNAAA8ttd2tcThRpOXnmwn7M7tAAKcsKGqAAA=" ChangeKey="DwAAABYAAAA8ttd2tcThRpOXnmwn7M7tAAKcsLZm" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+      </ItemIds>
+    </GetItem>
+  </soap:Body>
+</soap:Envelope>

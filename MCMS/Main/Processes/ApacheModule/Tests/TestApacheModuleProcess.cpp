@@ -1,0 +1,41 @@
+// TestTestProcess.cpp: implementation of the TestTestProcess class.
+//
+//////////////////////////////////////////////////////////////////////
+
+
+
+#include "TestApacheModuleProcess.h"
+#include "ApacheModuleProcess.h"
+#include "SystemFunctions.h"
+#include "Trace.h"
+
+CPPUNIT_TEST_SUITE_REGISTRATION( CTestApacheModuleProcess);
+
+
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+void CTestApacheModuleProcess::setUp()
+{
+}
+
+//////////////////////////////////////////////////////////////////////
+void CTestApacheModuleProcess::tearDown()
+{
+}
+
+//////////////////////////////////////////////////////////////////////
+void CTestApacheModuleProcess::testConstructor()
+{
+	FTRACESTR(eLevelInfoNormal) << "CTestApacheModuleProcess::testConstructor";
+
+	CPPUNIT_ASSERT_MESSAGE( "CTestApacheModuleProcess::testConstructor ",
+		CProcessBase::GetProcess() != NULL );  
+
+} 
+
+
+

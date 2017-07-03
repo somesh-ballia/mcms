@@ -1,0 +1,20 @@
+
+        
+    <TRANS_CONF_2>
+      <TRANS_COMMON_PARAMS>
+        <MCU_TOKEN>4</MCU_TOKEN>
+        <MCU_USER_TOKEN>4</MCU_USER_TOKEN>
+        <MESSAGE_ID>1039</MESSAGE_ID>
+      </TRANS_COMMON_PARAMS>
+      <ACTION>
+        <ATTEND_PARTY>
+          <ID>13</ID>
+          <PARTY_ID>1</PARTY_ID>
+          <OPERATOR_CONF_NAME />
+          <OPERATOR_CONF_ID>0</OPERATOR_CONF_ID>
+        </ATTEND_PARTY>
+      </ACTION>
+    </TRANS_CONF_2>
+    
+  
+        

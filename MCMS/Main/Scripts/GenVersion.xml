@@ -1,0 +1,102 @@
+#!/bin/sh
+
+MAIN=""
+VERSION=""
+MAINORIG=""
+BASELINE=""
+SEARCH3=""
+SEARCH2=""
+SEARCH1=""
+
+fillBaselinesNames()
+{
+	VERSION=$(echo -n `cat mcms_version`)
+	BASELINE=$(echo -n `cat mcms_version`)
+	SEARCH3=".*\([0-9][0-9][0-9]\)"
+	SEARCH2=".*\([0-9][0-9]\)"
+	SEARCH1=".*\([0-9]\)"
+
+}
+
+stripBaselines()
+{
+	STRIP_VER=$VERSION
+	MAIN=${STRIP_VER%%.*}
+	MAINORIG=${STRIP_VER%%.*}
+	MAIN=$(expr "$MAINORIG" : $SEARCH3)
+	
+	if [ "$?" != "0" ];
+	then
+  		MAIN=$(expr "$MAINORIG" : $SEARCH2)  		 
+  		if [ "$?" != "0" ]
+  		then
+			MAIN=$(expr "$MAINORIG" : $SEARCH1)			
+  		fi
+	fi
+}
+
+
+if test -e mcms_version; then
+    fillBaselinesNames
+    stripBaselines	
+else	
+	VERSION=$(cleartool lsbl -s| grep "MCMS-V" | tail -n1)
+	BASELINE=$(cleartool lsbl -s| tail -n1)
+	PRIVATE=$(cleartool lsact -s | tail -n1 | cut -c1-40)
+	SEARCH3=".*V\([0-9][0-9][0-9]\)"
+	SEARCH2=".*V\([0-9][0-9]\)"
+	SEARCH1=".*V\([0-9]\)"
+	stripBaselines
+fi
+
+
+if [ -z "$MAIN" ]; then
+    cp /Carmel-Versions/NonStableBuild/RMX_100.0/last/mcms/mcms_version .
+    fillBaselinesNames
+    stripBaselines
+fi
+
+STRIP_VER=${STRIP_VER#*.}
+MAJOR=${STRIP_VER%%.*}
+STRIP_VER=${STRIP_VER#*.}
+MINOR=${STRIP_VER%%.*}
+STRIP_VER=${STRIP_VER#*.}
+INTERNAL=${STRIP_VER%%.*}
+INTERNAL=$(echo $INTERNAL | sed 's/^\([0-9][0-9]*\).*$/\1/')
+BUILD_DATE=$(date +%Y%m%d%H%M%S)
+
+# The simulation should be aligned with root_build.sh
+
+if [ "$BASELINE" != "" ]
+then
+echo "<VERSIONS>"
+echo "    <MCU_VERSION>"
+echo "        <MAIN>0</MAIN>"
+echo "        <MAJOR>0</MAJOR>"
+echo "        <MINOR>0</MINOR>"
+echo "        <INTERNAL>0</INTERNAL>"
+echo "        <PRIVATE_DESCRIPTION>Simulation</PRIVATE_DESCRIPTION>"
+echo "        <BASELINE>"$BASELINE"</BASELINE>"
+echo "        <BUILD_DATE>"$BUILD_DATE"</BUILD_DATE>"
+echo "    </MCU_VERSION>"
+else
+echo "<VERSIONS>"
+echo "    <MCU_VERSION>"
+echo "        <MAIN>"$MAIN"</MAIN>"
+echo "        <MAJOR>"$MAJOR"</MAJOR>"
+echo "        <MINOR>"$MINOR"</MINOR>"
+echo "        <INTERNAL>"$INTERNAL"</INTERNAL>"
+echo "        <PRIVATE_DESCRIPTION>Simulation</PRIVATE_DESCRIPTION>"
+echo "        <BASELINE>"$BASELINE"</BASELINE>"
+echo "        <BUILD_DATE>"$BUILD_DATE"</BUILD_DATE>"
+echo "    </MCU_VERSION>"
+fi
+echo "    <MCMS_VERSION>"
+echo "        <MAIN>"$MAIN"</MAIN>"
+echo "        <MAJOR>"$MAJOR"</MAJOR>"
+echo "        <MINOR>"$MINOR"</MINOR>"
+echo "        <INTERNAL>"$INTERNAL"</INTERNAL>"
+echo "        <PRIVATE_DESCRIPTION>"$PRIVATE"</PRIVATE_DESCRIPTION>"
+echo "        <BASELINE>"$BASELINE"</BASELINE>"
+echo "    </MCMS_VERSION>"
+echo "</VERSIONS>"

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Header>
+    <RequestServerVersion Version="Exchange2007_SP1" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+  </soap:Header>
+  <soap:Body>
+    <GetFolder xmlns="http://schemas.microsoft.com/exchange/services/2006/messages">
+      <FolderShape>
+        <BaseShape xmlns="http://schemas.microsoft.com/exchange/services/2006/types">IdOnly</BaseShape>
+      </FolderShape>
+      <FolderIds>
+        <DistinguishedFolderId Id="calendar" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="contacts" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="deleteditems" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="drafts" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="inbox" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="journal" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="notes" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="outbox" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="sentitems" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="tasks" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="msgfolderroot" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="publicfoldersroot" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="root" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="junkemail" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="searchfolders" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+        <DistinguishedFolderId Id="voicemail" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+      </FolderIds>
+    </GetFolder>
+  </soap:Body>
+</soap:Envelope>

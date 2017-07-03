@@ -1,0 +1,33 @@
+POST http:// HTTP/1.1
+Host: 127.0.0.1:8080
+Accept-Encoding: identity
+Content-Length: 568
+Connection: Keep-Alive
+Cache-control: private
+Content-type: text/xml
+Server: PolycomHTTPServer
+
+<TRANS_MCU>
+	<TRANS_COMMON_PARAMS>
+		<MCU_TOKEN>0</MCU_TOKEN>
+		<MCU_USER_TOKEN>0</MCU_USER_TOKEN>
+		<ASYNC>
+			<YOUR_TOKEN1>0</YOUR_TOKEN1>
+			<YOUR_TOKEN2>0</YOUR_TOKEN2>
+		</ASYNC>
+		<MESSAGE_ID>0</MESSAGE_ID>
+	</TRANS_COMMON_PARAMS>
+	<ACTION>
+		<LOGIN>
+			<MCU_IP>
+				<IP>1.2.3.4</IP>
+				<LISTEN_PORT>80</LISTEN_PORT>
+			</MCU_IP>
+			<USER_NAME>POLYCOM</USER_NAME>
+			<PASSWORD>POLYCOM</PASSWORD>
+			<STATION_NAME>MyStati¿∞</STATION_NAME>
+			<COMPRESSION>false</COMPRESSION>
+			<CONFERENCE_RECORDER>false</CONFERENCE_RECORDER>
+		</LOGIN>
+	</ACTION>
+</TRANS_MCU>

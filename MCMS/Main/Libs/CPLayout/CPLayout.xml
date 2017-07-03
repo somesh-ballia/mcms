@@ -1,0 +1,86 @@
+<API name="CPLayout" ns="CPLayout">
+
+<!--  enums -->
+
+	<ENUM name="layout type">
+		<VALUE tag="CP_LAYOUT_OVERLAY_ITP_1P"/>
+		<VALUE tag="CP_LAYOUT_OVERLAY_ITP_2P"/>
+		<VALUE tag="CP_LAYOUT_OVERLAY_ITP_3P"/>
+		<VALUE tag="CP_LAYOUT_OVERLAY_ITP_4P"/>
+		<VALUE tag="eCP_LAYOUT_NONE"/>
+	</ENUM>
+	
+	<ENUM name="screen type">
+		<VALUE tag="RESERVED"/>
+		<VALUE tag="GRID"/>
+	</ENUM>
+	
+	<ENUM name="condition">
+		<VALUE tag="eFuncDefault"/>
+		<VALUE tag="eFuncUpTo3RoomsOf3Cam"/>
+		<VALUE tag="eFuncMore3RoomsOf3Cam"/>
+		<VALUE tag="eFuncUpTo4RoomsOf3And4Cam"/>
+		<VALUE tag="eFuncUpTo4RoomsOf4CamAndUpTo3Rooms3"/>
+		<VALUE tag="eFuncMore4RoomsOf4Cam"/>
+		<VALUE tag="eFuncUpTo2RoomsOf2Cam"/>
+		<VALUE tag="eFuncMore2RoomsOf2Cam"/>
+	</ENUM>
+	
+<!--  enums -->
+
+	<CLASS name="Telepresence layouts logic" tag="TELEPRESENCE_LAYOUTS_LOGIC">
+		<MEMBER name="reserved screens logic table" tag="RESERVED_SCREENS_LOGIC_TABLE" type="class" type_ref="reserved screens logic table"/>
+		<MEMBER name="grid screens logic table" tag="GRID_SCREENS_LOGIC_TABLE" type="class" type_ref="grid screens logic table" />
+	</CLASS>
+	
+	<CLASS name="grid screens logic table">
+		<PROPERTY tag="name" type="api string"/>
+		<MEMBER name="grid screens table entry" tag="GRID_SCREENS_TABLE_ENTRY" type="class" type_ref="grid screens table entry" container="list"/>
+	</CLASS>
+	
+	<CLASS name="grid screens table entry" tag="GRID_SCREENS_TABLE_ENTRY">
+		<PROPERTY tag="num_of_grid_screens" type="unsigned int" />
+		<PROPERTY tag="max_cameras_in_conf" type="unsigned int" />
+		<PROPERTY tag="filmsrtip_num_of_screens" type="unsigned int" />
+		<PROPERTY tag="remaining_cells_to_display_from" type="unsigned int" />
+		<PROPERTY tag="remaining_cells_to_display_to" type="unsigned int" />
+		<PROPERTY tag="condition" type="enum" type_ref="condition" />
+		<MEMBER name="screens layout list" tag="SCREEN_LAYOUT" type="class" type_ref="screen layout" container="list"/>
+	</CLASS>
+	
+	<CLASS name="screen layout" tag="SCREEN_LAYOUT">
+		<PROPERTY tag="screen_index" type="unsigned int" />
+		<MEMBER name="grid layout type index" tag="GRID_LAYOUT_TYPE_INDEX" type="unsigned int"/>
+	</CLASS>
+	
+	<CLASS name="reserved screens logic table" tag="RESERVED_SCREENS_LOGIC_TABLE">
+		<PROPERTY tag="name" type="api string"/>
+		<MEMBER name="reserved screens table entry" tag = "RESERVED_SCREENS_TABLE_ENTRY" type="class" type_ref ="reserved screens table entry" container="list"/>
+	</CLASS>
+	
+	<CLASS name="reserved screens table entry" tag = "RESERVED_SCREENS_TABLE_ENTRY">
+			<PROPERTY tag="dest_num_of_screens" type="unsigned int" />
+			<PROPERTY tag="max_cameras_in_conf" type="unsigned int" />
+			<MEMBER name="speakers params entry" tag ="SPEAKERS_PARAMS_ENTRY" type="class" type_ref="speakers params entry" container = "list"/>
+	</CLASS>
+	
+	<CLASS name = "speakers params entry" tag = "SPEAKERS_PARAMS_ENTRY">
+			<PROPERTY tag="num_of_screens_of_speaker_1" type="unsigned int" />
+			<PROPERTY tag="num_of_screens_of_speaker_2" type="unsigned int" />
+			<PROPERTY tag="num_of_screens_of_speaker_3" type="unsigned int" />
+			<MEMBER name="dst screens" tag="RESERVED_LAYOUT" type="class" type_ref="reserved layout" container = "list"/>
+	</CLASS>
+	
+	<CLASS name = "reserved layout" tag = "RESERVED_LAYOUT">
+		<PROPERTY tag="screen_index" type="unsigned int" />	
+		<MEMBER name = "screen type" tag="SCREEN_TYPE" type="enum" type_ref = "screen type"></MEMBER>
+		<MEMBER name = "layout type" tag="RESERVED_LAYOUT_TYPE" type="enum" type_ref = "layout type"></MEMBER>
+	</CLASS>
+	
+</API>
+
+<!--  
+PROPERTY = RED SUBTITLE
+MEMBER OF TYPE  ENUM LAYOUT 
+reserve_layout class data of reserved layout list
+-->

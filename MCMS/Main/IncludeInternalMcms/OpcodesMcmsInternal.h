@@ -1,0 +1,1115 @@
+// OpcodesMcmsInternal.h
+
+#ifndef OPCODES_MCMS_INTERNAL_H_
+#define OPCODES_MCMS_INTERNAL_H_
+
+// =======================================
+// =========== CONFPARTY range ===========
+// =======================================
+//#define CONF_PARTY_INTERNAL_MCMS_FIRST_OPCODE		1980000
+#define CONF_MPL_CREATE_PARTY_REQ					1980010
+#define CONF_MPL_DELETE_PARTY_REQ				    1980011
+
+#define EXT_DB_PWD_CONFIRM							1980050
+#define EXT_DB_CONF_CONFIRM							1980051
+#define	XML_EVENT									1980052
+
+#define MOVE_PARTY_RESOURCE_REQ 					1980060
+#define	AC_OPEN_CONF_RESEND                         1980061
+
+#define SIGNALLING_DTMF_INPUT_IND					1980070
+#define RTP_DTMF_INPUT_IND							1980071
+#define IP_DTMF_INPUT_IND							1980072
+
+#define IVR_MUSIC_ADD_SOURCE_REQ                    1980110
+#define IVR_MUSIC_GET_SOURCE_REQ                    1980111
+
+#define CONF_ACTIVEALARM_IND						1980151
+#define SPECIFIC_MEETING_ROOM_AT_STARTUP_REQ		1980152
+
+#define CONF_DELETED_CONFERENCE						1980153
+#define CONF_FAILED_TASK							1980154
+#define CONF_UPDATED_FAILED_TASK					1980155
+#define CONF_FAILED_CONFERENCE						1980156
+#define CONF_UPDATED_FAILED_CONFERENCE				1980157
+#define CONF_REQUEST_PRECEDENCE_SETTINGS			1980158
+#define MULTIPLE_PARTIES_CHANGE_LAYOUT_REQ			1980160
+#define LOGGER_CURRENT_FILE_NUMBER_REPORT			1980161
+#define MULTIPLE_PARTIES_INDICATION_ICON_CHANGE_REQ			1980162
+
+#define EMA_IVR_SLIDE_CONVERTED                     1980163 // distinguished with MCCF_IVR_SLIDE_CONVERTED
+
+//#define CONF_PARTY_INTERNAL_MCMS_LAST_OPCODE		1989999
+
+// =======================================
+// ============= MPLAPI range ============
+// =======================================
+//#define MPLAPI_INTERNAL_MCMS_FIRST_OPCODE					2980000
+#define ESTABLISH_CONNECTION         					    2980001// Not in use now
+#define REESTABLISH_CONNECTION         					    2980002//
+#define BASIC_MSG_TO_MPL_API         					    2980010
+#define MPLAPI_MSG_TO_MPL             						2980011
+//#define MPLAPI_INTERNAL_MCMS_LAST_OPCODE					2989999
+
+// =======================================
+// ============ LOGGER range =============
+// =======================================
+//#define LOGGER_INTERNAL_MCMS_FIRST_OPCODE					3980000
+#define LOGGER_BUSY_TIMER									3980010
+#define LOGGER_FILE_SYSTEM_WARNING_TIMER                    3980011
+#define LOGGER_SYSTEM_LOAD_AVERAGE                          3980012
+#define LOGGER_DROP_MESSAGE_FLAG_ON_TIMER                   3980013
+#define LOGGER_ALL_MAX_TRACE_LEVEL                          3980014
+#define LOGGER_CARDS_MAX_TRACE_LEVEL                        3980015
+#define LOGGER_UDPAPPENDER_TIMER		                    3980016
+#define LOGGER_MSG_AVG_COUNT_TIMER		                    3980017
+#define LOGGER_LICENSING_IND			                    3980018
+#define LOGGER_SET_LEVEL_EXPLICIT							3980019
+#define LOGGER_UPDATE_WRITE_CFG_TIMER						3980020
+
+//#define LOGGER_INTERNAL_MCMS_LAST_OPCODE					3989999
+
+// =======================================
+// ============ MCUMNGR range ============
+// =======================================
+//#define MCUMNGR_INTERNAL_MCMS_FIRST_OPCODE			4980000
+#define  MCUMNGR_TO_ALL_PROCESSES_STATE_REQ	          	4980010
+#define  MCUMNGR_AUTHENTICATION_STRUCT_REQ				4980011   // sends MCMS_AUTHENTICATION_S structure
+#define  MCUMNGR_AUTHENTICATION_SUCCESS_REQ				4980012   // sends MCMS_AUTHENTICATION_S structure
+#define  MCUMNGR_TO_RSRCALLOC_LICENSING_IND          	4980013   // sends RSRCALLOC_LICENSING_S structure
+//#define  MCUMNGR_TO_CSMNGR_GET_DEFAULT_ROUTER	       	4980014   // get default router from CS Mngr
+#define  MCUMNGR_TO_CONFPARTY_LICENSING_IND          	4980015   // sends CONFPARTY_LICENSING_S structure
+#define  MCUMNGR_TO_GK_LICENSING_IND                	4980016   // sends GK_LICENSING_S structure
+#define  MCUMNGR_TO_RTMISDN_LICENSING_IND				4980017
+#define  NTP_SERVERS_STATUS_TIMER				       	4980018
+#define  NTP_SYNC_TIMER						          	4980019
+#define  INSTALLER_TO_MCUMNGR_CFS_PARAMS_REQ	      	4980020
+#define  MCUMNGR_TO_INSTALLER_CFS_PARAMS_IND	      	4980021   // sends INSTALLER_CFS_S structure
+#define  TEST_DHCP_IP_TIMER								4980022
+#define  TEST_DHCP_DNS_TIMER							4980023
+#define  MCUMNGR_STARTUP_TIMER							4980024
+#define  SYSTEM_MEMORY_USAGE_TIMER                      4980025
+#define  MCUMNGR_AUT_SET_DEFAULT_USER_LIST              4980026
+#define  MCUMNGR_TO_CSMNGR_END_IP_CONFIG_IND            4980027
+#define  CONF_BLOCK_IND									4980028
+#define  MCUMNGR_TO_CERTMNGR_HOST_NAME_UPDATE			4980029
+#define  GET_CONF_NUM_REQ                   			4980030
+#define  GET_CONF_NUM_IND                   			4980031
+#define  RECONFIG_CS_INERFACE_REQ                       4980032
+#define  MCUMNGR_RESET_TIMER                            4980033
+#define  RESOURCE_SYSTEM_RAM_SIZE_REQ		 	       	4980034   // should be united to a single
+#define  CONFPARTY_SYSTEM_RAM_SIZE_REQ		 	       	4980035   //   opcode: SYSTEM_RAM_SIZE_REQ
+#define  SYSTEM_RAM_SIZE_IND		 	               	4980036
+#define  MCUMNGR_INIT_KEYCODE_FAILURE_IND				4980037
+#define  MCUMNGR_TO_CARDS_LICENSING_IND             	4980038   // sends CARDS_LICENSING_S structure
+#define  MCUMNGR_TO_APACHEMODULE_LICENSING_IND        	4980039   // sends APACHEMODULE_LICENSING_S structure
+#define  MCUMNGR_TO_RSRCALLOC_TIME_CHANGED_IND			4980040
+#define	 BACKUPRESTORE_TO_MCUMNGR_SYS_VERSION_REQ		4980041
+#define  MCUMNGR_TO_BACKUPRESTORE_SYS_VERSION_IND		4980042
+#define  MCUMNGR_IP_TYPE_IND							4980043
+#define  SYSTEM_STARTUP_REMAINING_TIME_TIMER			4980044
+#define  MCUMNGR_TIME_SET								4980045
+// soft reset for Call Generator
+#define  MCMS_RESET										4980046
+
+#define  MCUMNGR_TO_AUTHENTICATION_MULTIPLE_SERVICES_IND 4980047
+#define  MCUMNGR_TO_APACHE_MULTIPLE_SERVICES_IND		4980048
+#define  MCUMNGR_TO_CSMNGR_MULTIPLE_SERVICES_IND       	4980049
+#define  MCUMNGR_TO_RSRC_MULTIPLE_SERVICES_IND			4980050
+#define  MCUMNGR_TO_CERTMNGR_MULTIPLE_SERVICES_IND		4980051
+#define  MCUMNGR_SECURITY_MODE_IND						4980052
+#define  MCUMNGR_CSMNGR_V35GW_PARAMS_REQ				4980053
+
+
+#define  MCUMNGR_TO_SIPPROXY_MULTIPLE_SERVICES_IND       4980054
+
+
+
+// McuMngr <-> GK
+#define  MCUMNGR_GK_MNGMNT_REQ                          4980055
+#define  MCUMNGR_GK_MNGMNT_IND                          4980056
+#define  MCUMNGR_TO_CSMNGR_IP_BECAME_VALID_IND          4980057
+
+//#define MCUMNGR_IPV6_AUTO_CONFIG_TIMER					4980060
+#define MCUMNGR_NETWORK_CONFIG_FAILURE_TIMER			4980061
+#define  MCUMNGR_SYSTEM_IS_OUT_OF_STARTUP_IND           4980062
+#define  MCUMNGR_CERTIFICATES_DAILY_TIMER				4980063
+#define  MCUMNGR_CONF_GMT_UPDATE						4980064
+#define  GMT_OFFSET_SET_TIMER							4980065
+#define  RSRCMNGR_UPDATE_HD_TRUE_IN_NON_1500Q           4980066
+#define  MCUMNGR_NOTIFMNGR_MCU_STATE_REQ                4980067
+#define  MCUMNGR_NOTIFMNGR_MCU_STATE_IND                4980068
+#define  MCUMNGR_NOTIFMNGR_AA_LIST_REQ                  4980069
+#define  MCUMNGR_NOTIFMNGR_AA_LIST_IND                  4980070
+// McuMngr <-> Encryption
+#define ENC_TO_MCUMNGR_IS_NTP_SYNC_REQ                  4980071
+// 802.1x
+#define MCUMNGR_GENERATE_CONF_FILE_802_1X               4980072
+#define MCUMNGR_Op802_1x_NEW_KILL_WPA_REQ               4980073
+#define OpInt802_1x_CONNECTION_STATUS_CHANGE_EVENT      4980074
+#define MCUMNGR_802_1x_WAIT_FOR_CARDS_TIMER             4980075
+#define MCUMNGR_802_1x_WAIT_FOR_CTRL_ETH_SET_TIMER      4980076
+#define MCUMNGR_802_1x_WAIT_FOR_MEDIA1_ETH_SET_TIMER    4980077
+#define MCUMNGR_802_1x_WAIT_FOR_MEDIA2_ETH_SET_TIMER    4980078
+#define MCUMNGR_802_1x_WAIT_FOR_MEDIA3_ETH_SET_TIMER    4980079
+#define MCUMNGR_802_1x_WAIT_FOR_MEDIA4_ETH_SET_TIMER    4980080
+#define RESOURCE_SYSTEM_CPU_PROFILE_REQ                 4980081
+#define SYSTEM_CPU_PROFILE_IND                          4980082
+#define MCUMNGR_802_1x_WAIT_FOR_SWITCH_ETH_SET_TIMER    4980083
+#define MCUMNGR_SNMP_READY_TIMER						4980084
+#define MCUMNGR_TO_CDR_PARAMS_IND						4980085
+#define  RSRCMNGR_UPDATE_MCUMNGR_ON_1500Q               4980086
+
+// BackupRestore timeout
+#define  BACKUP_TIMEOUT									4980100
+#define  RESTORE_TIMEOUT								4980101
+#define  BACKUP_START									4980102 // Internal Backup call
+#define  BACKUP_RESTORE_TO_INSTALLER_START_IND			4980103
+#define  BACKUP_RESTORE_TO_INSTALLER_FINISH_IND			4980104
+#define  INSTALLER_TO_BACKUP_RESTORE_START_IND			4980105
+#define  INSTALLER_TO_BACKUP_RESTORE_FINISH_IND			4980106
+#define  INSTALLER_PROGRESS_TIMER						4980107 // Timeout for unblocking instller progress
+#define  BACKUP_IDLE_TIMER								4980108 // Timeout for set Backup action to idle
+#define  EXCHANGEMNGR_CONFIG_TO_CONFPARTY_IND           4980109 // Sends whether Exchange Module is configured or not to work
+#define  EXCHNAGE_UPDATE_CONF_DETAILS_REQ               4980110
+#define  EXCHNAGE_MONITOR_UPDATE_SET_CFG_PARAMS         4980111
+#define  MCUMNGR_TO_EXCHANGE_STARTUP_END         		4980112
+#define  AV_VALIDATION_IND         						4980113
+#define  LOGGER_TO_MCUMNGR_CS_LOG_STATE			    	4980114
+#define	 MCUMNGR_PRECEDENCE_SETTINGS					4980115
+#define	 MCUMNGR_PRECEDENCE_SETTINGS_REQ				4980116
+#define  SECURITY_PKI_CFG								4980117
+#define  SECURITY_PKI_CFG_REQ							4980118
+
+#define  FPGA_UPGRADE_PROGRESS         					4980119
+#define  FAILED_REMOVED_AA_TIMER						4980120
+#define  MCUMNGR_VM_IP_READY_TIMER						4980121
+
+#define  LICENSE_SERVER_PARAMS_REQ                      4980122
+#define  LICENSE_SERVER_PARAMS_IND                      4980123
+#define  LICENSE_SERVER_FIRST_UPDATE_PARAMS_REQ         4980124
+#define  LICENSE_SERVER_UPDATE_PARAMS_REQ               4980125
+#define  LICENSE_SERVER_CONNECTION_STATUS_IND           4980126
+#define  LICENSE_SERVER_CONNECTION_TIME_IND             4980127
+
+//#define MCUMNGR_INTERNAL_MCMS_LAST_OPCODE				4989999
+
+// =======================================
+// ============= CARDS range =============
+// =======================================
+//#define CARDS_INTERNAL_MCMS_FIRST_OPCODE				5980000
+#define  RSRCALLOC_UNIT_CONFIG_REQ              	    5980010   // sends a RSRCALLOC_UNITS_LIST_CONFIG_PARAMS_S structure
+#define  RSRCALLOC_UNIT_CONFIG_IND         				5980011   // sends a CM_UNITS_CONFIG_S structure
+#define  SM_MFA_FAILURE_IND         					5980012
+#define  CARDS_NEW_MEDIA_IP_IND     					5980013   // sends a MEDIA_IP_PARAMS_S structure
+#define  CARDS_RSRC_MFA_STARTUP_COMPLETE_IND	      	5980014   // sends DWORD boardId, DWORD pq1_Status, DWORD pq2_Status
+#define  CARDS_RSRC_IVR_MOUNT_READ_STATUS_IND	      	5980015   // sends DWORD boardId, DWORD isSuccess
+#define  MFA_STARTUP_TIMER								5980016
+#define  KEEP_ALIVE_TIMER_RECEIVE                   	5980017   // new keepAlive opcodes. old opcodes
+#define  KEEP_ALIVE_TIMER_SEND                      	5980018   //      should be removed
+#define  SPEC_MFA_ACTIVE_ALARMS_REQ        	        	5980019   // sends DWORD boardId, DWORD subBoardId
+#define  SPEC_MFA_ACTIVE_ALARMS_IND        	    	   	5980020   // sends a ACTIVE_ALARMS_SPECIFIC_CARD_S structure
+#define  HOT_SWAP_RTM_REMOVED           	        	5980021   // sends DWORD boardId, DWORD subBoardId
+#define  SYSTEM_CARDS_MODE_STARTUP_TIMER     	        5980022
+#define  RESOURCE_SYSTEM_CARDS_MODE_REQ		     	   	5980023   // should be united to a single
+#define  CONFPARTY_SYSTEM_CARDS_MODE_REQ		    	5980024   //   opcode: MCMS_SYSTEM_CARDS_MODE_REQ
+#define  MCMS_SYSTEM_CARDS_MODE_IND		              	5980025
+#define  RESOURCE_UNIT_RECONFIG_REQ	     			    5980026
+#define  RESOURCE_UNIT_RECONFIG_IND	     			    5980027
+#define  SM_COMP_SLOT_ID_IND							5980028
+#define  CARDS_SLOTS_NUMBERING_CONVERSION_TABLE_IND		5980029   // sends a SLOTS_NUMBERING_CONVERSION_TABLE_S structure
+#define  BOARDS_EXPECTED_IND	     				    5980030
+#define  RESTART_STARTUP_TIMER	     				    5980031
+#define  UPDATE_SYSTEM_STARTUP_DURATION_IND			    5980032
+#define  CARDS_NEW_SYS_CFG_PARAMS_IND					5980033
+#define  FIPS_140_TIMER_RECEIVE_ALL_IND	     			5980034
+#define  IVR_MUSIC_ADD_SOURCE_RECEIVED_IND			    5980035
+#define  INSTALLER_NEW_VERSION_IS_READY_TO_CARDS        5980036
+#define  LAST_CARD_INSTALLATION_FINISHED                5980037
+#define  IPMC_UPGRADE_TIMER                             5980038
+#define	 INSTALLER_RESET_ALL_TO_CARDS					5980039
+#define  CHECK_ALL_IPMC_IND_RECEIVED					5980040
+#define  TOTAL_IPMC_IND_RECEIVED_TOUT					5980041
+
+#define  RTM_LANS_AND_ISDN_SLOT_IND						5980042
+#define  MODE_DETECTION_IND	     				        5980043
+#define  RSRCALLOC_IP_CONFIG_FAIL_IND					5980044
+#define  CARDS_SIPPROXY_ICE_INIT_IND					5980045
+#define  ICE_INIT_TIMER									5980046
+#define  ICE_INIT_IND_RECEIVED							5980047
+
+// Cards <-> CSMngr
+#define  CARDS_TO_CS_ICE_DETAILS						5980048
+#define  RTM_LANS_IND						            5980049
+#define  CARDS_LICENSE_IND								5980050
+
+#define  MFA_TASK_ALREADY_EXIST_TIMER                   5980051
+#define  CARDS_TO_UTILITY_START_TCP_DUMP_STATUS               5980052
+#define  CARDS_TO_UTILITY_STOP_TCP_DUMP_STATUS               5980053
+#define  CARDS_CSMNGR_MFA_STARTUP_COMPLETE_IND 			5980054
+
+#define  MFA1_HOT_SWAP_TIMER                        5980055
+#define  MFA2_HOT_SWAP_TIMER                        5980056
+#define  MFA3_HOT_SWAP_TIMER                        5980057
+#define  MFA4_HOT_SWAP_TIMER                        5980058
+
+#define MFA_IP_CONFIG_MSGS_TIMER                    5980059
+#define MFA_SIGNAL_FIRST_PORT_INACTIVITY_TIMER		5980060
+#define MFA_SIGNAL_SECOND_PORT_INACTIVITY_TIMER		5980061
+
+#define CS_EXT_INT_IP_CONFIG_FIRST_SERVICE_TIMER          5980062
+#define CS_EXT_INT_IP_CONFIG_SECOND_SERVICE_TIMER         5980063
+#define CS_EXT_INT_WAIT_REPLY_TIMER                       5980064
+
+#define MCUMNGR_SYSTEM_CARDS_MODE_REQ		    		5980065
+#define UTILITY_SYSTEM_CARDS_MODE_REQ		    		5980066
+#define  ICE_STATUS_IND_RECEIVED						5980067 //N.A. DEBUG
+#define  CARDS_TO_CS_ICE_DETAILS_UPDATE_STATUS			5980068
+//#define CARDS_INTERNAL_MCMS_LAST_OPCODE				5989999
+
+
+
+// =======================================
+// ============= QAAPI range =============
+// =======================================
+//#define QAAPI_INTERNAL_MCMS_FIRST_OPCODE					6980000
+#define SERVER_KEEP_ALIVE_TIMER								6980010
+#define SEND_REQ_TO_EXT_DB									6980011
+#define EXT_DB_USER_LOGIN_CONFIRM							6980012
+#define EXT_DB_RESPONSE_TOUT								6980013
+#define CQAAPI_MNGMNT_INTERFACE_IP_REQ                      6980014
+#define CQAAPI_MNGMNT_INTERFACE_IP_IND                      6980015
+#define AD_AUTHENTICATION_RESPONSE_TOUT						6980016
+//#define QAAPI_INTERNAL_MCMS_LAST_OPCODE					6989999
+
+// =======================================
+// ============= CS_API range ============
+// =======================================
+//#define CS_API_INTERNAL_MCMS_FIRST_OPCODE					7980000
+#define BASIC_MSG_TO_CS_API									7980010
+#define CS_API_MSG_TO_CS									7980011
+//#define CS_API_INTERNAL_MCMS_LAST_OPCODE					7989999
+
+// =======================================
+// =========== ENCRYPTION range ==========
+// =======================================
+//#define ENCRYPTION_INTERNAL_MCMS_FIRST_OPCODE				8980000
+
+//#define GET_HALF_KEY_REQ								 	8980010
+
+#define GET_HALF_KEY_IND								 	8980011
+#define START_CREATE_KEYS_REQ			                    8980012
+#define REQ_DH_FOR_NEW_KEY                                  8980013
+#define DH_IND_ON_NEW_KEY                                   8980014
+#define START_FILLING_ENCRYP_KEY_POLYCOM_DH_GEN_TABLE_TOUT  8980015
+#define START_FILLING_ENCRYP_KEY_TANBERG_H323_DH_GEN_TABLE_TOUT       8980016
+#define START_FILLING_ENCRYP_KEY_TANBERG_H320_DH_GEN_TABLE_TOUT       8980017
+#define DELAY_BETWEEN_GENERATE_ENC_KEY_TOUT                           89800118
+
+#define DELAY_BETWEEN_ENC_KEY_CHECK_TH_TOUT					89800119
+
+
+
+//--------------------------------------------------------------------------
+//#define ENCRYPTION_INTERNAL_MCMS_LAST_OPCODE				8989999
+
+// =======================================
+// =========== RSRCALLOC range ===========
+// =======================================
+//#define RESOURCE_INTERNAL_MCMS_FIRST_OPCODE				9980000
+#define ALLOCATE_FIRST_OPCODE_IN_RANGE                      9980010
+#define ALLOCATE_PARTY_RSRC_REQ                             9980011
+#define ALLOCATE_PARTY_RSRC_IND                             9980012
+#define DEALLOCATE_PARTY_RSRC_REQ                           9980013
+#define DEALLOCATE_PARTY_RSRC_IND                           9980014
+#define CREATE_RSRV_REQ                                     9980015
+#define CREATE_START_CONF_REQ                               9980016
+#define DESTROY_CONF_REQ                                    9980017
+#define START_CONF_RSRC_REQ                                 9980018
+#define START_CONF_RSRC_IND                                 9980019
+#define TERMINATE_CONF_RSRC_REQ                             9980020
+#define TERMINATE_CONF_RSRC_IND                             9980021
+#define START_PARTY_MOVE_RSRC_REQ                           9980022
+#define START_PARTY_MOVE_RSRC_IND                           9980023
+#define END_PARTY_MOVE_RSRC_REQ                             9980024
+#define END_PARTY_MOVE_RSRC_IND                             9980025
+#define STARTUP_READ_MR_AND_PROFILE_DB_REQ                  9980026
+#define STARTUP_READ_MR_AND_PROFILE_DB_IND                  9980027
+#define   STARTUP_INIT_MR_DB_IND                            9980028
+#define  ADD_MR_REQ            								9980029
+#define  ADD_RSRV_CONF_REQ          						9980030
+#define  ACTIVATE_MR_REQ            						9980031
+#define  START_AD_HOC_CONF_REQ      						9980032
+#define  RSRC_ADD_MR_IND            						9980033
+#define  RSRC_START_CONF_IND        						9980034
+#define  RSRC_ACTIVATE_MR_IND       						9980035
+#define  DEL_MR_REQ                 						9980036
+#define  DEL_RSRV_CONF_REQ          						9980037
+#define  DEACTIVATE_MR_REQ          						9980038
+#define  RSRC_DEL_MR_IND            						9980039
+#define  RSRC_DEL_RSRV_CONF_IND     						9980040
+#define  RSRC_DEACTIVATE_MR_IND     						9980041
+#define  SYNC_DEL_RSRV_CONF_REQ     						9980042
+#define  SYNC_DEACTIVATE_MR_REQ								9980043
+#define  RSRC_MR_UPDATE_IND        						    9980044
+#define  RSRC_SYSTEM_MEDIA_RECORDING_REQ        			9980045
+#define  COLLECTOR_COLLECTING_INFO_REQ						9980046
+#define  COLLECT_INFO_REQ                                   9980047
+#define  COLLECT_INFO_END_IND                               9980048
+#define  COLLECTOR_PROCESS_INFO_REQ						    9980049
+#define  COLLECTOR_PROCESS_INFO_IND						    9980050
+#define  COLLECT_INFO_TEST                                  9980051
+
+#define  COLLECT_PROCESSES_INFO_TIMER                       9980052
+#define  REALLOCATE_PARTY_RSRC_REQ                          9980053// related to SD feature
+#define  REALLOCATE_PARTY_RSRC_IND                          9980054
+#define  IP_RESOURCE_INFO_REQ                               9980055
+#define  IP_RESOURCE_INFO_IND                               9980056
+#define  REALLOCATE_RTM_ON_BOARD_FULL_REQ                   9980057
+#define  REALLOCATE_RTM_ON_BOARD_FULL_IND                   9980058
+#define  DEALLOCATE_BONDING_TEMP_PHONE_REQ                  9980059
+#define  UPDATE_RTM_PORT_REQ                                9980060
+#define  UPDATE_RTM_PORT_IND                                9980061
+// #define  SET_AUDIO_CNTRLR_MASTER_REQ                     9980057    // related to Hot Swap
+#define  CARD_REMOVED_IND                                   9980062
+#define  HW_REMOVED_PARTY_LIST_IND        		            9980063    //( sending from RP->ConfParty while removing  a card)
+#define  HW_NEW_IND                                         9980064    //( sending from RP->ConfParty while adding  a card)
+#define  UPDATE_IVR_CNTR_IND                                9980065
+#define  SET_AUTO_EXTEND_CONF_ENDTIME_REQ                   9980066
+#define  SET_CONFERENCE_ENDTIME_IND                         9980067
+#define  RESOURCE_READ_RES_DB								9980068
+#define  PROFILE_UPDATE_RSRC_IND							9980069
+#define  PROFILE_ADD_RSRC_IND								9980070
+#define  PROFILE_DELETE_RSRC_IND							9980071
+#define  RESOURCE_DELETE_REPEATED_IND							9980072
+#define  RESOURCE_WRITE_REPEATED_IND							9980073
+#define  RESOURCE_DELETE_CONFERENCE_TIMER						9980074
+#define  RESOURCE_START_CONFERENCE_TIMER						9980075
+
+#define  BACKUP_INPROGRESS_REQ								9980076 //BackupRestore Process
+#define	 RESTORE_INPROGRESS_REQ								9980077
+#define  RESOURCE_READY_IND									9980078
+#define  RESOURCE_NUMERIC_ID_REQ							9980079
+#define  RESOURCE_NUMERIC_ID_IND							9980080
+
+#define UPDATE_RESOLUTION_THRESHOLD                             9980081
+#define RESOURCE_DELETE_ALL_RES_IND                             9980082
+#define EXTRACT_PARTY_RSRC_INFO                                 9980083
+#define ALLOCATE_CONTENT_XCODE_REQ                              9980084
+#define DEALLOCATE_CONTENT_XCODE_REQ                            9980085
+#define DEALLOCATE_CONTENT_XCODE_IND                            9980086
+
+#define  SLAVE_ADD_CONF_REQ									9980090
+#define  SLAVE_UPDATE_CONF_TIME_REQ							9980091
+#define  SLAVE_ADD_PROFILE_REQ								9980092
+#define  SLAVE_UPDATE_PROFILE_REQ							9980093
+#define  SLAVE_DELETE_PROFILE_REQ							9980094
+#define  SLAVE_ADD_MEETING_ROOM_REQ							9980095
+#define  SLAVE_DELETE_MEETING_ROOM_REQ						9980096
+#define  SLAVE_ADD_OR_UPDATE_RSRV_REQ						9980097
+#define  SLAVE_DELETE_RSRV_REQ								9980098
+#define  SLAVE_ACTIVATE_MR_REQ                              9980099
+
+#define  RSRC_START_PREVIEW_IND						     	9980100
+#define  RSRC_STOP_PREVIEW_IND						     	9980101
+#define  RSRC_CHANGE_SYS_MODE_REQ							9980102 //2 modes cop/cp
+
+#define  ALLOCATE_PCM_RSRC_REQ			 					9980103
+#define  ALLOCATE_PCM_RSRC_IND     							9980104
+#define  DEALLOCATE_PCM_RSRC_REQ							9980105
+#define  DEALLOCATE_PCM_RSRC_IND 							9980106
+#define  COLLECT_INFO_FAILED_IND                            9980107
+#define  RSRC_CARD_TYPE_IND									9980108
+#define  REALLOCATE_ART_PARTY_REQ                           9980109
+#define  SYSMNTR_TO_RSRC_STOP_ALL_MEDIA_RECORDING_REQ       9980110
+
+#define  FORCE_DEALLOCATE_ALL_PARTIES_IN_CONF_RSRC_REQ      9980111
+#define  FORCE_DEALLOCATE_ALL_PARTIES_IN_CONF_RSRC_IND      9980112
+#define  GET_CONF_AND_PARTIES_RSRC_IDS_REQ					9980113
+#define  GET_CONF_AND_PARTIES_RSRC_IDS_IND					9980114
+#define  GET_CONF_COP_RSRC_IDS_REQ							9980115
+#define  GET_CONF_COP_RSRC_IDS_IND							9980116
+#define  GET_PARTY_RSRC_ID_REQ								9980117
+#define  GET_PARTY_RSRC_ID_IND								9980118
+
+#define  GET_CONFS_AND_PARTIES_LIST_REQ						9980119
+#define  GET_CONFS_AND_PARTIES_LIST_IND						9980120
+
+#define  STOP_VIDEO_PREVIEW_REQ								9980121
+
+// mixed Avc Svc Dynamic allocation
+#define  AVC_SVC_ADDITIONAL_PARTY_RSRC_REQ                  9989122
+#define  AVC_SVC_ADDITIONAL_PARTY_RSRC_IND                  9989123
+#define  SET_CONF_AVC_SVC_MEDIA_STATE			            9989124
+
+#define  CSMNGR_TO_RESOURSE_INTERFACE_UPDATE                    9989125
+//#define RESOURCE_INTERNAL_MCMS_LAST_OPCODE				9989999
+
+// =======================================
+// ============ SIPPROXYI range ==========
+// =======================================
+//#define SIPPROXY_INTERNAL_MCMS_FIRST_OPCODE				10980000
+#define START_CONF_REG										10980010
+#define TERMINATE_CONF_REG									10980011
+#define SIP_PROXY_TO_CONF_PARTY_DB_REQ						10980012
+#define SIP_START_SUBSCRIBE									10980013
+#define UPDATE_CREDENTIALS									10980014
+#define SIPPROXY_TO_CARDS_ICE_INIT_REQ						10980015
+#define SIP_PROXY_TO_CONF_END_INIT_ICE						10980016
+#define SIP_START_PRESENCE									10980017
+#define SIP_END_PRESENCE									10980018
+#define SIP_PROXY_TO_CONF_PARTY_SERVER_TYPE_REQ				10980019
+#define SIP_PROXY_CHANGE_PRESENCE_STATE						10980020
+#define DIALOG_RECOVERY_IND               10980021
+#define DIALOG_RECOVERY_REQ               10980022
+#define SIP_PROXY_TO_CONF_END_STAT_ICE						10980023
+#define WEBRTC_ICE_SERVICE_MANG_TO_CONF_END_INIT_ICE		10980024
+//#define SIPPROXY_INTERNAL_MCMS_LAST_OPCODE				10989999
+
+// =======================================
+// ============ AUTHENTICATION range ==========
+// =======================================
+//#define AUTHENTICATION_PRIVATE_FIRST_OPCODE				15990000
+#define DAILY_TIMER_TOUT									15990001
+#define LOCK_TIMER_TOUT										15990002
+#define AUTHETICATION_FIRST_JITC_TIMER						15990003
+#define SWITCH_LDAP_LOGIN_REQ								15990004
+
+
+//#define AUTHENTICATION_PRIVATE_LAST_OPCODE				15999999
+
+// =======================================
+// ============= CSMNGR range ============
+// =======================================
+//#define CS_MNGR_INTERNAL_MCMS_FIRST_OPCODE				16980000
+#define CS_MNGR_TO_MCU_FIRST_OPCODE_IN_RANGE  				16980010
+#define CS_MCU_NUM_OF_PORTS_REQ			                    16980011
+#define CS_MCU_NUM_OF_PORTS_IND								16980012
+#define CS_MCU_DELETE_IP_SERVICE_IND						16980013
+#define CSMNGR_TO_MCUMNGR_IP_TYPE_REQ						16980014
+#define CSMNGR_TO_MCUMNGR_V35GW_UPDATE_IND				    16980015
+#define CS_MNGR_TO_MCU_LAST_OPCODE_IN_RANGE				    16980016
+
+#define ICE_IP_SERVICE_PARAM_REQ					    	16980020
+#define ICE_IP_SERVICE_PARAM_IND					    	16980021
+
+#define CS_MNGR_TO_CONF_FIRST_OPCODE_IN_RANGE  				16980030
+#define CS_CONF_IP_SERVICE_PARAM_REQ						16980031
+#define CS_CONF_IP_SERVICE_PARAM_IND						16980032
+#define CS_CONF_IP_SERVICE_PARAM_END_IND					16980033
+#define CS_CONF_DELETE_IP_SERVICE_IND						16980034
+//#define CS_CONF_END_ICE_INT								16980035
+#define UPDATE_ICE_END										16980035
+#define CS_CONF_DEFAULT_SERVICE_IND							16980036
+#define CS_MNGR_TO_CONF_LAST_OPCODE_IN_RANGE				16980037
+#define UPDATE_STATUS_END									16980038
+
+#define CS_MNGR_TO_PROXY_FIRST_OPCODE_IN_RANGE 				16980050
+#define CS_PROXY_IP_SERVICE_PARAM_REQ						16980051
+#define CS_PROXY_IP_SERVICE_PARAM_IND						16980052
+#define CS_PROXY_IP_SERVICE_PARAM_END_IND					16980053
+#define CS_PROXY_DELETE_IP_SERVICE_IND						16980054
+#define CS_PROXY_REGISTRAR_STATUS_UPDATE_IND				16980055
+#define CS_PROXY_CS_UP_IND									16980056
+#define CS_PROXY_END_ICE_INT								16920057
+#define CS_PROXY_CONF_STATUS_UPDATE_IND						16980058
+#define CS_MNGR_TO_PROXY_LAST_OPCODE_IN_RANGE				16980059
+
+#define CS_MNGR_TO_CARDS_FIRST_OPCODE_IN_RANGE 				16980070
+#define CS_CARDS_MEDIA_IP_PARAMS_REQ                        16980071
+#define CS_CARDS_MEDIA_IP_PARAMS_IND						16980072   // sends a CS_MEDIA_IP_PARAMS_S structure
+#define CS_CARDS_MEDIA_IP_PARAMS_END_IND					16980073
+#define CS_CARDS_MEDIA_IP_CONFIG_IND     					16980074   // sends a IP_CONFIG_IND_S structure
+#define CS_CARDS_DELETE_IP_SERVICE_IND						16980075
+#define CS_ETH_SETTING_IND									16980076
+#define CS_MNGR_TO_CARDS_LAST_OPCODE_IN_RANGE				16980077
+
+#define CS_MNGR_TO_RSRC_FIRST_OPCODE_IN_RANGE 				16980090
+#define CS_RSRC_IP_SERVICE_PARAM_REQ						16980091
+#define CS_RSRC_IP_SERVICE_PARAM_IND						16980092
+#define CS_RSRC_IP_SERVICE_PARAM_END_IND					16980093
+#define CS_RSRC_DELETE_IP_SERVICE_IND						16980094
+#define CS_RSRC_UDP_PORT_RANGE_IND						    16980095
+#define CS_RSRC_CFS_IND         						    16980096
+#define CS_RSRC_UPDATE_IPV6_SERVICE_PARAM_REQ			   	16980097
+#define CS_RSRC_DEFAULT_SERVICE_IND							16980098
+#define CS_RSRC_TO_RSRC_LAST_OPCODE_IN_RANGE				16980099
+
+#define CS_MNGR_TO_DNS_AGENT_FIRST_OPCODE_IN_RANGE			16980110
+#define CS_DNS_AGENT_RESOLVE_IND							16980111
+#define CS_DNS_AGENT_DELETE_IP_SERVICE_IND					16980112
+#define CS_RSRC_TO_DNS_AGENT_LAST_OPCODE_IN_RANGE			16980113
+#define CS_SIGNAL_PORT_INACTIVITY_TIMER						16980114
+
+#define CS_MCUMNGR_IP_SERVICE_PARAM_IND						16980115
+#define CS_MCUMNGR_IP_SERVICE_PARAM_END_IND					16980116
+#define CS_MCUMNGR_DELETE_IP_SERVICE_IND					16980117
+#define CSMNGR_MCUMNGR_IP_SERVICE_PARAM_REQ					16980118
+
+#define CSMNGR_END_IP_CONFIG_IND							16980120
+#define CSMNGR_PROXY_IP_SERVICE_PARAM_REQ					16980121
+#define CSMNGR_SNMP_INTERFACE_REQ							16980122
+#define CSMNGR_ICE_TYPE_IND									16980123
+#define CSMNGR_TO_MCMSDAEMON_START_SIGNALING				16980124
+
+#define CSMNGR_CERTMNGR_IP_SERVICE_PARAM_REQ				16980125
+#define CS_CERTMNGR_IP_SERVICE_PARAM_IND					16980126
+#define CS_CERTMNGR_IP_SERVICE_PARAM_END_IND				16980127
+#define CS_CERTMNGR_DELETE_IP_SERVICE_IND					16980128
+#define CSMNGR_SIP_SERVER_TYPE_IND							16980129
+
+//GK MANAGER <-> CS MANAGER
+#define CS_MNGR_TO_GKMNGR_FIRST_OPCODE_IN_RANGE				16980130
+#define CS_GKMNGR_IP_SERVICE_PARAM_REQ						16980131
+#define CS_GKMNGR_IP_SERVICE_PARAM_IND						16980132
+#define CS_GKMNGR_IP_SERVICE_UPDATE_PARAM_IND				16980133
+#define CS_GKMNGR_DELETE_IP_SERVICE_IND						16980134
+#define CS_GKMNGR_UPDATE_SERVICE_PROPERTIES_REQ				16980135
+#define CS_GKMNGR_CLEAR_GK_PARAMS_FROM_PROPERTIES_REQ	16980136
+#define CS_GKMNGR_SET_GK_IP_IN_PROPERTIES_REQ				16980137
+#define CS_GKMNGR_SET_GK_ID_IN_PROPERTIES_REQ			16980138
+#define CS_GKMNGR_SET_GK_NAME_IN_PROPERTIES_REQ			16980139
+#define CS_MNGR_TO_GKMNGR_LAST_OPCODE_IN_RANGE				16980140
+#define CSMNGR_ADD_REMOVE_AA_IND							16980141
+
+#define CSMNGR_CONF_DISAPPROVE_INCOMING_CONFERENCES_REQ		16980160
+#define CSMNGR_CONF_RELEASE_CONFERENCES_REQ					16980161
+#define SIGNALINGTASK_TO_CSMNGR_SERVICE_UP_IND				16980162
+#define CSMNGR_GET_SERVICE_INFO_TIMER	    				16980163
+
+// CSMngr <-> McuMngr
+#define DNS_HOST_REGISTRATION_REQ							16980200
+#define DNS_HOST_REGISTRATION_IND							16980201
+
+#define CS_SERVICE_CFG_UPDATE_IND							16980202
+
+// CSMngr <-> Utility (TCPDump)
+#define CS_TCPDUMP_IP_SERVICE_PARAM_IND                     16980203
+#define CS_TCPDUMP_IP_SERVICE_PARAM_END_IND                 16980204
+#define CS_TCPDUMP_DELETE_IP_SERVICE_IND                    16980205
+#define CS_TCPDUMP_IP_SERVICE_PARAM_REQ                     16980206
+#define TCPDUMP_REQUEST_IP_SERVICE_TIMER                    16980207
+#define CS_UTILITY_MEDIA_IP_PARAMS_IND						16980208   // sends a CS_MEDIA_IP_PARAMS_S structure
+#define CS_UTILITY_IS_UP_TIMER									16980209   // sends a CS_MEDIA_IP_PARAMS_S structure
+#define  CS_CHECK_CS_IP_CONFIG_TIMER                              16980210
+
+#define  CS_CHECK_CS_IP_CONFIG_END_TIMER                              16980211
+#define  CS_CARDS_MS_CS_IP_CONFIG_END                              16980212
+#define  CS_SECURITY_PKI_CFG_IND							16980213
+#define CHECK_ETH2_CS_TIMER									16980214
+#define	FIRE_CHECK_ETH2_CS									16980215
+
+//#define CS_MNGR_INTERNAL_MCMS_LAST_OPCODE					16989999
+
+// =======================================
+// ============== CDR range ==============
+// =======================================
+//#define CDR_INTERNAL_MCMS_FIRST_OPCODE					17980000
+#define CDR_EVENT_BASE		 								17980010
+#define CDR_START_CONF 										17980011
+#define CDR_EVENT 											17980012
+#define CDR_END_CONF 										17980013
+#define CDR_INIT_DB 										17980014
+#define CDR_DETAIL 											17980015
+#define CDR_DETAIL_XML 										17980016
+#define CDR_FILE_SYSTEM_WARNING_TIMER                       17980017
+#define CDR_RETRIVED_INTERNAL_NOTIFY                        17980018
+#define CDR_CREATE_XML_FOLDER		                        17980019
+#define CDR_CONVERTOR_CREATE_XML	                        17980020
+#define CDR_XML_READY				                        17980021
+#define CDR_XML_COLLECTION_DONE		                        17980023
+#define CDR_CONVERTOR_ABORT		                       		17980024
+#define CDR_COLLECTOR_ABORT		                       		17980025
+#define CDR_PERSISTENCE_QUEUE_ENABLE                  		17980026
+#define CDR_PERSISTENCE_QUEUE_DISABLE                  		17980027
+#define CDR_PERSISTENCE_QUEUE_FOLDER_SIZE_TIMER             17980028
+#define CDR_PERSISTENCE_QUEUE_ADD_CDR	                    17980029
+#define	CDR_ENABLE_AA_SERVER_CONEECTION_DOWN				17980030
+#define	CDR_DISABLE_AA_SERVER_CONEECTION_DOWN				17980031
+#define	CDR_ENABLE_DISABLE_REMOTE_CDR_TIMER				    17980032
+#define	CDR_IS_REMOTE_CDR_ENABLE						    17980033
+
+
+
+
+
+//CDR MANAGER <-> RESOURCE MANAGER
+#define CDR_RSRC_GET_LAST_CONF_ID_REQ						17980100
+#define CDR_RSRC_SET_LAST_CONF_ID_IND						17980101
+
+//#define CDR_INTERNAL_MCMS_LAST_OPCODE						17989999
+
+// =======================================
+// ============ DNSAGENT range ===========
+// =======================================
+//#define DNSAGENT_INTERNAL_MCMS_FIRST_OPCODE				18980000
+#define DNS_RESOLVE_DOMAIN_REQ			  					18980010
+#define DNS_RESOLVE_IND				  						18980011
+#define SET_SIP_API				      						18980012
+#define DNS_MNGR_DUMP			      						18980013
+#define DNS_SERVICE_REQ			      						18980014
+#define DNS_SERVICE_IND			      						18980015
+#define DNS_UPDATE_REQ			      						18980016
+#define DNS_UPDATE_IND			      						18980017
+#define DNS_CLEAR_ALL			      						18980018
+#define SET_GK_API				      						18980019
+#define DNS_QUERY_STATUS_UPDATE								18980021
+#define DNSAGENT_MCUMNGR_CONFIGURATION_REQ					18980022
+#define DNSAGENT_MCUMNGR_CONFIGURATION_IND					18980023
+#define SIPPROXY_MCUMNGR_CONFIGURATION_REQ					18980024
+#define SIPPROXY_MCUMNGR_CONFIGURATION_IND					18980025
+#define SIPPROXY_CONFIG_CS_IND					            18980026
+#define SYSTEM_MONITORING_MCUMNGR_CPU_INFO					18980027
+#define DNSAGENT_TO_CSMNGR_GET_IPCONFIG                     18980028
+#define CSMNGR_TO_DNSAGENT_CS_CONFIGURED                    18980029 //---PLCM_DNS-------//
+//#define DNSAGENT_INTERNAL_MCMS_LAST_OPCODE				18989999
+
+// =======================================
+// ======== SYSTEM_MONITOR range ==========
+// =======================================
+//#define SYSTEM_MONITOR_FIRST_OPCODE_IN_RANGE				19970000
+#define  CORE_DUMP_MANAGER_TIMER                            19970000
+#define  SMART_MONITOR_TIMER                                19970001
+#define  ETHERNET_SETTINGS_MONITORING_TIMER                 19970002
+#define  SYSMONITOR_CARDS_ETHERNET_SETTINGS_MONITORING_IND  19970003
+#define  SMART_SELFTEST_TIMER								19970004
+//#define SYSTEM_MONITOR_LAST_OPCODE_IN_RANGE				19979999
+
+// =======================================
+// ======== APACHE_MODULE range ==========
+// =======================================
+//#define APACHE_MODULE_FIRST_OPCODE_IN_RANGE				19980000
+#define APACHE_MODULE_INTERNAL_MCMS_FIRST_OPCODE			19980000
+#define APACHE_MODULE_AUTHENTICATION_STRUCT_AND_LICENSING_REQ 19980010
+#define INSTALLER_FIPS_140_TEST_RESULT_IND      		   	19980011
+#define ENCRYPTION_KEY_SERVER_FIPS_140_TEST_RESULT_IND		19980012
+#define HTTPD_TO_CERTMNGR_LINK_FILE						    19980013
+#define APACHE_SECURITY_PKI_LOGIN_STATUS_IND			    19980014
+#define APACHE_BLOCK_REQUESTS			    				19980015
+#define APACHE_MODULE_INTERNAL_MCMS_LAST_OPCODE				19989999
+//#define APACHE_MODULE_LAST_OPCODE_IN_RANGE				19989999
+
+// =======================================
+// ========== MCMS Skeleton range ========
+// =======================================
+//#define MCMS_SKELETON_FIRST_OPCODE_IN_RANGE				25000001
+#define TO_MCUMNGR_STATE_CHANGED							25000010
+#define TASK_CHANGE_STATE_FAULT_IND							25000011
+#define MANAGER_STARTUP_TIMER								25000012
+#define PROCESS_IDLE_TIMER									25000013
+#define STARTUP_EVENT										25000014
+#define MANAGER_ALIVE									    25000015
+#define FLUSH_TO_LOGGER										25000016
+#define PROCESS_STAT_TIMER									25000017
+#define STARTUP_CONDITION_CONFIGURATION_TIMER				25000018
+#define SYNC_TERMINAL_COMMAND				                25000019
+#define PROCESS_MEMORY_USAGE_TIMER                          25000020
+#define NEW_CORE_DUMP_IND						      	    25000021
+#define SEND_RESPONSE_MSG_TIMER					     	    25000022
+#define TEST_RESPONSE_MSG_IND					     	    25000023
+#define PROCESS_CPU_USAGE_TIMER					     	    25000024
+#define ON_ASSERT_IND										25000025
+#define IS_STARTUP_FINISHED_TIMER                           25000026
+#define PROCESSBASE_DUMP_STATISTICS_TIMER                   25000027
+//#define MCMS_SKELETON_LAST_OPCODE_IN_RANGE				26000000
+
+// ===============================================
+// =========== InstallerManager range ============
+// ===============================================
+//#define INSTALLER_INTERNAL_MCMS_FIRST_OPCODE				26980000
+#define INSTALLER_KEYCODE_UPDATE_IND						26980010
+#define INSTALLER_SOFTWARE_PROGRESS_FROM_CARDS                          26980011
+#define INSTALLER_LAST_CARD_INSTALLATION_FINISHED                       26980012
+#define INSTALLER_IPMC_PROGRESS_FROM_CARDS                              26980013
+#define INSTALLER_LAST_CARD_IPMC_FINISHED                               26980014
+#define INSTALLER_MONITOR_UPDATE_KEY_STATUS_PARAMS                      26980015
+#define INSTALLER_AUTHETICATION_REMOVE_ENC_OPERATOR_FILE	26980016
+#define INSTALLER_AUTHENTICATION_STRUCT_REQ                             26980017
+//#define INSTALLER_INTERNAL_MCMS_LAST_OPCODE				26989999
+
+// =======================================
+// ========= MCMS_DAEMON range ===========
+// =======================================
+//#define MCMS_DAEMON_INTERNAL_MCMS_FIRST_OPCODE			27980000
+#define TO_MCMS_DAEMON_RESET_MCMS_REQ						27980010
+#define TO_MCMS_DAEMON_RESET_PROCESS_REQ					27980011
+#define CONFIG_APACHE_FINISHED_IND                          27980012
+#define INSTALLER_STOP_IPMC_WD                              27980013
+
+// for Call Generator - soft reset
+#define TO_MCMS_DAEMON_RESET_MCMS_EXT_REQ					27980014
+//#define MCMS_DAEMON_INTERNAL_MCMS_LAST_OPCODE				27989999
+
+
+// =======================================
+// ====== SYSTEM MONITORING range ========
+// =======================================
+//#define SYSTEM_MONITORING_INTERNAL_MCMS_FIRST_OPCODE		28980000
+#define SYSTEM_SYSTEM_CPU_USAGE_TIMER						28980010
+#define SYSTEM_MEMORY_SCAN_TIMER						    28980011
+#define SYSTEM_CHECK_SYSTEM_CPU_USAGE_REQ	   				28980012
+#define SYSTEM_PROCESS_STAT_TIMER			   				28980013
+#define SYSTEM_PROCESS_TEMP_SENSORS_TIMER					28980014
+#define SYSTEM_IS_STARTUP_FINISHED_TIMER                    28980015
+#define SYSTEM_CHECK_MEDIA_RECORDING_FOLDER_SIZE_TIMER      28980016
+#define SYSTEM_CHECK_FREE_DISK_SPACE_TIMER				    28980017
+#define SYSTEM_SCHED_LATENCY_TIMER				    28980018
+//#define SYSTEM_MONITORING_INTERNAL_MCMS_LAST_OPCODE		28989999
+
+// =======================================
+// ===== SYSTEM RTM_ISDN_MNGR range ======
+// =======================================
+//#define RTM_ISDN_MNGR_INTERNAL_MCMS_FIRST_OPCODE			29980000
+#define RTM_ISDN_PARAMS_IND									29980010	// RTM_ISDN_PARAMS_MCMS_S
+#define RTM_ISDN_PARAMS_END_IND								29980011
+#define RTM_ISDN_DEFAULT_SERVICE_NAME_IND					29980012	// RTM_ISDN_SERVICE_NAME_S
+#define RTM_ISDN_SPAN_MAPS_IND								29980013	// RTM_ISDN_SPAN_MAPS_LIST_S
+#define RTM_ISDN_SPAN_ENABLED_IND							29980014	// SPAN_ENABLED_S
+#define RTM_ISDN_ATTACH_SPAN_MAP_IND						29980015	// RTM_ISDN_SPAN_MAP_S
+#define RTM_ISDN_DETACH_SPAN_MAP_IND						29980016	// SPAN_DISABLE_S
+#define RTM_ISDN_SPAN_DISABLE_IF_UPDATABLE_REQ				29980017	// SPAN_DISABLE_S
+#define RTM_ISDN_SPAN_DISABLE_IF_UPDATABLE_IND				29980018	// SPAN_DISABLE_S
+#define RTM_ISDN_ENTITY_LOADED_IND                          29980019    // RTM_ISDN_ENTITY_LOADED_S
+#define RTM_ISDN_SPAN_STATUS_MCMS_IND                       29980020    // RTM_ISDN_SPAN_STATUS_MCMS_S
+#define RTM_ISDN_DISABLE_ALL_SPANS_IND						29980021	// RTM_ISDN_BOARD_ID_S
+#define RTM_ISDN_ADD_PHONE_RANGE_REQ						29980022	// RTM_ISDN_PHONE_RANGE_UPDATE_S
+#define RTM_ISDN_PHONE_RANGE_DELETE_IF_UPDATABLE_REQ		29980023	// RTM_ISDN_PHONE_RANGE_UPDATE_S
+#define RTM_ISDN_PHONE_RANGE_DELETE_IF_UPDATABLE_IND		29980024	// RTM_ISDN_PHONE_RANGE_UPDATE_S
+#define RTM_ISDN_SERVICE_CANCEL_IF_UPDATABLE_REQ			29980025	// RTM_ISDN_SERVICE_CANCEL_S
+#define RTM_ISDN_SERVICE_CANCEL_IF_UPDATABLE_IND			29980026	// RTM_ISDN_SERVICE_CANCEL_S
+#define RTM_ISDN_DELETE_SERVICE_IND							29980027	// RTM_ISDN_SERVICE_NAME_S
+#define RTM_ISDN_GET_SERVICE_INFO_TIMER						29980028	// RTM_ISDN_GET_SERVICE_INFO_TIMER
+
+#define RTM_ISDN_NUM_PRI_CARD						            29980029
+
+//#define RTM_ISDN_MNGR_INTERNAL_MCMS_LAST_OPCODE			29989999
+
+// =======================================
+// ========= GK Manager Internal range ===========
+// =======================================
+//#define GKMNGR_INTERNAL_MCMS_FIRST_OPCODE	              	30980000
+#define GKMNGR_RESOURCE_INFO_REQ						    30980001
+#define GKMNGR_RESOURCE_INFO_IND						    30980002
+//#define GKMNGR_INTERNAL_MCMS_LAST_OPCODE	               	30989999
+
+
+// =======================================
+// ========= SNMP range ===========
+// =======================================
+//#define MCMS_SNMP_INTERNAL_MCMS_FIRST_OPCODE		        31980000
+//#define UPDATE_SNMP_MANAGMENT_IP							31980010
+//#define CS_UPDATE_SNMP                                    31980011
+#define UPDATE_SNMP_IP_NOTIFICATION                         31980012
+#define SWITCH_IP_REQ                                       31980015
+#define SWITCH_IP_IND                                       31980016
+#define CS_IP_REQ                                           31980017
+#define CS_IP_IND                                           31980018
+#define GK_IP_REQ                                           31980019
+#define GK_IP_IND                                           31980020
+#define MFA1_IP_REQ                                         31980021
+#define MFA1_IP_IND                                         31980022
+#define MFA2_IP_REQ                                         31980023
+#define MFA2_IP_IND                                         31980024
+#define PRODUCT_TYPE_REQ                                    31980025
+#define PRODUCT_TYPE_IND                                    31980026
+#define SNMPD_WD                                            31980027
+#define SNMPD_STARTUP_RESET                                 31980028
+#define SNMPD_FIX_SNMPD_TIMER                               31980029
+
+//                                                          31980029
+//                                                          31980030
+
+#define SNMP_CS_INTERFACE_IP_REQ                            31980031
+#define SNMP_CS_INTERFACE_IP_IND                            31980032
+
+#define SNMP_MFA_INTERFACE_IP_REQ                           31980033
+#define SNMP_MFA_INTERFACE_IP_IND                           31980034
+
+#define SNMP_MNGMNT_INTERFACE_IP_REQ                        31980035
+#define SNMP_MNGMNT_INTERFACE_IP_IND                        31980036
+#define SNMP_MNGMNT_IP_CONFIG_IND                           31980037
+
+#define SNMP_AGENT_READY_IND                                31980038
+#define EP_PROCESS_STARTED                                  31980039
+#define SNMP_UPDATE_TELEMETRY_DATA_IND                      31980040
+#define SNMP_GET_TELEMETRY_DATA_REQ                         31980041
+#define SNMP_CONFIG_TO_OTHER_PROGRESS                       31980042
+#define SNMP_OTHER_PROCESS_READY                            31980043
+#define SNMP_UPDATE_MULTIPLE_TELEMETRY_DATA_IND             31980044
+#define SNMP_CM_CARD_MNGR_NEW_CARD_IND                      31980046
+#define SNMP_MFA_LINK_STATUS_IND                      		31980047
+#define SNMP_CS_LINK_STATUS_IND                      		31980048
+
+//#define MCMS_SNMP_INTERNAL_MCMS_LAST_OPCODE			    31989999
+
+// =======================================
+// ========= AUDITOR range ===========
+// =======================================
+
+//#define MCMS_AUDITOR_INTERNAL_MCMS_FIRST_OPCODE			    31990000
+#define AUDIT_EVENT_MCMS                                        31990001
+#define AUDIT_EVENT_OUTSIDER                                    31990002
+#define FLUSH_BUFFER_REQ                                        31990003
+#define FLUSH_BUFFER_IND_OK                                     31990004
+#define FLUSH_BUFFER_IND_FAIL                                   31990005
+#define TIMER_MID_NIGHT                                         31990006
+#define AUDIT_FILE_SYSTEM_WARNING_TIMER                         31990007
+
+//#define MCMS_AUDITOR_INTERNAL_MCMS_LAST_OPCODE			    31999999
+
+// ===============================================
+// ========= Certificate Manager range ===========
+// ===============================================
+#define CERTMNGR_TO_MCUMNGR_CERTIFICATE_UPDATE_IND				32980000
+#define CERTMNGR_GET_CERT_DETAILS                               32980001
+#define CERTMNGR_VERIFY_CERTIFICATE                             32980002
+#define CERTMNGR_REMOVE_ACTIVE_ALARM                            32980003
+#define CERTMNGR_VERIFY_CS_CERTIFICATE                          32980004
+
+
+// =========================================
+// ========= IPMCInterface range ===========
+// =========================================
+
+//#define IPMCIF_INTERNAL_MCMS_FIRST_OPCODE					    33980000
+
+#define IPMCIF_TO_INSTALLER_UPGRADE_PROGRESS					33980001
+#define IPMCIF_TO_INSTALLER_NO_UPGRADE_NEEDED					33980002
+
+//#define IPMCIF_INTERNAL_MCMS_LAST_OPCODE					    31989999
+// ===============================================
+// =============== Failover range ================
+// ===============================================
+//#define FAILOVER_INTERNAL_MCMS_FIRST_OPCODE				31080000
+#define MASTER_KEEP_ALIVE_TIMER_SEND						31080010
+#define MASTER_KEEP_ALIVE_TIMER_FAILURE						31080011
+#define MASTER_DOWN_IND										31080012
+#define FAILOVER_MCUMNGR_CONFIG_REQ               	    	31080013
+#define FAILOVER_MCUMNGR_CONFIG_IND                 		31080014
+#define FAILOVER_AUTHENTICATION_CONFIG_REQ        	  		31080015
+#define FAILOVER_AUTHENTICATION_CONFIG_IND        	  		31080016
+#define FAILOVER_START_SLAVE 			             		31080017
+#define FAILOVER_START_MASTER 			             		31080018
+#define FAILOVER_SLAVE_BECOME_MASTER						31080019 //not from API, but from code logic
+#define FAILOVER_RESTART_SLAVE								31080020
+#define FAILOVER_START_MASTER_BECOME_SLAVE					31080021 //not from API, but from code logic
+#define FAILOVER_CSMNGR_UPDATE_SERVICE_IND					31080022
+#define FAILOVER_MCUMNGR_UPDATE_MNGMNT_IND					31080023
+#define FAILOVER_CONFPARTY_ADD_OR_UPDATE_CONF_IND			31080024
+#define FAILOVER_CONFPARTY_TERMINATE_CONF_IND				31080025
+#define FAILOVER_CONFPARTY_ADD_OR_UPDATE_PROFILE_IND		31080026
+#define FAILOVER_CONFPARTY_TERMINATE_PROFILE_IND			31080027
+#define FAILOVER_CONFPARTY_ADD_OR_UPDATE_MEETING_ROOM_IND	31080028
+#define FAILOVER_CONFPARTY_TERMINATE_MEETING_ROOM_IND		31080029
+#define FAILOVER_CONFPARTY_IVR_SERVICE_LIST_IND		        31080030
+#define FAILOVER_CONFPARTY_RECORDING_LINKS_LIST_IND		    31080031
+#define FAILOVER_LOGIN_ARRIVED								31080032
+#define FAILOVER_RELOGIN_TIMER    			    			31080033
+#define WHOLE_SYNC_COMPLETED_IND							31080034
+#define FAILOVER_SOCKET_RCV_IND								31080035
+#define FAILOVER_RESUME_SLAVE_TASK							31080036
+#define FAILOVER_SET_PARAMS_IND			             		31080037
+#define FAILOVER_MASTER_BECOME_SLAVE						31080038
+#define FAILOVER_CONFPARTY_END_PREPARE_MASTER_BECOME_SLAVE	31080039
+
+#define FAILOVER_MCUMNGR_GET_STATE_EX_IND             		31080040
+/*Added for VNGR-23142. Used for the com between failover and MCUManager*/
+#define FAILOVER_MCUMNGR_UPDATE_PAIR_IP_IND             	31080041
+#define FAILOVER_EVENT_TRIGGER_IND							31080042
+/*To info the McuManager, one trigger deactivated now*/
+#define FAILOVER_MCUMNGR_EVENT_TRIGGER_IND					31080043
+
+#define SYNC_ONGOING_CONFERENCES_TIMER						31080050
+#define SYNC_MEETING_ROOMS_TIMER							31080051
+#define SYNC_RESERVATIONS_TIMER								31080052
+#define SYNC_CONFERENCES_PROFILES_TIMER						31080053
+#define SYNC_IVR_SERVICES_TIMER								31080054
+#define SYNC_RECORDING_LINKS_TIMER							31080055
+#define SYNC_MNGMNT_SERVICE_TIMER							31080056
+#define SYNC_IP_SERVICE_TIMER								31080057
+
+#define FAILOVER_RECONNECT_SOCKET_TIMER    				    31080060
+#define FAILOVER_MASTER_PING_TIMER    					    31080061
+#define FAILOVER_MASTER_GET_STATE_FROM_SLAVE_TIMER		    31080062
+#define FAILOVER_REFRESH_GK_REG_IND						    31080063
+#define FAILOVER_LED_STATUS_IND                             31080064
+//#define FAILOVER_INTERNAL_MCMS_LAST_OPCODE				31089999
+
+/*added by Richer for BRIDGE-14263, 2014.7.16*/
+#define FAILOVER_INIT_TIMER                                 31080065
+
+
+// ===============================================
+// ================ Utility range ================
+// ===============================================
+const OPCODE UTILITY_DOWNLOAD_FILE = 33980000; // a generic request to download a file: * -> UtilityManager
+
+const OPCODE UTILITY_INTERFACES_CONFIGURATION_REQ = 33980010;
+
+const OPCODE UTILITY_TO_CARDS_START_TCP_DUMP_REQ = 33980011;
+const OPCODE UTILITY_TO_CARDS_STOP_TCP_DUMP_REQ = 33980012;
+
+const OPCODE UTILITY_START_TCP_DUMP = 33980013;
+const OPCODE UTILITY_STOP_TCP_DUMP = 33980014;
+
+const OPCODE UTILITY_CLEAR_TCP_DUMP_STORAGE = 33980015;
+
+const OPCODE UTILITY_START_TCP_DUMP_TIMER = 33980016;
+
+const OPCODE UTILITY_FORWARD_TRACE_TO_LOGGER = 33980017;
+
+const OPCODE UTILITY_NO_START_TCP_DUMP_IND_TIMER = 33980018;
+const OPCODE UTILITY_NO_STOP_TCP_DUMP_IND_TIMER = 33980019;
+
+const OPCODE UTILITY_CONVERT_SLIDE = 33980020;
+
+
+//#define                         33989999
+
+//#define UTILITY_LAST_OPCODE				34000000
+
+
+// ===============================================
+// =============== LDAP Module range ================
+// ===============================================
+//#define LDAP_INTERNAL_MCMS_FIRST_OPCODE				    31090000
+#define LDAP_MODULE_AD_SERVER_AVAILABE_REQ   				31090001
+#define LDAP_MODULE_AD_SERVER_AVAILABE_IND   				31090002
+#define LDAP_AUTHENTICATION_LOGIN_REQ		   				31090003
+#define LDAP_AUTHENTICATION_LOGIN_IND		   				31090004
+#define LDAP_AUTHENTICATION_LOGIN_RESPONSE_TIMER			31090005
+#define LDAP_CLIENT_CHECK_SERVER_AVAILABILITY_TIMER	    	31090006
+#define CHECK_USER_LIST_FOR_LDAP_REQ						31090007
+#define CHECK_USER_LIST_FOR_LDAP_IND						31090008
+#define LDAP_ADD_ACTIVE_ALARM								31090009
+#define CHECK_AD_SERVER_AVAILABILITY						31090010
+#define LDAP_MONITOR_UPDATE_AVAILIBILITY_STATUS				31090011
+#define LDAP_MODULE_OCSP_SERVER_AVAILABE_IND				31090012
+//#define LDAP_INTERNAL_MCMS_LAST_OPCODE				    31099999
+// ============= MCCF Module range ===============
+// ===============================================
+const OPCODE MCCF_MESSAGE_QUEUE_TIMER     = 31200000;
+
+const OPCODE MCCF_MNGMNT_INTERFACE_IP_REQ = 31200001;
+const OPCODE MCCF_MNGMNT_INTERFACE_IP_IND = 31200002;
+
+const OPCODE MCCF_CS_KEEP_ALIVE_TIMER     = 31200003; // MCCFMngrManager -> CSApiManager
+
+// nothing to be sent back to Application Server, just notify MccfTxSocket on completion of request handling
+const OPCODE MCCF_REQUEST_ACK             = 31200004; // MccfRXSocket, ConfPartyManager -> MccfTXSocket
+
+// request to send a preliminary ACK to the Application Server
+const OPCODE MCCF_APP_SERVER_ACK          = 31200005; // MccfRXSocket -> MccfTXSocket
+
+// notifications of MCCF channel being OPENED / CLOSED
+const OPCODE MCCF_CHANNEL_OPENED          = 31200006; // MccfRXSocket -> MCCFMngrManager
+const OPCODE MCCF_CHANNEL_CLOSED          = 31200007; // MccfRXSocket -> MCCFMngrManager
+
+// generic MCCF package initialization / termination messages
+const OPCODE MCCF_CHANNEL_SYNC            = 31200008; // MccfRXSocket -> ConfPartyManager
+const OPCODE MCCF_CHANNEL_DROP            = 31200009; // MccfRXSocket -> ConfPartyManager
+
+// MCCF IVR package's request / response
+const OPCODE MCCF_IVR_PACKAGE_REQUEST     = 31200010; // MccfRXSocket -> ConfPartyManager
+const OPCODE MCCF_IVR_PACKAGE_RESPONSE    = 31200011; // ConfPartyManager -> MccfTXSocket
+
+const OPCODE MCCF_IVR_FILE_DOWNLOADED     = 31200012; // UtilityManager -> ConfPartyManager
+
+// MCCF CDR package report message
+const OPCODE MCCF_CDR_PACKAGE_RESPONSE    = 31200013; // ConfPartyManager -> MccfTxSocket
+
+const OPCODE MCCF_IVR_SLIDE_CONVERTED     = 31200014; // UtilityManager -> ConfPartyManager
+
+
+
+
+// ===============================================
+// ============= LicenseServer range ===============
+// ===============================================
+const OPCODE SYSTEM_LICENSE_REFRESH_TIMER     = 31300000;
+
+
+
+
+// ===============================================
+// ============= MCMSNetwork Module range ===============
+// ===============================================
+
+//#define MCMS_NETWORK_FIRST_OPCODE						31400000
+#define MCMSNETWORK_TO_MCMSDAEMON_FINISH				31400000
+//#define MCMS_NETWORK__LAST_OPCODE                      31409999
+
+
+
+// ===============================================
+// // ============= Faults Module range ===============
+// // ===============================================
+
+ #define DUMP_FAULTS_FILE_REQ				31500000
+
+// ===============================================
+// =============== EndPointsSim  Module range ===============
+// ===============================================
+// 10001 - 10020
+const OPCODE GIDEON_MSG				= 10001;
+const OPCODE CONNECT_CS_SOCKET		= 10002;
+const OPCODE GUI_SOCKET_RCV_MSG		= 10003;
+const OPCODE SIM_CS_RCV_MSG			= 10004;
+const OPCODE BATCH_COMMAND			= 10005;
+
+// 10101 - 10150
+const OPCODE UPDATE_ENDPS_MBX		= 10101;
+//const OPCODE UPDATE_H323_MBX		= 10101;
+//const OPCODE UPDATE_SIP_MBX		= 10102;
+const OPCODE UPDATE_CS_MBX			= 10103;
+const OPCODE SEND_TO_CSAPI			= 10104;
+const OPCODE GUI_TO_ENDPOINTS		= 10105;
+const OPCODE GUI_TO_MANAGER			= 10106;
+//const OPCODE GUI_TO_PSTN			= 10107;
+const OPCODE ENDPOINTS_TO_GUI		= 10108;
+//const OPCODE H323_TO_GUI			= 10108;
+const OPCODE CSAPI_TO_PROXY			= 10109;
+const OPCODE UPDATE_PROXY_MBX		= 10110;
+const OPCODE PROXY_REMOVE_CONF		= 10111;
+const OPCODE GUI_TO_SCRIPTS			= 10112;
+const OPCODE SCRIPTS_TO_GUI			= 10113;
+const OPCODE GK_REMOVE_SERVICE		= 10114;
+const OPCODE UPDATE_GK_MBX			= 10115;
+const OPCODE SC_MSG_TO_MNGR			= 10116;
+
+const OPCODE GUI_TO_GATEKEEPER		= 10117;
+
+
+// batch commands  10201 - 10250
+const OPCODE BATCH_ADD_PARTY		= 10201;
+const OPCODE BATCH_DEL_PARTY		= 10202;
+const OPCODE BATCH_CONNECT_PARTY	= 10203;
+const OPCODE BATCH_DISCONNECT_PARTY	= 10204;
+const OPCODE BATCH_DTMF_PARTY		= 10205;
+const OPCODE BATCH_ACTIVE_SPEAKER	= 10206;
+const OPCODE BATCH_MUTE				= 10207;
+const OPCODE BATCH_UNMUTE			= 10208;
+const OPCODE BATCH_FECC_TOKEN_REQUEST	= 10209;
+const OPCODE BATCH_FECC_TOKEN_RELEASE	= 10210;
+const OPCODE BATCH_AUDIO_SPEAKER	= 10211;
+const OPCODE BATCH_CHANGEMODE_PARTY	= 10212;
+const OPCODE BATCH_ADD_CAPSET		= 10213;
+const OPCODE BATCH_H239_TOKEN_REQUEST	= 10214;
+const OPCODE BATCH_H239_TOKEN_RELEASE	= 10215;
+const OPCODE BATCH_CHANNELS_UPDATE	= 10216;
+const OPCODE BATCH_SET_PARTY_CAPSET	= 10217;
+const OPCODE BATCH_LPR_MODE_CHANGE_REQUEST = 10218;
+const OPCODE BATCH_FECC_KEY_REQUEST	= 10219;
+const OPCODE BATCH_SHOW_ALL_PARTIES_REQ = 10220;
+
+const OPCODE BATCH_DEL_CAPSET		= 10225;
+const OPCODE BATCH_SCP_STREAMS_REQUEST = 10226;
+
+/*#define MOUNT_FAILED 0xDEAD
+typedef struct
+{
+    APIU32  status;
+} UPGRADE_NEW_VERSION_READY_IND_S;*/
+
+
+#endif  // OPCODES_MCMS_INTERNAL_H_

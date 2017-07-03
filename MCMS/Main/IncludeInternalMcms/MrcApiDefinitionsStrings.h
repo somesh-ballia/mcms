@@ -1,0 +1,22 @@
+/*
+ * MrcApiDefinitionsStrings.h
+ *
+ *  Created on: May 20, 2012
+ *      Author: kgratz
+ */
+
+#ifndef MRCAPIDEFINITIONSSTRINGS_H_
+#define MRCAPIDEFINITIONSSTRINGS_H_
+
+static const char* EMrmpVideoChannelTypeNames[] =
+{
+	"E_MRMP_VIDEO_CHANNEL_DUMMY",
+	"E_MRMP_VIDEO_CHANNEL_NORMAL",
+	"E_MRMP_VIDEO_CHANNEL_SVC_TO_AVC",
+	"E_MRMP_VIDEO_CHANNEL_AVC_TO_SVC",
+	"E_MRMP_VIDEO_CHANNEL_CONTENT",
+	"E_MRMP_VIDEO_CHANNEL_LAST"
+};
+
+
+#endif /* MRCAPIDEFINITIONSSTRINGS_H_ */

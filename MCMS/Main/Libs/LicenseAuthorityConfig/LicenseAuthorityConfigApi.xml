@@ -1,0 +1,19 @@
+<API name="LicenseAuthorityConfig" >
+
+	<NAMESPACE tag="ns3" default="urn:com:polycom:api:rest:plcm-license-authority-config"/>
+	<NAMESPACE tag="ns2" default="urn:com:polycom:api:rest:plcm-server-address"/>	
+	<NAMESPACE default="http://www.w3.org/2005/Atom"/>
+
+	<CLASS ns="ns3" tag="plcm-license-authority-config" root="true">		
+		<MEMBER  ns="ns3" tag="main-server-address" type="class" type_ref="main-server-address"/>
+		<MEMBER  ns="ns3" tag="use-auto-discovery" type="bool"/>
+		<MEMBER  ns="ns3" tag="current-status" type="string"/>
+		<MEMBER  ns="ns3" tag="entity-tag" type="uint" />				
+	</CLASS>
+	
+	<CLASS ns="ns2" tag="main-server-address">
+		<MEMBER ns="ns2" tag="host" type="string"/>		
+		<MEMBER ns="ns2" tag="port-number" type="uint"/>
+	</CLASS>
+
+</API>

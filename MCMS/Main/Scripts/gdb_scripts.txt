@@ -1,0 +1,371 @@
+
+
+
+
+
+#################################################################################################
+#                    dumps of generic stl data structures in Carmel project			#
+#################################################################################################
+
+
+
+
+define dumpstlht
+  set $s = $arg0._M_ht._M_buckets._M_impl._M_start
+  set $e = $arg0._M_ht._M_buckets._M_impl._M_finish
+  set $b = 0
+  while $s < $e 
+    printf "bucket %d\n", $b
+    set $x = *$s
+    while $x != 0
+      p $x->_M_val
+      set $x = $x->_M_next
+    end
+    set $b = $b + 1
+    set $s = $s + 1
+    printf "\n"
+  end
+end
+
+define dumpvec
+  set $s = $arg0._M_impl._M_start
+  set $e = $arg0._M_impl._M_finish
+  set $i = 0
+  while $s < $e
+    printf "%d:", $i
+    p *$s
+    set $i = $i + 1
+    set $s = $s + 1
+    printf "\n"
+  end
+end
+
+
+#
+# std::list<>
+#
+define dumplist
+	set $head = &$arg0._M_impl._M_node
+	set $current = $arg0->_M_impl->_M_node->_M_next
+	set $size = 0
+	while $current != $head
+	
+		printf "elem[%u]: ", $size
+		p *($arg1*)($current + 1)
+	
+		set $current = $current->_M_next
+		set $size++
+	end
+	printf "List size = %u \n", $size
+end
+
+document dumplist
+	Prints std::list<T> information.
+	Syntax: dumplist <list> <T> <idx>: Prints list size, if T defined all elements or just element at idx
+	Examples:
+	dumplist l - prints list size and definition
+	dumplist l int - prints all elements and list size
+	dumplist l int 2 - prints the third element in the list (if exists) and list size
+end
+
+
+define dumpstlrbt
+  set $h = $arg0._M_t._M_impl._M_header
+  set $i = $h->_M_left
+  while $i != $h
+    p ((_Rb_tree_node*) $i)->_M_value_field
+    if $i->_M_right != 0
+      set $i = $i->_M_right
+      while $i->_M_left != 0
+        set $i = $i->_M_left
+      end
+    else
+      set $p = $i->_M_parent
+      while $i == $p->_M_right
+        set $i = $p
+        set $p = $p->_M_parent
+      end
+      if $i->_M_right != $p
+        set $i = $p
+      end
+    end
+  end
+end
+
+#define dumplist
+#  p $arg0
+#  set $node = $arg0._M_impl._M_node
+#  set $last = $arg0._M_impl._M_node->_M_prev
+#  set $list_counter = 0
+#  p $node->_M_next
+#  p $first
+#  while $node->_M_next != $last
+#    printf "%d:", $list_counter
+#    p $node
+#    set $list_counter = $list_counter + 1
+#    set $node = $node->_M_next
+#  end
+#end
+
+define dumpmap
+  dumpstlrbt $arg0
+end
+
+define dumpset
+  dumpstlrbt $arg0
+end
+
+define dumphmap
+  dumpstlht $arg0
+end
+
+
+define dumphset
+  dumpstlht $arg0
+end
+
+define dumpstr
+  printf "[Capacity = %u, Length = %u, References = %d]\n\"%s\"\n", $arg0._M_rep()->_M_capacity, $arg0._M_rep()->_M_length, $arg0._M_rep()->_M_refcount, $arg0._M_data()
+end
+
+
+#
+# std::map and std::multimap
+#
+
+define dumpmap
+
+		set $tree = $arg0
+		set $i = 0
+		set $node = $tree->_M_t->_M_impl->_M_header->_M_left
+		set $end = $tree->_M_t->_M_impl->_M_header
+		set $tree_size = $tree->_M_t->_M_impl->_M_node_count
+
+			while $i < $tree_size
+				set $value = (void *)($node + 1)
+				printf "elem[%u]->left: ", $i
+				p *($arg1*)$value
+				set $value = $value + 4
+				printf "elem[%u]->right: ", $i
+				p *($arg2*)$value
+				if $node->_M_right != 0
+					set $node = $node->_M_right
+					while $node->_M_left != 0
+						set $node = $node->_M_left
+					end
+				else
+					set $tmp_node = $node->_M_parent
+					while $node == $tmp_node->_M_right
+						set $node = $tmp_node
+						set $tmp_node = $tmp_node->_M_parent
+					end
+					if $node->_M_right != $tmp_node
+						set $node = $tmp_node
+					end
+				end
+				set $i++
+			end
+	
+		printf "Map size = %u\n", $tree_size
+
+end
+
+document dumpmap
+	Prints std::map<TLeft and TRight> or std::multimap<TLeft and TRight> information. Works for std::multimap as well.
+	Syntax: dumpmap <map> <TtypeLeft> <TypeRight> <valLeft> <valRight>: Prints map size, if T defined all elements or just element(s) with val(s)
+	Examples:
+	dumpmap m - prints map size and definition
+	dumpmap m int int - prints all elements and map size
+	dumpmap m int int 20 - prints the element(s) with left-value = 20 (if any) and map size
+	dumpmap m int int 20 200 - prints the element(s) with left-value = 20 and right-value = 200 (if any) and map size
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#################################################################################################
+#                    dumps of specific data structures in Carmel project			#
+#################################################################################################
+
+
+
+
+
+#
+# std::map and std::multimap
+#
+
+define pOpcodeStringConverter
+
+		set $tree = CProcessBase::m_pCurrentProcess->m_OpcodeStringConverter->m_Map
+		set $i = 0
+		set $node = $tree->_M_t->_M_impl->_M_header->_M_left
+		set $end = $tree->_M_t->_M_impl->_M_header
+		set $tree_size = $tree->_M_t->_M_impl->_M_node_count
+
+			while $i < $tree_size
+				set $value = (void *)($node + 1)
+
+				set $key = $value
+				set $value = $value + 4
+				printf "%i -> %s\n" , * ((int *)$key) , *((char** )$value)
+				if $node->_M_right != 0
+					set $node = $node->_M_right
+					while $node->_M_left != 0
+						set $node = $node->_M_left
+					end
+				else
+					set $tmp_node = $node->_M_parent
+					while $node == $tmp_node->_M_right
+						set $node = $tmp_node
+						set $tmp_node = $tmp_node->_M_parent
+					end
+					if $node->_M_right != $tmp_node
+						set $node = $tmp_node
+					end
+				end
+				set $i++
+			end
+	
+		printf "Map size = %u\n", $tree_size
+
+end
+
+
+
+#
+# std::map and std::multimap
+#
+
+define pSysCfgMap
+		set $tree = *(CProcessBase::m_pCurrentProcess->m_SysConfig->m_Map)
+
+		set $i = 0
+		set $node = $tree->_M_t->_M_impl->_M_header->_M_left
+		set $end = $tree->_M_t->_M_impl->_M_header
+		set $tree_size = $tree->_M_t->_M_impl->_M_node_count
+
+		while $i < $tree_size
+			set $value = (void *)($node + 1)
+
+			set $key = $value
+			set $data = $value + 4
+			printf "%s -> %s\n" , *((char** )$key) ,  (*((CCfgData**)$data))->m_Data.c_str()
+
+			if $node->_M_right != 0
+				set $node = $node->_M_right
+				while $node->_M_left != 0
+					set $node = $node->_M_left
+				end
+			else
+				set $tmp_node = $node->_M_parent
+				while $node == $tmp_node->_M_right
+					set $node = $tmp_node
+					set $tmp_node = $tmp_node->_M_parent
+				end
+				if $node->_M_right != $tmp_node
+					set $node = $tmp_node
+				end
+			end
+			set $i++
+		end
+	
+		printf "Map size = %u\n", $tree_size
+end
+
+
+
+
+
+
+
+
+define dumptasksaspointer
+  set $s = (*(CProcessBase::m_pCurrentProcess->m_pTasks))._M_impl._M_start
+  set $e = (*(CProcessBase::m_pCurrentProcess->m_pTasks))._M_impl._M_finish
+  set $i = 0
+  while $s < $e
+    printf "%d:", $i
+    p *$s 
+    p **$s
+    set $i = $i + 1
+    set $s = $s + 1
+    printf "\n"
+  end
+end
+
+
+define dumptaskstimers
+  set $st = (*(CProcessBase::m_pCurrentProcess->m_pTasks))._M_impl._M_start
+  set $et = (*(CProcessBase::m_pCurrentProcess->m_pTasks))._M_impl._M_finish
+  set $it = 0
+  while $st < $et
+    printf "%d:", $it
+    p *$st
+    #p *$st->m_pTimer
+    #p $st->m_pTimer.m_TimerQueue
+    set $xt = $st->m_pTimer.m_TimerQueue
+    dumpvec $xt
+    set $it = $it + 1
+    set $st = $st + 1
+    printf "\n"
+  end
+end
+
+
+define dumptasksqueues
+  set $sq = (*(CProcessBase::m_pCurrentProcess->m_pTasks))._M_impl._M_start
+  set $eq = (*(CProcessBase::m_pCurrentProcess->m_pTasks))._M_impl._M_finish
+  set $iq = 0
+  while $sq < $eq
+    printf "%d:", $iq
+    p *$sq
+    p *$sq->m_pRcvMbxRead
+    p *$sq->m_pRcvMbxRead->m_internals
+    set $n = 0
+    while $n < $sq->m_pRcvMbxRead->m_internals->m_max_connections
+       if $sq->m_pRcvMbxRead->m_internals->m_opened[$n] != -1
+          p $n
+          p $sq->m_pRcvMbxRead->m_internals->m_opened[$n]
+          p $sq->m_pRcvMbxRead->m_internals->m_statistics[$n]
+       end
+       set $n = $n + 1
+    end
+    #p *$sq->m_pRcvMbxRead->m_internals->m_statistics
+    set $iq = $iq + 1
+    set $sq = $sq + 1
+    printf "\n"
+  end
+end
+
+
+#define dumptaskslocalqueues
+#  set $sq = (*(CProcessBase::m_pCurrentProcess->m_pTasks))._M_impl._M_start
+#  set $eq = (*(CProcessBase::m_pCurrentProcess->m_pTasks))._M_impl._M_finish
+#  set $iq = 0
+#  while $sq < $eq
+#    printf "%d:", $iq
+#    p *$sq
+#    set $xq = $sq->m_localQueue
+#    p $xq
+#    dumplist $xq
+#    set $iq = $iq + 1
+#    set $sq = $sq + 1
+#    printf "\n"
+#  end
+#end
+

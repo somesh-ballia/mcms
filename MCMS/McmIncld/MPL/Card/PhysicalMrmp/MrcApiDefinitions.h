@@ -1,0 +1,16 @@
+#ifndef MRCAPIDEFINITIONS_H_
+#define MRCAPIDEFINITIONS_H_
+
+typedef enum
+{
+            E_MRMP_VIDEO_CHANNEL_DUMMY,
+            E_MRMP_VIDEO_CHANNEL_NORMAL,
+            E_MRMP_VIDEO_CHANNEL_SVC_TO_AVC,
+            E_MRMP_VIDEO_CHANNEL_AVC_TO_SVC,
+            E_MRMP_VIDEO_CHANNEL_CONTENT,
+            E_MRMP_VIDEO_CHANNEL_LAST
+} EMrmpVideoChannelType;
+
+
+
+#endif /* MRCAPIDEFINITIONS_H_ */

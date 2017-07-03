@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Header>
+    <RequestServerVersion Version="Exchange2007_SP1" xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+  </soap:Header>
+  <soap:Body>
+    <FindItem Traversal="Shallow" xmlns="http://schemas.microsoft.com/exchange/services/2006/messages">
+      <ItemShape>
+        <BaseShape xmlns="http://schemas.microsoft.com/exchange/services/2006/types">Default</BaseShape>
+        <AdditionalProperties xmlns="http://schemas.microsoft.com/exchange/services/2006/types">
+          <FieldURI FieldURI="item:ItemClass"/>
+          <FieldURI FieldURI="calendar:MyResponseType"/>
+        </AdditionalProperties>
+      </ItemShape>
+      <CalendarView MaxEntriesReturned="100" StartDate="__START_TIME_PLACE__" EndDate="__END_TIME_PLACE__" />
+      <ParentFolderIds>
+        <DistinguishedFolderId Id="calendar" xmlns="http://schemas.microsoft.com/exchange/services/2006/types">
+          <Mailbox>
+            <EmailAddress>__EMAIL_ADDRESS_PLACE__</EmailAddress>
+          </Mailbox>
+        </DistinguishedFolderId>
+      </ParentFolderIds>
+    </FindItem>
+  </soap:Body>
+</soap:Envelope>

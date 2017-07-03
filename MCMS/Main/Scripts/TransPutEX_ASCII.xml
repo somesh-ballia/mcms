@@ -1,0 +1,18 @@
+PUT /Install/леле-меме HTTP/1.1
+Content-Type: text/xml
+pragma: MESSAGE_ID=1
+Server: PolycomHTTPServer
+Cache-control: private
+Authorization: Basic U1VQUE9SVDpTVVBQT1JU
+Content-Length: 7940
+Expect: 100-continue
+Host: 172.22.191.95
+Cookie: XMLMCUToken=5
+
+HTTP/1.1 100 Continue
+
+file content
+
+
+
+

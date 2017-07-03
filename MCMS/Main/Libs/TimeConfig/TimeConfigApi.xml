@@ -1,0 +1,19 @@
+<API name="TimeConfig" >
+
+	<NAMESPACE tag="ns3" default="urn:com:polycom:api:rest:plcm-time-config"/>
+	<NAMESPACE tag="ns2" default="urn:com:polycom:api:rest:plcm-timezone-list"/>	
+	<NAMESPACE default="http://www.w3.org/2005/Atom"/>
+
+	<CLASS name="plcm-time-config" ns="ns3" tag="plcm-time-config" root="true">
+		<MEMBER  ns="ns3" tag="use-ntp-server" type="bool" />
+		<MEMBER  ns="ns3" tag="ntp-server-list" type="string" container="list"/>
+		<MEMBER  ns="ns3" tag="entity-tag" type="uint" />				
+		<MEMBER  ns="ns3" tag="current-time" type="opt string"/>
+	</CLASS>
+
+</API>
+
+
+
+
+

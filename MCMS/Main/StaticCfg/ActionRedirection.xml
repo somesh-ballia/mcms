@@ -1,0 +1,520 @@
+<ACTION_REDIRECTION_MAP>
+
+
+<!-- Redirection entry description -->
+<!-- The attribute auditable SHOULD be added ALWAYS -->
+<!-- if transaction should NOT be audited  set value be "no", otherwise set "yes" -->
+
+<!-- How does one can tell which transaction to audit and which not? -->
+<!-- The rule of thumb is that changing administrative configuration should be audited -->
+<!-- monitoring(GET transactions) should not be audited -->
+<!-- conference activities should not be audited -->
+
+<!-- example -->
+<!-- <LOGIN auditable="yes">ApacheModule</LOGIN>  -->
+
+
+ <TRANS_MCU>
+   <LOGIN  auditable="yes" name="Login" description="A user logged into the RMX." failure_description="User login to the system failed.">ApacheModule</LOGIN>
+   <LOGOUT  auditable="yes" name="Logout" description="A user logged out of the RMX." failure_description="User logout of the system failed.">ApacheModule</LOGOUT>
+   <GET_VIRTUAL_DIRECTORY  auditable="no">ApacheModule</GET_VIRTUAL_DIRECTORY>   
+   <GET_VIRTUAL_DIRECTORY_RECURSIVE  auditable="no">ApacheModule</GET_VIRTUAL_DIRECTORY_RECURSIVE>      
+   <CREATE_DIRECTORY  auditable="yes" name="Create directory" description="A directory was created." failure_description="Failed to create a directory.">ApacheModule</CREATE_DIRECTORY>      
+   <REMOVE_DIRECTORY_CONTENT  auditable="yes" name="Directory content deleted" description="All files deleted from the directory." failure_description="Failed to delete all the files from the directory.">ApacheModule</REMOVE_DIRECTORY_CONTENT>   
+   <REMOVE_DIRECTORY  auditable="yes" name="Delete directory" description="A directory was deleted." failure_description="Failed to delete a directory.">ApacheModule</REMOVE_DIRECTORY>   
+   <RENAME  auditable="yes" name="Rename" description="A file was renamed." failure_description="Failed to rename a file.">ApacheModule</RENAME> 
+   <BEGIN_RECEIVING_VERSION  auditable="yes" name="Start version download" description="A new version was downloaded to the RMX." failure_description="Failed to download a new version to the RMX.">Installer</BEGIN_RECEIVING_VERSION>
+   <FINISHED_TRANSFER_VERSION  auditable="yes" name="Version download completed" description="Version download completed successfully." failure_description="Version download failed.">Installer</FINISHED_TRANSFER_VERSION>
+   <GET_INSTALLATION_STATUS  auditable="no">Installer</GET_INSTALLATION_STATUS>
+   <GET_LAST_UPDATE_KEY_CODE_INDICATION  auditable="no">Installer</GET_LAST_UPDATE_KEY_CODE_INDICATION>
+   <UPDATE_KEY_CODE  auditable="yes" name="Update Key Code" description="The Key Code was updated" failure_description="Failed to update the Key Code.">Installer</UPDATE_KEY_CODE>
+   <UPDATE_LICENSING_SERVER  auditable="yes" name="Update Licensing Server" description="Licensing server has been updated" failure_description="Failed to update licensing server.">McuMngr</UPDATE_LICENSING_SERVER>
+   <GET_DIRECTORY  auditable="no">ConfParty</GET_DIRECTORY>
+   <GET_STATE  auditable="no">McuMngr</GET_STATE>
+   <SET_TIME  auditable="yes" name="Set RMX Time" description="The RMX time settings were modified." failure_description="Failed to modify the RMX time settings.">McuMngr</SET_TIME>
+   <GET_TIME  auditable="no">McuMngr</GET_TIME>
+   <SET_PRECEDENCE_SETTINGS  auditable="yes" name="Set Precedence Settings" description="The RMX precedence settings were modified." failure_description="Failed to modify the RMX precedence settings.">McuMngr</SET_PRECEDENCE_SETTINGS>
+   <GET_PRECEDENCE_SETTINGS  auditable="no">McuMngr</GET_PRECEDENCE_SETTINGS>
+   <GET_CFS  auditable="no">McuMngr</GET_CFS>         
+   <SET_RESTORE_TYPE  auditable="yes" name="Set Restore Factory Defaults mode" description="Standard or Enhance mode was selected as the Restore Factory Default mode." failure_description="Failed to select the Restore Factory Default mode.">McuMngr</SET_RESTORE_TYPE>
+   <TURN_SSH  auditable="yes" name="Activate/deactivate SSH" description="SSH was activated or deactivated." failure_description="Failed to activate or deactivate SSH.">McuMngr</TURN_SSH>
+   <FLUSH  auditable="no">Logger</FLUSH>         
+   <GET_RECORDING_JUNCTION_LIST  auditable="no">Resource</GET_RECORDING_JUNCTION_LIST>  
+   <STOP_ALL_MEDIA_RECORDING  auditable="no">Resource</STOP_ALL_MEDIA_RECORDING>
+   <COLLECT_INFO  auditable="yes" name="Collect Information" description="Information Collector utility was activated" failure_description="Failed to activate the Information Collector utility">Collector</COLLECT_INFO> 
+   <RESET  auditable="yes" name="Reset" description="System reset by operator." failure_description="Failed to reset by operator">McuMngr</RESET>	   <!-- for Call Generator -->
+   <GET_PORT_CONFIGURATION  auditable="no">Resource</GET_PORT_CONFIGURATION>     
+   <SET_PORT_CONFIGURATION  auditable="yes" name="Set port configuration" description="The Video/Audio Port Configuration was modified." failure_description="Failed to modify the Video/Voice Port Configuration.">Resource</SET_PORT_CONFIGURATION>   
+   <RESET_PORT_CONFIGURATION  auditable="yes" name="Reset port configuration" description="The Video/Audio Port Configuration was reset." failure_description="Failed to reset the Video/Voice Port Configuration.">Resource</RESET_PORT_CONFIGURATION>
+   <SHIFT_RESERVATIONS_TIME  auditable="yes" name="Adjust reservation time" description="The reservation time was updated." failure_description="Failed to adjust reservation time.">Resource</SHIFT_RESERVATIONS_TIME>
+   <GET_ENHANCED_PORT_CONFIGURATION  auditable="no">Resource</GET_ENHANCED_PORT_CONFIGURATION>     
+   <GET_CHECK_ENHANCED_PORT_CONFIGURATION  auditable="no">Resource</GET_CHECK_ENHANCED_PORT_CONFIGURATION>     
+   <SET_ENHANCED_PORT_CONFIGURATION  auditable="yes" name="Set enhanced port configuration" description="The resource configuration was modified using the Fixed Resource Capacity sliders." failure_description="Failed to modify the resource configuration using the Fixed Resource Capacity sliders.">Resource</SET_ENHANCED_PORT_CONFIGURATION>
+   <GET_ALLOCATION_MODE  auditable="no">Resource</GET_ALLOCATION_MODE>     
+   <SET_ALLOCATION_MODE  auditable="yes" name="Set allocation mode" description="The Resource Capacity Mode was changed." failure_description="Failed to change the Resource Capacity Mode.">Resource</SET_ALLOCATION_MODE>
+   <INSTALL_PREVIOUS_VERSION auditable="yes" name="Go back to previous version" description="The previous version was installed successfully." failure_description="Failed to revert to previous version.">Installer</INSTALL_PREVIOUS_VERSION>      
+   <BACKUP_CONFIG_START  auditable="yes" name="Start system backup" description="System files backup process started." failure_description="Failed to start the system files backup process.">BackupRestore</BACKUP_CONFIG_START>
+   <BACKUP_CONFIG_FINISH  auditable="yes" name="Finished system backup" description="System files backup process completed successfully." failure_description="Failed to complete the system files backup process.">BackupRestore</BACKUP_CONFIG_FINISH>
+   <RESTORE_CONFIG_START  auditable="yes" name="Start system restore" description="System files restore process started." failure_description="Failed to start the system files restore process.">BackupRestore</RESTORE_CONFIG_START>
+   <RESTORE_CONFIG_FINISH  auditable="yes" name="Finished system restore" description="System files restore process completed successfully." failure_description="">BackupRestore</RESTORE_CONFIG_FINISH>
+   <SET_RESOLUTIONS_SET  auditable="yes" name="Set resolution configuration" description="The Resolution Slider was changed." failure_description="Failed to change the Resolution Slider.">ConfParty</SET_RESOLUTIONS_SET>
+   <GET_RESOLUTIONS_SET  auditable="no">ConfParty</GET_RESOLUTIONS_SET>     
+   <SET_PING  auditable="no" name="set ping" description="start ping from rmx to">CSMngr</SET_PING>
+   <GET_PING  auditable="no" name="get ping" description="get ping response">CSMngr</GET_PING>
+   <GET_MCU_EXCHANGE_CONFIG_PARAMS  auditable="no" name="get mcu exchnage parameters" description="get mcu exchnage parameters">ExchangeModule</GET_MCU_EXCHANGE_CONFIG_PARAMS>
+   <SET_MCU_EXCHANGE_CONFIG_PARAMS  auditable="no" name="set mcu exchnage parameters" description="set mcu exchnage parameters">ExchangeModule</SET_MCU_EXCHANGE_CONFIG_PARAMS>   
+   <GET_LAST_SET_MCU_EXCHANGE_CONFIG_INDICATION auditable="no" name="get last mcu exchnage set parameters inidcation" description="get last indication of set exchnage configuration">ExchangeModule</GET_LAST_SET_MCU_EXCHANGE_CONFIG_INDICATION>
+   <RMX_GET_STATE_EX  auditable="no">McuMngr</RMX_GET_STATE_EX>
+   <GET_COLLECT_INFO_SETTINGS auditable="no">Collector</GET_COLLECT_INFO_SETTINGS>
+   <START_COLLECT_INFO_ESTIMATED_SIZE auditable="yes" name="Collect information estimated size" description="Information Collector estimate size utility was activated" failure_description="Failed to activate the Information Collector estimated size utility">Collector</START_COLLECT_INFO_ESTIMATED_SIZE>
+   <GET_COLLECT_INFO_ESTIMATED_SIZE auditable="no">Collector</GET_COLLECT_INFO_ESTIMATED_SIZE>
+   <ABORT_COLLECT_INFO auditable="yes" name="abort collect info" description="Abort collect info operation" failure_description="Failed to abort collect info operation">Collector</ABORT_COLLECT_INFO>
+   <GET_ACTIVE_DIRECTORY_CONFIGURATION  auditable="no" name="get active directory parameters" description="get active directory parameters">LdapModule</GET_ACTIVE_DIRECTORY_CONFIGURATION>
+   <SET_ACTIVE_DIRECTORY_CONFIGURATION  auditable="no" name="set active directory parameters" description="set active directory parameters">LdapModule</SET_ACTIVE_DIRECTORY_CONFIGURATION>
+   <GET_AD_SERVER_AVAILABILITY_STATUS  auditable="no" name="get active directory server availability status" description="get active directory server availability status">LdapModule</GET_AD_SERVER_AVAILABILITY_STATUS> 
+   <GET_DYNAMIC_CONTENT_RATE_TABLE  auditable="no">ConfParty</GET_DYNAMIC_CONTENT_RATE_TABLE>
+   <GET_CUSTOMIZED_CONTENT_RATE_TABLE  auditable="no">ConfParty</GET_CUSTOMIZED_CONTENT_RATE_TABLE>
+   <GET_DYNAMIC_HP_CONTENT_RATE_TABLE  auditable="no">ConfParty</GET_DYNAMIC_HP_CONTENT_RATE_TABLE>
+   <GET_CUSTOMIZED_HP_CONTENT_RATE_TABLE  auditable="no">ConfParty</GET_CUSTOMIZED_HP_CONTENT_RATE_TABLE>
+   <CREATE_GATEWAY_SECURITY_TOKEN  auditable="no">ApacheModule</CREATE_GATEWAY_SECURITY_TOKEN>
+   <GET_CDR_SETTINGS  auditable="no" name="get cdr settings" description="get cdr settings">CDR</GET_CDR_SETTINGS>
+   <SET_CDR_SETTINGS  auditable="no" name="set cdr settings" description="set cdr settings">CDR</SET_CDR_SETTINGS>
+   </TRANS_MCU>
+
+ <TRANS_RES_1>
+   <START  auditable="no">ConfParty</START>
+   <START_REPEATED_EX  auditable="no">ConfParty</START_REPEATED_EX>
+   <UPDATE  auditable="no">ConfParty</UPDATE>
+   <SET_DEFAULT_EQ  auditable="no">ConfParty</SET_DEFAULT_EQ>
+   <CANCEL_DEFAULT_EQ  auditable="no">ConfParty</CANCEL_DEFAULT_EQ>	 	 
+ </TRANS_RES_1>
+
+ <TRANS_CONF_2>
+   <TERMINATE_CONF  auditable="no">ConfParty</TERMINATE_CONF>
+   <DELETE_PARTY  auditable="no">ConfParty</DELETE_PARTY>
+   <SET_CONNECT  auditable="no">ConfParty</SET_CONNECT>
+   <GET  auditable="no">ConfParty</GET>
+   <SET_VISUAL_EFFECT  auditable="no">ConfParty</SET_VISUAL_EFFECT>
+   <SET_AUTO_LAYOUT  auditable="no">ConfParty</SET_AUTO_LAYOUT>
+   <SET_END_TIME  auditable="no">ConfParty</SET_END_TIME>
+   <SET_AUDIO_VOLUME  auditable="no">ConfParty</SET_AUDIO_VOLUME>
+   <SET_LISTEN_AUDIO_VOLUME  auditable="no">ConfParty</SET_LISTEN_AUDIO_VOLUME>
+   <SET_AUDIO_VIDEO_MUTE  auditable="no">ConfParty</SET_AUDIO_VIDEO_MUTE>
+   <SET_AUDIO_VIDEO_MUTE_PARTIES_EXCEPT_LEADER  auditable="no">ConfParty</SET_AUDIO_VIDEO_MUTE_PARTIES_EXCEPT_LEADER>
+   <SET_AUDIO_BLOCK  auditable="no">ConfParty</SET_AUDIO_BLOCK>
+   <SET_PARTY_VISUAL_NAME  auditable="no">ConfParty</SET_PARTY_VISUAL_NAME> 
+   <SET_AGC  auditable="no">ConfParty</SET_AGC>
+   <SET_LEADER  auditable="no">ConfParty</SET_LEADER>
+   <SET_BILLING_DATA  auditable="no">ConfParty</SET_BILLING_DATA>
+   <SET_CONF_CONTACT_INFO  auditable="no">ConfParty</SET_CONF_CONTACT_INFO> 
+   <SET_PARTY_CONTACT_INFO  auditable="no">ConfParty</SET_PARTY_CONTACT_INFO>
+   <SET_ENTRY_PASSWORD  auditable="yes" name="Conference entry password changed" description="The conference entry password was changed" failure_description="Failed to change the conference entry password.">ConfParty</SET_ENTRY_PASSWORD>
+   <SET_PASSWORD  auditable="yes" name="Conference chairperson password changed" description="The conference chairperson password was changed" failure_description="Failed to change the conference chairperson password.">ConfParty</SET_PASSWORD>
+   <START_MEDIA_RECORDING  auditable="no">Resource</START_MEDIA_RECORDING>
+   <GET_PARTY_PORTS_INFO  auditable="no">Resource</GET_PARTY_PORTS_INFO>
+   <WITHDRAW_CONTENT_TOKEN  auditable="no">ConfParty</WITHDRAW_CONTENT_TOKEN>   
+   <START_RECORDING  auditable="no">ConfParty</START_RECORDING>
+   <STOP_RECORDING  auditable="no">ConfParty</STOP_RECORDING>
+   <PAUSE_RECORDING  auditable="no">ConfParty</PAUSE_RECORDING>
+   <RESUME_RECORDING  auditable="no">ConfParty</RESUME_RECORDING>
+   <SET_VIDEO_CLARITY  auditable="no">ConfParty</SET_VIDEO_CLARITY>
+   <MOVE_PARTY  auditable="no">ConfParty</MOVE_PARTY>
+   <ATTEND_PARTY  auditable="no">ConfParty</ATTEND_PARTY>
+   <BACK_TO_CONF_PARTY  auditable="no">ConfParty</BACK_TO_CONF_PARTY>
+   <SET_AUTO_REDIAL  auditable="no">ConfParty</SET_AUTO_REDIAL>
+   <SET_MESSAGE_OVERLAY auditable="no">ConfParty</SET_MESSAGE_OVERLAY>
+   <SET_MUTE_PARTIES_IN_LECTURE auditable="no">ConfParty</SET_MUTE_PARTIES_IN_LECTURE>
+   <SET_EXCLUSIVE_CONTENT_MODE auditable="no">ConfParty</SET_EXCLUSIVE_CONTENT_MODE>
+   <SET_SITE_NAME auditable="no">ConfParty</SET_SITE_NAME>
+   <SET_PARTY_MESSAGE_OVERLAY auditable="no">ConfParty</SET_PARTY_MESSAGE_OVERLAY>
+   <SET_EXCLUSIVE_CONTENT auditable="no">ConfParty</SET_EXCLUSIVE_CONTENT>
+   <REMOVE_EXCLUSIVE_CONTENT auditable="no">ConfParty</REMOVE_EXCLUSIVE_CONTENT>
+   <SET_AUTO_SCAN_INTERVAL auditable="no">ConfParty</SET_AUTO_SCAN_INTERVAL>
+   <SET_AUTO_SCAN_ORDER auditable="no">ConfParty</SET_AUTO_SCAN_ORDER>
+    <!-- for Call Generator -->
+   <SET_DTMF  auditable="no">ConfParty</SET_DTMF>
+   <START_CONTENT  auditable="no">ConfParty</START_CONTENT>
+   <STOP_CONTENT  auditable="no">ConfParty</STOP_CONTENT>
+   <GET_CONF_RELAY_INFO  auditable="no">ConfParty</GET_CONF_RELAY_INFO>
+   
+ </TRANS_CONF_2>
+
+ <TRANS_RES_2>
+   <TERMINATE_PROFILE  auditable="no">Resource</TERMINATE_PROFILE>
+   <TERMINATE_MEETING_ROOM  auditable="no">ConfParty</TERMINATE_MEETING_ROOM>
+   <TERMINATE_RES  auditable="no">Resource</TERMINATE_RES>
+   <TERMINATE_CONFERENCE_TEMPLATE  auditable="no">ConfParty</TERMINATE_CONFERENCE_TEMPLATE>
+   <CANCEL_REPEATED  auditable="no">Resource</CANCEL_REPEATED>   
+   <GET_PROFILE  auditable="no">ConfParty</GET_PROFILE>
+   <GET_MEETING_ROOM  auditable="no">ConfParty</GET_MEETING_ROOM>
+   <GET_RES  auditable="no">Resource</GET_RES>
+   <GET_CONFERENCE_TEMPLATE  auditable="no">ConfParty</GET_CONFERENCE_TEMPLATE>
+ </TRANS_RES_2>
+
+ <TRANS_RES_LIST>
+   <GET_PROFILE_LIST  auditable="no">ConfParty</GET_PROFILE_LIST>
+   <GET_MEETING_ROOM_LIST  auditable="no">ConfParty</GET_MEETING_ROOM_LIST>
+   <GET_RES_LIST  auditable="no">Resource</GET_RES_LIST>
+   <GET_CONFERENCE_TEMPLATE_LIST  auditable="no">ConfParty</GET_CONFERENCE_TEMPLATE_LIST>
+ </TRANS_RES_LIST>
+
+ <TRANS_CONF_1>
+   <ADD_PARTY  auditable="no">ConfParty</ADD_PARTY>
+   <SET_VIDEO_LAYOUT  auditable="no">ConfParty</SET_VIDEO_LAYOUT>
+   <SET_PARTY_VIDEO_LAYOUT_EX  auditable="no">ConfParty</SET_PARTY_VIDEO_LAYOUT_EX>
+   <SET_PARTY_LAYOUT_TYPE  auditable="no">ConfParty</SET_PARTY_LAYOUT_TYPE>
+   <SET_LECTURE_MODE  auditable="no">ConfParty</SET_LECTURE_MODE>
+   <UPDATE_PARTY  auditable="no">ConfParty</UPDATE_PARTY>
+   <START_PREVIEW  auditable="no">ConfParty</START_PREVIEW>
+   <STOP_PREVIEW  auditable="no">ConfParty</STOP_PREVIEW>
+   <REQUEST_INTRA  auditable="no">ConfParty</REQUEST_INTRA>
+ </TRANS_CONF_1>
+ 
+ <TRANS_CONF_LIST>
+   <GET_LS  auditable="no">ConfParty</GET_LS>
+   <GET_FULL_CONF_CHANGE_LS auditable="no">ConfParty</GET_FULL_CONF_CHANGE_LS>
+ </TRANS_CONF_LIST>
+
+ <TRANS_PARTY>
+   <GET  auditable="no">ConfParty</GET>
+ </TRANS_PARTY>
+
+ <TRANS_AV_MSG_SERVICE_LIST>
+   <GET_IVR_LIST  auditable="no">ConfParty</GET_IVR_LIST>
+ </TRANS_AV_MSG_SERVICE_LIST>
+ 
+ <TRANS_AV_MSG_SERVICE>
+   <ADD_IVR  auditable="yes" name="Add IVR Service" description="New IVR Service was added." failure_description="Failed to add new IVR Service.">ConfParty</ADD_IVR>
+   <DELETE  auditable="yes" name="Delete IVR Service" description="IVR Service was deleted." failure_description="Failed to delete IVR Service.">ConfParty</DELETE> 
+   <UPDATE_IVR  auditable="yes" name="Update IVR Service" description="The IVR Service parameters were updated." failure_description="Failed to update the IVR Service parameters.">ConfParty</UPDATE_IVR>
+   <ADD_IVR_LANGUAGE  auditable="no">ConfParty</ADD_IVR_LANGUAGE>
+   <SET_DEFAULT  auditable="no">ConfParty</SET_DEFAULT>
+   <SET_DEFAULT_EQ  auditable="no">ConfParty</SET_DEFAULT_EQ>
+   <CONVERT_SLIDE  auditable="yes" name="Convert Slide" description="Convert uploaded image to all protocol slides." failure_description="Failed to convert slide.">ConfParty</CONVERT_SLIDE>
+   <GET_CONVERSION_STATUS  auditable="yes" name="Get conversion status" description="Get conversion status of converting slide." failure_description="Failed to get conversion status.">ConfParty</GET_CONVERSION_STATUS>
+ </TRANS_AV_MSG_SERVICE>
+
+ <TRANS_IP_SERVICE>
+  <NEW_IP_SERVICE  auditable="yes" name="Create IP Service" description="An IP Network Service was created." failure_description="Failed to create an IP Network Service.">CSMngr</NEW_IP_SERVICE>
+  <DEL_IP_SERVICE  auditable="yes" name="Delete IP Service" description="An IP Network Service was deleted." failure_description="Failed to delete an IP Network Service.">CSMngr</DEL_IP_SERVICE>	
+  <UPDATE_IP_SERVICE  auditable="yes" name="Update IP Service" description="The IP Network Service parameters were updated." failure_description="Failed to update the IP Network Service parameters.">CSMngr</UPDATE_IP_SERVICE>
+  <SET_DEFAULT_H323_SERVICE  auditable="yes" name="Set H.323 Service as default" description="The IP Network Service was set as default for H.323 connections." failure_description="Failed to set the IP Network Service as default for H.323 connections.">CSMngr</SET_DEFAULT_H323_SERVICE>
+  <SET_DEFAULT_SIP_SERVICE  auditable="yes" name="Set SIP Service as default" description="The IP Network Service was set as default for SIP connections." failure_description="Failed to set the IP Network Service as default for SIP connections.">CSMngr</SET_DEFAULT_SIP_SERVICE>
+  <UPDATE_MANAGEMENT_NETWORK  auditable="yes" name="Update Management Service" description="The IP Management Service parameters were updated." failure_description="Failed to update the IP Management Service parameters.">McuMngr</UPDATE_MANAGEMENT_NETWORK>
+ </TRANS_IP_SERVICE>
+
+ <TRANS_IP_SERVICE_LIST>
+  <GET  auditable="no">CSMngr</GET>
+  <GET_FULL_IP_SERVICE_LIST  auditable="no">CSMngr</GET_FULL_IP_SERVICE_LIST>
+  <GET_MANAGEMENT_NETWORK_LIST  auditable="no">McuMngr</GET_MANAGEMENT_NETWORK_LIST>
+ </TRANS_IP_SERVICE_LIST>
+
+<TRANS_SYSTEM_INTERFACE_LIST>
+	<GET auditable="no">CSMngr</GET>
+</TRANS_SYSTEM_INTERFACE_LIST>
+
+<TRANS_OPER_LIST>
+  <GET_OPER_LIST  auditable="no">Authentication</GET_OPER_LIST>
+</TRANS_OPER_LIST>
+
+<TRANS_OPERATOR>
+  <CHANGE_PASSWORD  auditable="yes" name="Password changed" description="The user password was changed" failure_description="Failed to change the user password.">Authentication</CHANGE_PASSWORD>
+  <DELETE_OPERATOR  auditable="yes" name="Delete User" description="The user was deleted from the Users list." failure_description="Failed to delete the user from the Users list.">Authentication</DELETE_OPERATOR>
+  <DISABLE_OPERATOR  auditable="yes" name="Disable User" description="The user was disabled in the Users list." failure_description="Failed to disable the user in the Users list.">Authentication</DISABLE_OPERATOR>
+  <NEW_OPERATOR  auditable="yes" name="Create User" description="A new user was added to the Users list." failure_description="Failed to add a new user to the Users list.">Authentication</NEW_OPERATOR>
+  <RENAME_OPERATOR auditable="yes" name="Rename User" description="A user was renamed in the Users list." failure_description="Failed to rename a user in the Users list.">Authentication</RENAME_OPERATOR>
+  <UNLOCK_OPERATOR auditable="yes" name="Unlock User" description="A user was unlocked in the Users list." failure_description="Failed to unlock a user in the Users list.">Authentication</UNLOCK_OPERATOR>
+  <SET_OPERATOR_AUDIBLE_ALARM auditable="yes" name="Set operator audible alarm" description="The operator changed his audible alarms settings." failure_description="Failed to change audible alarms settings">Authentication</SET_OPERATOR_AUDIBLE_ALARM>
+  <GET_OPERATOR_AUDIBLE_ALARM auditable="no">Authentication</GET_OPERATOR_AUDIBLE_ALARM>   
+</TRANS_OPERATOR>
+
+<TRANS_CARDS_LIST>
+  <GET  auditable="no">Cards</GET>
+</TRANS_CARDS_LIST>
+
+<TRANS_CARD>
+<!--  <GET>Cards</GET>
+  <GET_UNITS  auditable="no">Resource</GET_UNITS>  -->
+  <GET  auditable="no">Resource</GET>
+  <GET_UNIT  auditable="no">Resource</GET_UNIT>
+  <RESET_UNITS  auditable="YES" name="Reset Unit" description="A unit was Reseted." failure_description="Failed to reset unit">Resource</RESET_UNITS>
+  <ENABLE_UNITS  auditable="YES" name="Enable Unit" description="A unit was enableed." failure_description="Failed to enbale unit">Resource</ENABLE_UNITS>
+  <DISABLE_UNITS  auditable="YES" name="Disable Unit" description="A unit was disabled." failure_description="Failed to disable unit">Resource</DISABLE_UNITS>
+  <RESCUE_CARD auditable="YES" name="Rescue Card" description="Card was rescued." failure_description="Failed to rescue card">Cards</RESCUE_CARD>
+</TRANS_CARD>
+
+<TRANS_TRACE>
+  <ADD_TRACE  auditable="no">Logger</ADD_TRACE>
+</TRANS_TRACE>
+
+<TRANS_CFG>
+  <GET_CFG  auditable="no">McuMngr</GET_CFG>
+  <SET_CFG  auditable="yes" name="Set configuration flags" description="The system configuration flags were modified." failure_description="Failed to modify the system configuration flag settings.">McuMngr</SET_CFG>
+  <SET_CFG_PARAM auditable="yes" name="Set configuration flag" description="One system configuration flag was modified." failure_description="Failed to modify the system configuration flag settings.">McuMngr</SET_CFG_PARAM>
+ </TRANS_CFG>
+
+<TRANS_FAULTS_LIST>
+  <GET  auditable="no">Faults</GET>
+</TRANS_FAULTS_LIST>
+
+<TRANS_FAULTS_LIST_SHORT>
+  <GET  auditable="no">Faults</GET>
+</TRANS_FAULTS_LIST_SHORT>
+
+<TRANS_ACTIVE_ALARMS_LIST>
+  <GET  auditable="no">McuMngr</GET>
+</TRANS_ACTIVE_ALARMS_LIST>
+
+<TRANS_SIMULATION>
+		<!-- EndpointSim requests  -->
+	<H323_PARTY_ADD  auditable="no">EndpointsSim</H323_PARTY_ADD>
+	<H323_PARTY_DEL  auditable="no">EndpointsSim</H323_PARTY_DEL>
+	<H323_PARTY_CONNECT  auditable="no">EndpointsSim</H323_PARTY_CONNECT>
+	<H323_PARTY_DISCONNECT  auditable="no">EndpointsSim</H323_PARTY_DISCONNECT>
+	<H323_PARTY_DTMF  auditable="no">EndpointsSim</H323_PARTY_DTMF>
+	<SIP_PARTY_ADD  auditable="no">EndpointsSim</SIP_PARTY_ADD>
+	<SIP_PARTY_DEL  auditable="no">EndpointsSim</SIP_PARTY_DEL>
+	<SIP_PARTY_CONNECT  auditable="no">EndpointsSim</SIP_PARTY_CONNECT>
+	<SIP_PARTY_DISCONNECT  auditable="no">EndpointsSim</SIP_PARTY_DISCONNECT>
+	<SIP_PARTY_DTMF  auditable="no">EndpointsSim</SIP_PARTY_DTMF>
+	<PSTN_PARTY_ADD  auditable="no">EndpointsSim</PSTN_PARTY_ADD>
+	<PARTY_CONNECT  auditable="no">EndpointsSim</PARTY_CONNECT>
+	<PARTY_DISCONNECT  auditable="no">EndpointsSim</PARTY_DISCONNECT>
+	<PARTY_DELETE  auditable="no">EndpointsSim</PARTY_DELETE>
+	<PARTY_DTMF  auditable="no">EndpointsSim</PARTY_DTMF>
+	<ACTIVE_SPEAKER  auditable="no">EndpointsSim</ACTIVE_SPEAKER>
+	<AUDIO_SPEAKER  auditable="no">EndpointsSim</AUDIO_SPEAKER>
+	<MUTE  auditable="no">EndpointsSim</MUTE>
+	<UNMUTE  auditable="no">EndpointsSim</UNMUTE>
+	<FECC_TOKEN_REQUEST  auditable="no">EndpointsSim</FECC_TOKEN_REQUEST>
+	<FECC_TOKEN_RELEASE  auditable="no">EndpointsSim</FECC_TOKEN_RELEASE>
+	<CS_SOCKET_DISCONNECT  auditable="no">EndpointsSim</CS_SOCKET_DISCONNECT>
+	<H323_PARTY_BITRATE_ERROR  auditable="no">EndpointsSim</H323_PARTY_BITRATE_ERROR>
+	<SIP_PARTY_CHANGEMODE  auditable="no">EndpointsSim</SIP_PARTY_CHANGEMODE>
+	<SIP_MUTE  auditable="no">EndpointsSim</SIP_MUTE>
+	<ADD_CAP_SET  auditable="no">EndpointsSim</ADD_CAP_SET>
+	<DEL_CAP_SET  auditable="no">EndpointsSim</DEL_CAP_SET>
+	<H239_TOKEN_REQUEST  auditable="no">EndpointsSim</H239_TOKEN_REQUEST>
+	<H239_TOKEN_RELEASE  auditable="no">EndpointsSim</H239_TOKEN_RELEASE>
+	<SIP_ADD_SUBSCRIPTION  auditable="no">EndpointsSim</SIP_ADD_SUBSCRIPTION>
+	<SIP_GET_NOTIFICATION  auditable="no">EndpointsSim</SIP_GET_NOTIFICATION>
+	<ENDPOINT_UPDATE_CHANNELS  auditable="no">EndpointsSim</ENDPOINT_UPDATE_CHANNELS>
+	<ISDN_PARTY_ADD  auditable="no">EndpointsSim</ISDN_PARTY_ADD>
+	<LPR_MODE_CHANGE_REQUEST  auditable="no">EndpointsSim</LPR_MODE_CHANGE_REQUEST>
+	<SCP_STREAMS_REQUEST  auditable="no">EndpointsSim</SCP_STREAMS_REQUEST>
+		<!-- GideonSim requests  -->
+	<SOCKET_CONNECT  auditable="no">GideonSim</SOCKET_CONNECT>
+	<SOCKET_DISCONNECT  auditable="no">GideonSim</SOCKET_DISCONNECT>
+	<SET_UNIT_STATUS_FOR_KEEP_ALIVE  auditable="no">GideonSim</SET_UNIT_STATUS_FOR_KEEP_ALIVE>
+	<CARD_ACK_STATUS  auditable="no">GideonSim</CARD_ACK_STATUS>
+	<!-- Insert/Remove Card (not auditable since it's for simulation only) -->
+	<!-- 
+	<INSERT_CARD_EVENT  auditable="yes" name="Card inserted" description="A new card was inserted." failure_description="">GideonSim</INSERT_CARD_EVENT>
+	<REMOVE_CARD_EVENT  auditable="yes" name="Card removed" description="A card was removed." failure_description="">GideonSim</REMOVE_CARD_EVENT>
+	-->
+	<INSERT_CARD_EVENT  auditable="no">GideonSim</INSERT_CARD_EVENT>
+	<REMOVE_CARD_EVENT  auditable="no">GideonSim</REMOVE_CARD_EVENT>
+	<ISDN_TIMERS  auditable="no">GideonSim</ISDN_TIMERS>
+	<ISDN_ENABLE_DISABLE_PORTS  auditable="no">GideonSim</ISDN_ENABLE_DISABLE_PORTS>
+</TRANS_SIMULATION>
+ <!-- for Call Generator - MediaMngr process --> 
+<TRANS_CALL_GENERATOR_PARAMS>
+	<SET  auditable="no">MediaMngr</SET>
+	<RESET_CHANNEL_OUT  auditable="no">MediaMngr</RESET_CHANNEL_OUT>
+	<UPDATE_MEDIA_LIBRARY  auditable="no">MediaMngr</UPDATE_MEDIA_LIBRARY>
+</TRANS_CALL_GENERATOR_PARAMS>
+
+
+<REQUEST_GENERAL>
+	<KEEP_ALIVE  auditable="no">EndpointsSim</KEEP_ALIVE>
+</REQUEST_GENERAL>
+
+<REQUEST_CONF_DETAILS>
+	<CREATE  auditable="no">EndpointsSim</CREATE>
+</REQUEST_CONF_DETAILS>
+
+<REQUEST_PARTY_DETAILS>
+	<ADD  auditable="no">EndpointsSim</ADD>
+</REQUEST_PARTY_DETAILS>
+<REQUEST_USER_DETAILS>
+	<AUTHENTICATE  auditable="no">EndpointsSim</AUTHENTICATE>
+</REQUEST_USER_DETAILS>
+
+	
+<TRANS_CONNECTIONS_LIST>
+	<GET  auditable="no">ApacheModule</GET>
+</TRANS_CONNECTIONS_LIST>
+
+<TRANS_RSRC_REPORT>
+  <GET_CARMEL_REPORT  auditable="no">Resource</GET_CARMEL_REPORT>
+  <GET_CARMEL_SERVICES_REPORT  auditable="no">Resource</GET_CARMEL_SERVICES_REPORT>
+  <SET_PORT_GAUGE auditable="yes" name="Set Port gauge value" description="The port gauge value was set." failure_description="Failed to set the port gauge value.">Resource</SET_PORT_GAUGE>
+</TRANS_RSRC_REPORT>
+
+
+<TRANS_CONFERENCES_RESOURCES>
+  <GET_LS  auditable="no">Resource</GET_LS>
+</TRANS_CONFERENCES_RESOURCES>
+
+
+<TRANS_CDR_LIST>
+	<GET  auditable="no">CDR</GET>
+</TRANS_CDR_LIST>
+
+
+<TRANS_CDR_FULL>
+	<GET  auditable="no">CDR</GET>
+	<GET_UNFORMATTED  auditable="no">CDR</GET_UNFORMATTED>
+</TRANS_CDR_FULL>
+
+<TRANS_SNMP>
+	<GET  auditable="no">SNMPProcess</GET>
+	<UPDATE  auditable="yes" name="Update SNMP configuration" description="The SNMP settings were updated." failure_description="Failed to modify the SNMP settings.">SNMPProcess</UPDATE>
+</TRANS_SNMP>
+
+<TRANS_LOG_FILE_LIST>
+   <GET  auditable="no">Logger</GET>
+</TRANS_LOG_FILE_LIST>
+
+	
+<TRANS_ISDN_SERVICE>
+	<NEW_ISDN_SERVICE  auditable="yes" name="Create ISDN/PSTN Service" description="An ISDN/PSTN Network Service was created." failure_description="Failed to create an ISDN/PSTN Network Service.">RtmIsdnMngr</NEW_ISDN_SERVICE>
+	<UPDATE_ISDN_SERVICE  auditable="yes" name="Update ISDN/PSTN Service" description="The ISDN/PSTN Network Service parameters were updated." failure_description="Failed to update the ISDN/PSTN Network Service parameters.">RtmIsdnMngr</UPDATE_ISDN_SERVICE>	
+	<DEL_ISDN_SERVICE  auditable="yes" name="Delete ISDN/PSTN Service" description="The ISDN/PSTN Network Service was deleted." failure_description="Failed to delete the ISDN/PSTN Network Service.">RtmIsdnMngr</DEL_ISDN_SERVICE>
+	<SET_DEFAULT_ISDN_SERVICE  auditable="yes" name="Set ISDN/PSTN Service as default" description="The ISDN/PSTN Network Service was set as default for ISDN or PSTN connections." failure_description="Failed to set the ISDN/PSTN Network Service as default for ISDN or PSTN connections.">RtmIsdnMngr</SET_DEFAULT_ISDN_SERVICE>
+</TRANS_ISDN_SERVICE>
+
+<TRANS_ISDN_SERVICE_LIST>
+	<GET  auditable="no">RtmIsdnMngr</GET>
+</TRANS_ISDN_SERVICE_LIST>
+
+<TRANS_ISDN_PHONE>
+	<ADD_ISDN_PHONE  auditable="yes" name="Add ISDN dial-in number range" description="A new dial-in number range was added to the ISDN Network Service." failure_description="Failed to add a new dial-in number range to the ISDN Network Service.">RtmIsdnMngr</ADD_ISDN_PHONE>
+	<DEL_ISDN_PHONE  auditable="yes" name="Delete ISDN dial-in number range" description="A dial-in number range was deleted from the ISDN Network Service." failure_description="Failed to delete a dial-in number range from the ISDN Network Service.">RtmIsdnMngr</DEL_ISDN_PHONE>
+</TRANS_ISDN_PHONE>
+
+<TRANS_RTM_ISDN_SPAN>
+	<UPDATE_RTM_ISDN_SPAN  auditable="yes" name="Update RTM ISDN Span table" description="A new ISDN/PSTN span was attached to the RTM ISDN card and the span table was updated accordingly." failure_description="Failed to attach an ISDN/PSTN span to the RTM ISDN card, therefore, the span table was not updated.">RtmIsdnMngr</UPDATE_RTM_ISDN_SPAN>
+</TRANS_RTM_ISDN_SPAN>
+
+<TRANS_RTM_ISDN_SPAN_LIST>
+	<GET  auditable="no">RtmIsdnMngr</GET>
+</TRANS_RTM_ISDN_SPAN_LIST>
+
+<TRANS_AUDIT_FILE_SUMMARY_LIST>
+        <GET  auditable="no">Auditor</GET>
+</TRANS_AUDIT_FILE_SUMMARY_LIST> 
+
+
+<TRANS_AUDIT_EVENT_LIST>
+        <GET  auditable="no">Auditor</GET>
+</TRANS_AUDIT_EVENT_LIST>   
+
+<TRANS_CERTIFICATE_REQUEST>
+	<CREATE  auditable="yes" name="Create certificate request." description="The TLS/SSL certificate request was created successfully." failure_description="Failed to create a TLS/SSL certificate request.">CertMngr</CREATE>
+	<CREATE_CS auditable="yes" name="Create certificate request for the CS." description="The TLS/SSL certificate request for the CS was created successfully." failure_description="Failed to create a TLS/SSL certificate request for the CS.">CertMngr</CREATE_CS>
+</TRANS_CERTIFICATE_REQUEST>
+
+<TRANS_CERTIFICATE>
+	<SEND  auditable="yes" name="Send certificate." description="TLS/SSL certificate was sent to the RMX successfully." failure_description="Failed to send TLS/SSL certificate to the RMX.">CertMngr</SEND>
+	<SEND_CS  auditable="yes" name="Send certificate for the CS." description="TLS/SSL certificate for the CS was sent to the RMX successfully." failure_description="Failed to send TLS/SSL certificate for the CS to the RMX.">CertMngr</SEND_CS>
+	<SEND_CA  auditable="yes" name="Send CA certificate." description="TLS/SSL CA certificate was sent to the RMX successfully." failure_description="Failed to send TLS/SSL CA certificate to the RMX.">CertMngr</SEND_CA>
+	<DELETE_CA  auditable="yes" name="Delete CA certificate." description="TLS/SSL CA certificate removed from the RMX successfully." failure_description="Failed to remove TLS/SSL CA certificate from the RMX.">CertMngr</DELETE_CA>
+    <DELETE_CRL  auditable="yes" name="Delete CRL certificate." description="TLS/SSL CRL certificate removed from the RMX successfully." failure_description="Failed to remove TLS/SSL CRL certificate from the RMX.">CertMngr</DELETE_CRL>
+    <FINISH_UPLOAD_CERTIFICATE  auditable="no">CertMngr</FINISH_UPLOAD_CERTIFICATE>
+	<GET  auditable="no">CertMngr</GET>
+	<GET_CA  auditable="no">CertMngr</GET_CA>
+	<GET_CRL auditable="no">CertMngr</GET_CRL>
+</TRANS_CERTIFICATE>
+
+<TRANS_CERTIFICATE_LIST>
+	<GET auditable="no">CertMngr</GET>
+	<UPDATE_CERTIFICATE_REPOSITORY auditable="no">CertMngr</UPDATE_CERTIFICATE_REPOSITORY>
+</TRANS_CERTIFICATE_LIST>
+
+<TRANS_RECORDING_LINKS_LIST>
+	<ADD  auditable="no">ConfParty</ADD>
+	<UPDATE  auditable="no">ConfParty</UPDATE>
+  	<DELETE  auditable="no">ConfParty</DELETE>
+	<GET  auditable="no">ConfParty</GET>
+	<SET_DEFAULT_RECORDING_LINK auditable="no">ConfParty</SET_DEFAULT_RECORDING_LINK>
+</TRANS_RECORDING_LINKS_LIST>
+
+ <TRANS_HOTBACKUP>
+	<UPDATE  auditable="no">Failover</UPDATE>
+	<GET  auditable="no">Failover</GET>
+</TRANS_HOTBACKUP>
+ 
+
+<TRANS_ETHERNET_SETTINGS>
+	<UPDATE_ETHERNET_SETTINGS  auditable="no" name="Update Ethernet Settings table" description="An Ethernet settings record was updated and the Ethernet settings table was updated accordingly." failure_description="Failed to update Ethernet settings record.">McuMngr</UPDATE_ETHERNET_SETTINGS>
+</TRANS_ETHERNET_SETTINGS>
+
+<TRANS_ETHERNET_SETTINGS_LIST>
+	<GET  auditable="no">McuMngr</GET>
+</TRANS_ETHERNET_SETTINGS_LIST>
+
+<TRANS_TCP_DUMP>
+	<START_TCP_DUMP auditable="yes" name="Start TCP Dump" description="TCP dump process started" failure_description="Failed to start TCP dump process">Utility</START_TCP_DUMP>
+	<STOP_TCP_DUMP auditable="yes" name="Stop TCP Dump" description="TCP dump process stopped" failure_description="Failed to stop TCP dump process">Utility</STOP_TCP_DUMP>
+	<CLEAR_STORAGE auditable="yes" name="Clear storage" description="Clear tcp dump storage" failure_description="Failed to clear tcp dump storage">Utility</CLEAR_STORAGE>
+	<GET_TCP_DUMP_CFG auditable="no">Utility</GET_TCP_DUMP_CFG>
+	<GET_TCP_DUMP_STATUS auditable="no">Utility</GET_TCP_DUMP_STATUS>
+</TRANS_TCP_DUMP>
+
+	
+<TRANS_LOGGER>
+        <UPDATE auditable="no">Logger</UPDATE>
+        <GET auditable="no">Logger</GET>
+        <CS_LOG_START auditable="no">Logger</CS_LOG_START>
+        <CS_LOG_STOP auditable="no">Logger</CS_LOG_STOP>
+</TRANS_LOGGER>
+	
+<TRANS_CUSTOMIZE_SETUP_ONGOING_CONF>
+	<UPDATE  auditable="no">ConfParty</UPDATE>
+	<GET  auditable="no">ConfParty</GET>
+</TRANS_CUSTOMIZE_SETUP_ONGOING_CONF>
+
+<TRANS_SUBSCRIBE>
+    <ADD  auditable="no" name="Add a subscription." description="Creates a new subscription." failure_description="Unable to create a new subscription.">NotificationMngr</ADD>
+    <GET  auditable="no" name="Retrieve a subscription details." description="Retrieves a subscription details." failure_description="Retrieve a subscription details failed.">NotificationMngr</GET>
+    <DELETE  auditable="no" name="Delete a subscription." description="Deletes a subscription." failure_description="Unable to delete a subscription.">NotificationMngr</DELETE>
+    <SEND_UPDATE_NOTIFICATION  auditable="no" name="Causes an update notification about the resource state to be published to subscribers." description="Causes an update notification about the resource state to be published to subscribers." failure_description="Unable to send an update notification about the resource state to be published to subscribers.">NotificationMngr</SEND_UPDATE_NOTIFICATION>
+</TRANS_SUBSCRIBE>
+
+<TRANS_IPMI_ENTITY_LIST>
+    <GET auditable="no">McuMngr</GET>
+</TRANS_IPMI_ENTITY_LIST>
+
+<TRANS_IPMI_ENTITY>
+    <GET_FAN_INFO auditable="no">McuMngr</GET_FAN_INFO>
+    <GET_FAN_LEVEL auditable="no">McuMngr</GET_FAN_LEVEL>
+    <GET_EVENT_LOG auditable="no">McuMngr</GET_EVENT_LOG>
+    <RESET auditable="yes" name="Reset" description="A user is resetting the unit." failure_description="User failed to reset the unit.">McuMngr</RESET>
+</TRANS_IPMI_ENTITY>
+
+<TRANS_IPMI_FRU>
+    <GET auditable="no">McuMngr</GET>
+</TRANS_IPMI_FRU>
+
+<TRANS_IPMI_SENSOR_LIST>
+    <GET auditable="no">McuMngr</GET>
+</TRANS_IPMI_SENSOR_LIST>
+
+<TRANS_IPMI_SENSOR_READING_LIST>
+    <GET auditable="no">McuMngr</GET>
+</TRANS_IPMI_SENSOR_READING_LIST>
+
+<TRANS_LAN_PORT_LIST>
+    <GET auditable="no">McuMngr</GET>
+</TRANS_LAN_PORT_LIST>
+
+<TRANS_LAN_PORT>
+    <GET auditable="no">McuMngr</GET>
+</TRANS_LAN_PORT>
+
+<TRANS_LICENSE>
+   <SYNC_LICENSE auditable="no">LicenseServer</SYNC_LICENSE>         
+</TRANS_LICENSE>
+
+</ACTION_REDIRECTION_MAP>

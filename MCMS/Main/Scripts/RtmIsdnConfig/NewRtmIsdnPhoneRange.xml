@@ -1,0 +1,20 @@
+<TRANS_ISDN_PHONE>
+        <TRANS_COMMON_PARAMS>
+                <MCU_TOKEN>2</MCU_TOKEN>
+                <MCU_USER_TOKEN>2</MCU_USER_TOKEN>
+                <MESSAGE_ID>756</MESSAGE_ID>
+        </TRANS_COMMON_PARAMS>
+        <ACTION>
+                <ADD_ISDN_PHONE>
+                        <NAME>ISDN</NAME>
+                        <NET_PHONE>
+                                <FIRST_PHONE_NUMBER>200</FIRST_PHONE_NUMBER>
+                                <LAST_PHONE_NUMBER>299</LAST_PHONE_NUMBER>
+                                <CATEGORY>0</CATEGORY>
+                                <FIRST_PORT_ID>0</FIRST_PORT_ID>
+                                <DIAL_IN_GROUP_ID>0</DIAL_IN_GROUP_ID>
+                        </NET_PHONE>
+                </ADD_ISDN_PHONE>
+        </ACTION>
+</TRANS_ISDN_PHONE>
+

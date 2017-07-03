@@ -1,0 +1,431 @@
+<API name="Cdr Persist">
+
+	<NAMESPACE tag="ns16" default="urn:com:polycom:api:rest:plcm-cdr-event-operator-party-activity"/>
+	<NAMESPACE tag="ns15" default="urn:com:polycom:api:rest:plcm-cdr-event-operator-conf-activity"/>
+	<NAMESPACE tag="ns14" default="urn:com:polycom:api:rest:plcm-cdr-event-disconnected-extended"/>
+	<NAMESPACE tag="ns13" default="urn:com:polycom:api:rest:plcm-cdr-event-connected"/>
+	<NAMESPACE tag="ns12" default="urn:com:polycom:api:rest:plcm-cdr-event-conf-user-data-update"/>
+	<NAMESPACE tag="ns11" default="urn:com:polycom:api:rest:plcm-cdr-event-conf-record"/>
+	<NAMESPACE tag="ns10" default="urn:com:polycom:api:rest:plcm-cdr-event-conf-operator-update-party"/>
+	<NAMESPACE tag="ns9" default="urn:com:polycom:api:rest:plcm-cdr-event-conf-operator-move-party"/>
+	<NAMESPACE tag="ns8" default="urn:com:polycom:api:rest:plcm-cdr-event-conf-operator-add-party"/>
+	<NAMESPACE tag="ns7" default="urn:com:polycom:api:rest:plcm-cdr-event-conf-begin-extended"/>
+	<NAMESPACE tag="ns6" default="urn:com:polycom:api:rest:plcm-cdr-event-call-start-extended"/>
+	<NAMESPACE tag="ns5" default="urn:com:polycom:api:rest:plcm-cdr-event-call-start"/>
+	<NAMESPACE tag="ns4" default="urn:com:polycom:api:rest:plcm-cdr-event-conf-data-update"/>
+	<NAMESPACE tag="ns3" default="urn:com:polycom:api:rest:plcm-cdr-event-conf-end"/>
+	<NAMESPACE tag="ns2" default="urn:com:polycom:api:rest:plcm-cdr-event"/>
+	<NAMESPACE tag="ns1" default="urn:com:polycom:api:rest:plcm-cdr-event-list"/>
+	<NAMESPACE tag="nsTypeDefs" default="urn:com:polycom:api:rest:plcm-cdr-mcu-type-defs"/>
+
+	<INCLUDE name="TypeDefs.xml"/>
+
+	<CLASS name="PersistItem" tag="PersistItemXmlName">
+		<PROPERTY name="checkstr" tag="checkstr" type="string"/>
+		<PROPERTY name="checkInt" tag="checkInt" type="api unsigned int" description="item which can be saved to file."/>
+		<PROPERTY name="fcheckApiStr" tag="checkApiStr" type="api string"/>
+	</CLASS>
+
+	<CLASS name="PersistenceList" tag="PersistenceList" root="true">
+		<!-- MEMBER name="plcm-cdr-event" tag="plcm-cdr-event" ns="ns2" type="class" type_ref="plcm-cdr-event" container="list"/ -->
+		<MEMBER name="PersistList" type="any" container="list" description="list of persistent items"/>
+	</CLASS>
+
+	<CLASS name="plcm-cdr-event-list" tag="plcm-cdr-event-list" ns="ns1" root="true">
+		<MEMBER name="plcm-cdr-event" tag="plcm-cdr-event" ns="ns2" type="class" type_ref="plcm-cdr-event" container="list"/>
+		<MEMBER name="send-time" ns="ns1" tag="send-time" type="string"/>
+	</CLASS>
+
+	<CLASS name="plcm-cdr-event" tag="plcm-cdr-event">
+		<MEMBER name="source-id" ns="ns2" tag="source-id" type="opt string"/>
+		<MEMBER name="correlation-id" ns="ns2" tag="correlation-id" type="opt string"/>
+		<MEMBER name="entity-type" ns="ns2" tag="entity-type" type="opt string"/>
+		<MEMBER name="event-data" ns="ns2" tag="event-data" type="class" type_ref="event-data"/>
+		<MEMBER name="event-timestamp" ns="ns2" tag="event-timestamp" type="opt string"/>
+	</CLASS>
+
+	<CLASS name="event-data" tag="event-data" >
+		<MEMBER name="event data" type="choice">
+			<MEMBER type_ref="plcm-cdr-event-conf-data-update"/>
+			<MEMBER type_ref="plcm-cdr-event-conf-end"/>
+			<MEMBER type_ref="plcm-cdr-event-conf-record"/>
+			<MEMBER type_ref="plcm-cdr-event-call-start"/>
+			<MEMBER type_ref="plcm-cdr-event-conf-user-data-update"/>
+			<MEMBER type_ref="plcm-cdr-event-conf-operator-move-party"/>
+			<MEMBER type_ref="plcm-cdr-event-conf-begin-extended"/>
+			<MEMBER type_ref="plcm-cdr-event-operator-conf-activity"/>
+
+			<MEMBER type_ref="plcm-cdr-event-disconnected-extended"/>
+			<MEMBER type_ref="plcm-cdr-event-connected"/>
+
+			<MEMBER type_ref="plcm-cdr-event-conf-operator-add-party"/>
+			<MEMBER type_ref="plcm-cdr-event-conf-operator-update-party"/>
+			<MEMBER type_ref="plcm-cdr-event-operator-party-activity"/>
+			<MEMBER type_ref="plcm-cdr-event-call-start-extended"/>
+
+		</MEMBER>
+	</CLASS>
+	
+	
+	<CLASS ns="ns5" tag="plcm-cdr-event-call-start">
+		<MEMBER ns="ns5" tag="native-callid" type="opt string" description="The unique UUID for the call."/>
+		<MEMBER ns="ns5" tag="source-uri" type="opt string" description="Source endpoint name or IP address."/>
+		<MEMBER ns="ns5" tag="destination-uri" type="opt string" description="Destination endpoint name or IP address."/>
+		<MEMBER ns="ns5" tag="signalling-type" type="enum" type_ref="SignallingType" description="Call signalling type."/>
+		<MEMBER ns="ns5" tag="direction" type="enum" type_ref="Direction" description="Direction of the call."/>
+		<MEMBER ns="ns5" tag="negotiated-bandwidth" type="opt uint" description="Bandwidth negotiated in MB."/>
+		<MEMBER ns="ns5" tag="host-app-server" type="opt string" description="Application server on which the call is hosted."/>
+		<MEMBER ns="ns5" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name."/>
+		<MEMBER ns="ns5" tag="party-id" type="opt int" description="The ID of the participant as assigned by the MCU."/>
+		<MEMBER ns="ns5" tag="end-point-type" type="enum" type_ref="EndPointType" description="The endpoint type"/>
+	</CLASS>
+	
+	<ENUM name="CallTypeCallStart">
+		<VALUE tag="P2P"/>
+		<VALUE tag="Pool Scheduled"/>
+		<VALUE tag="Direct Scheduled"/>
+		<VALUE tag="Ad-Hoc"/>
+	</ENUM>
+
+	<ENUM name="VideoCoding">
+		<VALUE tag="AVC"/>
+		<VALUE tag="SVC"/>
+	</ENUM>
+
+	<ENUM name="Direction">
+		<VALUE tag="INBOUND"/>
+		<VALUE tag="OUTBOUND"/>
+		<VALUE tag="INTERMEDIARY"/>
+	</ENUM>
+	
+	<CLASS name="PlcmCdrEventCallStartExtended" ns="ns6" tag="plcm-cdr-event-call-start-extended">
+		<MEMBER ns="ns6" tag="party-details" type="class" type_ref="AddPartyDetailsContent"/>
+		<MEMBER ns="ns6" tag="cdr-version" type="opt ushort" description="CDR version."/>
+		<MEMBER ns="ns6" tag="encryption" type="enum" type_ref="BoolAutoType" description="The participant encryption mode."/>						
+		<MEMBER ns="ns6" tag="ipv6-address" type="opt string"/> 
+	</CLASS>
+	
+	
+	<CLASS name="PlcmCdrEventConfBeginExtended" ns="ns7" tag="plcm-cdr-event-conf-begin-extended">
+		<MEMBER ns="ns7" tag="contact-info-list" type="class" type_ref="ContactInfoListContent" description="Contains the contents of multiple Info fields"/>
+		<MEMBER ns="ns7" tag="lecture-mode" type="class" type_ref="LectureModeContent" description="Contains information about the resources imposed on the MCU to run the conference"/>
+		<MEMBER ns="ns7" tag="resource-force" type="class" type_ref="ResourceForceContent" description="Contains information about the resources imposed on the MCU to run the conference"/>
+		<MEMBER ns="ns7" tag="cascade" type="class" type_ref="CascadeContent" description="Contains cascading information of the conference"/>
+		<MEMBER ns="ns7" tag="meet-me-per-conf" type="class" type_ref="MeetMePerConfContent" description="The Meet Me per Conference parameters"/>
+		<MEMBER ns="ns7" tag="auto-terminate" type="class" type_ref="AutoTerminateContent" description="The automatic termination settings."/>
+		<MEMBER ns="ns7" tag="cdr-version" type="opt ushort" description="CDR version."/>
+		<MEMBER ns="ns7" tag="conf-id" type="opt string" description=""/>		
+		<MEMBER ns="ns7" tag="host-app-server" type="opt string" description="Application server hosting the conference."/>
+		<MEMBER ns="ns7" tag="stand-by" type="opt bool" description="Indicates whether the conference is a standby (dial-out manually) conference or not (MCU automatically initiates calls to dial-out participants)."/>
+		<MEMBER ns="ns7" tag="transfer-rate" type="enum" type_ref="TransferRateType" description="The connection line rate."/>
+		<MEMBER ns="ns7" tag="restrict-mode" type="enum" type_ref="RestrictModeType" description="Indicates whether the conference is set as restricted line rate (56 kbps) or normal line rate (64 kbps)."/>
+		<MEMBER ns="ns7" tag="video-session" type="enum" type_ref="VideoSessionType" description="The video session mode."/>
+		<MEMBER ns="ns7" tag="video-format" type="enum" type_ref="VideoFormatType" description="The video format."/>
+		<MEMBER ns="ns7" tag="frame-rate" type="enum" type_ref="FrameRateType" description="The video frame rate."/>
+		<MEMBER ns="ns7" tag="qcif-frame-rate" type="enum" type_ref="FrameRateType" description="The qcif frame rate."/>
+		<MEMBER ns="ns7" tag="entry-tone" type="opt bool" description="Indicates whether the Entry Tone is enabled or disabled"/>
+		<MEMBER ns="ns7" tag="exit-tone" type="opt bool" description="Indicates whether the exit Tone is enabled or disabled"/>
+		<MEMBER ns="ns7" tag="talk-hold-time" type="opt short"/>		
+		<MEMBER ns="ns7" tag="audio-mix-depth" type="opt short"/>		
+		<MEMBER ns="ns7" tag="operator-conf" type="opt bool" description="Indicates whether the conference is an operator conference or a standard conference"/>
+		<MEMBER ns="ns7" tag="video-protocol" type="enum" type_ref="VideoProtocolType" description="The video protocol"/>
+		<MEMBER ns="ns7" tag="password" type="opt string" description="The chairperson password"/>
+		<MEMBER ns="ns7" tag="chair-mode" type="enum" type_ref="ChairMode" description="Indicates if chair control is enabled or disabled"/>
+		<MEMBER ns="ns7" tag="max-parties" type="opt string" description="The maximum number of participants that can connect to the conference at one time"/>
+		<MEMBER ns="ns7" tag="av-message" type="opt string" description="The name of the IVR Service assigned to the conference"/>
+		<MEMBER ns="ns7" tag="time-before-first-join" type="opt short"/>				
+		<MEMBER ns="ns7" tag="time-after-last-quit" type="opt short"/>
+		<MEMBER ns="ns7" tag="end-time-alert-tone-ex" type="class" type_ref="EndTimeAlertToneEx" description="Indicates whether the End of Conference alert tone is enabled or disabled, and how long before the conference end time the End of Conference alert tone is to be played."/>
+		<MEMBER ns="ns7" tag="remark" type="opt string" description="A conference or recording remark"/>
+		<MEMBER ns="ns7" tag="numeric-id" type="opt string"/>		
+		<MEMBER ns="ns7" tag="entry-password" type="opt string" description="The conference entry password."/>
+		<MEMBER ns="ns7" tag="chair-password" type="opt string" description="The conference chairperson (leader) password."/>
+		<MEMBER ns="ns7" tag="billing-data" type="opt string" description="The billing code"/>
+		<MEMBER ns="ns7" tag="encryption" type="enum" type_ref="Encryption" description="Indicates whether or not the conference is configured to encrypt the media (e.g. video stream) or whether or not the RMX is licensed to use encryption"/>
+		<MEMBER ns="ns7" tag="display-name" type="opt string" description="This element contains the Display Name of a conference, Meeting Room, Entry Queue or SIP Factory"/>
+	</CLASS>
+	
+	
+	<ENUM name="Encryption" base_value="-1">
+		<VALUE tag="no-encryption"/>
+		<VALUE tag="encrypt-all"/>
+		<VALUE tag="encrypt-when-possible"/>
+	</ENUM>
+	
+	<CLASS name="EndTimeAlertToneEx" ns="ns7" tag="EndTimeAlertToneEx">
+		<MEMBER ns="ns7" tag="on" type="opt bool" description="Indicates whether to enable or disable a feature"/>
+		<MEMBER ns="ns7" tag="time" type="class" type_ref="Time" description="An amount of time defined as a specific number of minutes"/>
+	</CLASS>
+
+	<CLASS name="Time" ns="ns7" tag="Time">
+		<MEMBER ns="ns7" tag="Time" type="opt byte"/>
+	</CLASS>
+
+	<CLASS name="TimeAfterLastQuit" ns="ns7" tag="TimeAfterLastQuit">
+		<MEMBER ns="ns7" tag="TimeAfterLastQuit" type="opt short"/>
+	</CLASS>
+
+	<CLASS name="TimeBeforeFirstJoin" ns="ns7" tag="TimeBeforeFirstJoin">
+		<MEMBER ns="ns7" tag="TimeBeforeFirstJoin" type="opt short"/>
+	</CLASS>
+	
+	
+	<ENUM name="ChairMode" base_value="-1">
+		<VALUE tag="none"/>
+		<VALUE tag="auto"/>
+	</ENUM>
+
+	<CLASS name="AudioMixDepth" ns="ns7" tag="AudioMixDepth">
+		<MEMBER ns="ns7" tag="AudioMixDepth" type="opt short"/>
+	</CLASS>
+
+	<CLASS name="TalkHoldTime" ns="ns7" tag="TalkHoldTime">
+		<MEMBER ns="ns7" tag="TalkHoldTime" type="opt short"/>
+	</CLASS>
+	
+	
+	<CLASS name="plcm-cdr-event-conf-data-update" ns="ns4" tag="plcm-cdr-event-conf-data-update">
+		<MEMBER name="name" ns="ns4" tag="name" type="opt string" description="Party-name of the participant who inserted the billing data."/>
+		<MEMBER name="id" ns="ns4" tag="id" type="opt int" description="Party-id of the participant who inserted the billing data."/>
+		<MEMBER name="chair" ns="ns4" tag="chair" type="opt bool" description="Indicates whether the party is chair or not."/>
+		<MEMBER name="billing data" ns="ns4" tag="billing-data" type="opt string" description="The billing data."/>
+	</CLASS>
+	
+	
+	<CLASS ns="ns3" tag="plcm-cdr-event-conf-end" description="Indicates the end of conference.">
+		<MEMBER name="conf id" ns="ns3" tag="conf-id" type="opt string" description="The unique ID of the conference."/>
+		<MEMBER name="bridge conference" ns="ns3" tag="bridge-conference" type="opt bool" description="Indicates that the conference is hosted on an external bridge or MCU."/>
+		<MEMBER name="conf end cause" ns="nsTypeDefs" tag="conf-end-cause" type="enum" type_ref="ConfEndCauseEnum" description="Contains information about the reason that the conference ended."/>
+	</CLASS>
+	
+
+	<ENUM name="ConfEndCauseEnum" >
+		<VALUE tag="ongoing"/>
+		<VALUE tag="cause_operator_terminate"/>
+		<VALUE tag="end_time_terminate"/>
+		<VALUE tag="auto_termination"/>
+		<VALUE tag="never_started"/>
+		<VALUE tag="conf_problem"/>
+		<VALUE tag="mcu_completed"/>
+		<VALUE tag="terminated_by_participant"/>
+	</ENUM>
+	
+
+	<ENUM name="OperatorAddPartyAction" base_value="-1">
+		<VALUE tag="operator_add_party_to_ongoing_conference"/>
+		<VALUE tag="operator_add_party_to_reserved_conference"/>
+	</ENUM>
+
+	
+<CLASS name="PlcmCdrEventConfOperatorAddParty" ns="ns8" tag="plcm-cdr-event-conf-operator-add-party">
+		<MEMBER ns="ns8" tag="alias" type="class" type_ref="AliasContent" description="Alias name and alias type."/>
+		<MEMBER ns="ns8" tag="mcu-phone-list" type="class" type_ref="PhoneListType" description="A list of the telephone numbers that are assigned to the MCU for dial-in participants."/>
+		<MEMBER ns="ns8" tag="phone-list" type="class" type_ref="PhoneListType" description="A list of the telephone numbers that are assigned to a participant"/>
+		<MEMBER ns="ns8" tag="action" type="enum" type_ref="OperatorAddPartyAction"/>
+		<MEMBER ns="ns8" tag="conf-id" type="opt string" description=""/>		
+		<MEMBER ns="ns8" tag="connection" type="enum" type_ref="ConnectionType" description="The type of connection to be used by a participant to connect to a conference"/>
+		<MEMBER ns="ns8" tag="bonding" type="enum" type_ref="BondingType" description="Indicates whether bonding is enabled or disabled"/>
+		<MEMBER ns="ns8" tag="service-name" type="opt string" description="The name of the Network, IVR, or GW service"/>
+		<MEMBER ns="ns8" tag="sub-service-name" type="opt string" description="Only applicable for dial-out participants. The name of the network sub-service as defined in the system. An empty string indicates the default network service."/>
+		<MEMBER ns="ns8" tag="resrtict-mode" type="enum" type_ref="RestrictModeType" description="This type indicates whether the conference is set as restricted line rate (56 kbps) or normal line rate (64 kbps)"/>
+		<MEMBER ns="ns8" tag="call-content" type="enum" type_ref="CallContentType" description="The connection line rate."/>
+		<MEMBER ns="ns8" tag="num-type" type="enum" type_ref="NetworkLineType" description="Indicates the type of telephone number."/>
+		<MEMBER ns="ns8" tag="meet-me-method" type="enum" type_ref="MeetMeMethodeType" description="Only applicable for dial-in participants. The type of Meet-me conference."/>
+		<MEMBER ns="ns8" tag="transfer-rate" type="enum" type_ref="TransferRateType" description="The connection line rate."/>
+		<MEMBER ns="ns8" tag="net-channel-number" type="enum" type_ref="NetChannelNumType" description="The number of network channels."/>
+		<MEMBER ns="ns8" tag="operator-name" type="opt string" description="The name of the user"/>
+		<MEMBER ns="ns8" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="ns8" tag="id" type="opt int" description="The conference or the fault ID."/>
+		<MEMBER ns="ns8" tag="identification-method" type="enum" type_ref="IdentMethodType" description="The method by which the destination conference is identified"/>
+		<MEMBER ns="ns8" tag="chair" type="opt bool" description="Not supported: Indicates whether the participant is the current chairperson of the conference"/>
+		<MEMBER ns="ns8" tag="ip-address" type="opt string" description="The IP address"/>
+		<MEMBER ns="ns8" tag="signalling-port" type="opt short" description="Only applicable to IP participants. The signaling port"/>
+		<MEMBER ns="ns8" tag="video-protocol" type="enum" type_ref="VideoProtocolType" description="TThe video protocol."/>
+		<MEMBER ns="ns8" tag="video-bit-rate" type="opt string" description="The video rate"/>		
+		<MEMBER ns="ns8" tag="volume" type="opt short"/>
+		<MEMBER ns="ns8" tag="interface" type="enum" type_ref="Interface" description="Call signalling type. Instead on &lt;Interface&gt;"/>
+		<MEMBER ns="ns8" tag="password" type="opt string" description="The chairperson password"/>
+		<MEMBER ns="ns8" tag="undefined" type="opt bool" description="Indicates whether or not the participant is an undefined participant"/>
+		<MEMBER ns="ns8" tag="node-type" type="enum" type_ref="NodeType" description="Indicates the type of node."/>
+		<MEMBER ns="ns8" tag="bonding-phone" type="opt string" description="The bonding phone number"/>
+		<MEMBER ns="ns8" tag="sip-address" type="opt string" description="Only applicable to SIP participants. The SIP address."/>
+		<MEMBER ns="ns8" tag="sip-address-type" type="enum" type_ref="SipAddressType" description="Only applicable to SIP participants. The SIP address type."/>
+		<MEMBER ns="ns8" tag="encryption" type="enum" type_ref="BoolAutoType" description="The participant encryption mode."/>		
+		<MEMBER ns="ns8" tag="ipv6-address" type="opt string"/> 
+	</CLASS>
+	
+	
+	<ENUM name="Interface" base_value="-1">
+		<VALUE tag="H323"/>
+		<VALUE tag="SIP"/>
+		<VALUE tag="ISDN"/>
+	</ENUM>
+	
+	
+	<ENUM name="OperatorMovePartyAction">
+		<VALUE tag="move-party-to-conference"/>
+		<VALUE tag="move-party-from-conference"/>
+	</ENUM>
+
+	<CLASS name="plcm-cdr-event-conf-operator-move-party" ns="ns9" >
+		<MEMBER ns="ns9" tag="party-details" type="class" type_ref="AddPartyDetailsContent"/>
+		<MEMBER ns="ns9" tag="action" type="enum" type_ref="OperatorMovePartyAction"/>
+		<MEMBER ns="ns9" tag="operator-name" type="opt string" description="The name of the user"/>
+		<MEMBER ns="ns9" tag="src_conf-name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="ns9" tag="src_conf-id" type="opt short" description="The conference or the fault ID"/>
+		<MEMBER ns="ns9" tag="party-name" type="opt string" description="The name of the participant"/>
+		<MEMBER ns="ns9" tag="party-id" type="opt short" description="party ID"/>
+		<MEMBER ns="ns9" tag="dest_conf-name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="ns9" tag="dest_conf-id" type="opt short" description="The conference or the fault ID"/>
+		<MEMBER ns="ns9" tag="phone1" type="opt string"/>
+		<MEMBER ns="ns9" tag="phone2" type="opt string"/>
+	</CLASS>
+	
+	
+	<CLASS name="PlcmCdrEventConfOperatorUpdateParty" ns="ns10" tag="plcm-cdr-event-conf-operator-update-party">
+		<MEMBER ns="ns10" tag="alias" type="class" type_ref="AliasContent" description="Alias name and alias type."/>
+		<MEMBER ns="ns10" tag="mcu-phone-list" type="class" type_ref="PhoneListType" description="A list of the telephone numbers that are assigned to the MCU for dial-in participants."/>
+		<MEMBER ns="ns10" tag="phone-list" type="class" type_ref="PhoneListType" description="A list of the telephone numbers that are assigned to a participant"/>
+		<MEMBER ns="ns10" tag="conf-id" type="opt string" description=""/>		
+		<MEMBER ns="ns10" tag="connection" type="enum" type_ref="ConnectionType" description="The type of connection to be used by a participant to connect to a conference"/>
+		<MEMBER ns="ns10" tag="bonding" type="enum" type_ref="BondingType" description="Indicates whether bonding is enabled or disabled"/>
+		<MEMBER ns="ns10" tag="service-name" type="opt string" description="The name of the Network, IVR, or GW service"/>
+		<MEMBER ns="ns10" tag="sub-service-name" type="opt string" description="Only applicable for dial-out participants. The name of the network sub-service as defined in the system. An empty string indicates the default network service."/>
+		<MEMBER ns="ns10" tag="resrtict-mode" type="enum" type_ref="RestrictModeType" description="This type indicates whether the conference is set as restricted line rate (56 kbps) or normal line rate (64 kbps)"/>
+		<MEMBER ns="ns10" tag="call-content" type="enum" type_ref="CallContentType" description="The connection line rate."/>
+		<MEMBER ns="ns10" tag="num-type" type="enum" type_ref="NetworkLineType" description="Indicates the type of telephone number."/>
+		<MEMBER ns="ns10" tag="meet-me-method" type="enum" type_ref="MeetMeMethodeType" description="Only applicable for dial-in participants. The type of Meet-me conference."/>
+		<MEMBER ns="ns10" tag="transfer-rate" type="enum" type_ref="TransferRateType" description="The connection line rate."/>
+		<MEMBER ns="ns10" tag="net-channel-number" type="enum" type_ref="NetChannelNumType" description="The number of network channels."/>
+		<MEMBER ns="ns10" tag="operator-name" type="opt string" description="The name of the user"/>
+		<MEMBER ns="ns10" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER ns="ns10" tag="id" type="opt int" description="The conference or the fault ID."/>
+		<MEMBER ns="ns10" tag="identification-method" type="enum" type_ref="IdentMethodType" description="The method by which the destination conference is identified"/>
+		<MEMBER ns="ns10" tag="chair" type="opt bool" description="Not supported: Indicates whether the participant is the current chairperson of the conference"/>
+		<MEMBER ns="ns10" tag="ip-address" type="opt string" description="The IP address"/>
+		<MEMBER ns="ns10" tag="signalling-port" type="opt short" description="Only applicable to IP participants. The signaling port"/>
+		<MEMBER ns="ns10" tag="video-protocol" type="enum" type_ref="VideoProtocolType" description="TThe video protocol."/>
+		<MEMBER ns="ns10" tag="video-bit-rate" type="opt string" description="The video rate"/>		
+		<MEMBER ns="ns10" tag="volume" type="opt short"/>
+		<MEMBER ns="ns10" tag="signalling-type" type="enum" type_ref="SignallingType" description="Call signalling type. Instead on &lt;Interface&gt;"/>
+		<MEMBER ns="ns10" tag="password" type="opt string" description="The chairperson password"/>
+		<MEMBER ns="ns10" tag="undefined" type="opt bool" description="Indicates whether or not the participant is an undefined participant"/>
+		<MEMBER ns="ns10" tag="node-type" type="enum" type_ref="NodeType" description="Indicates the type of node."/>
+		<MEMBER ns="ns10" tag="bonding-phone" type="opt string" description="The bonding phone number"/>
+		<MEMBER ns="ns10" tag="sip-address" type="opt string" description="Only applicable to SIP participants. The SIP address."/>
+		<MEMBER ns="ns10" tag="sip-address-type" type="enum" type_ref="SipAddressType" description="Only applicable to SIP participants. The SIP address type."/>
+		<MEMBER ns="ns10" tag="encryption" type="enum" type_ref="BoolAutoType" description="The participant encryption mode."/>		
+		<MEMBER ns="ns10" tag="ipv6-address" type="opt string"/>
+		
+	</CLASS>
+	
+	
+	<CLASS name="PlcmCdrEventConfRecord" ns="ns11" tag="plcm-cdr-event-conf-record">
+		<MEMBER name="conf-id" ns="ns11" tag="conf-id" type="opt string" description="The conference ID."/>
+		<MEMBER name="name" ns="ns11" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name"/>
+		<MEMBER name="party-id" ns="ns11" tag="party-id" type="opt int" description="The ID of the participant as assigned by the MCU"/>
+		<MEMBER name="start-recording-policy" ns="ns11" tag="start-recording-policy" type="enum" type_ref="StartRecordingPolicy"/>
+		<MEMBER name="rec-link-id" ns="ns11" tag="rec-link-id" type="opt int"/>
+		<MEMBER name="rec-link-name" ns="ns11" tag="rec-link-name" type="opt string"/>
+		<MEMBER name="recording-status" ns="ns11" tag="recording-status" type="enum" type_ref="RecordingStatus"/>
+	</CLASS>
+	
+	<ENUM name="RecordingStatus" base_value="-1">
+		<VALUE tag="stop"/>
+		<VALUE tag="start"/>
+		<VALUE tag="pause"/>
+		<VALUE tag="resume"/>
+		<VALUE tag="ended"/>
+	</ENUM>
+
+	<ENUM name="StartRecordingPolicy">
+		<VALUE tag="immediately"/>
+		<VALUE tag="upon_request"/>
+	</ENUM>
+	
+	<CLASS name="PlcmCdrEventConfUserDataUpdate" ns="ns12" tag="plcm-cdr-event-conf-user-data-update">
+		<MEMBER ns="ns12" tag="dtmf-code-failure" type="class" type_ref="DtmfCodeFailure"/>
+		<MEMBER ns="ns12" tag="net-channel-disconnect" type="class" type_ref="NetChannelDisconnect"/>
+		<MEMBER ns="ns12" tag="net-channel-connect" type="class" type_ref="NetChannelConnect"/>
+		<MEMBER ns="ns12" tag="user-defined-information" type="class" type_ref="UserDefinedInformation"/>
+		<MEMBER ns="ns12" tag="remote-comunication-mode" type="class" type_ref="RemoteComunicationMode"/>
+		<MEMBER ns="ns12" tag="gatekeeper-information" type="class" type_ref="GatekeeperInformation"/>
+		<MEMBER ns="ns12" tag="participant-max-usage" type="class" type_ref="ParticipantMaxUsage"/>
+		<MEMBER ns="ns12" tag="participant-connection-rate" type="class" type_ref="ParticipantConnectionRate"/>
+		<MEMBER ns="ns12" tag="visual-name" type="class" type_ref="VisualNameData"/>
+		<MEMBER ns="ns12" tag="user-data-a" type="opt string" description="User or provisioned data."/>
+		<MEMBER ns="ns12" tag="user-data-b" type="opt string" description="User or provisioned data."/>
+		<MEMBER ns="ns12" tag="user-data-c" type="opt string" description="User or provisioned data."/>
+	</CLASS>
+	
+	
+	<CLASS name="PlcmCdrEventConnected" ns="ns13" tag="plcm-cdr-event-connected">
+		<MEMBER ns="ns13" tag="svc-connect-info" type="class" type_ref="SvcSipParticipantConnectedContent"/>
+		<MEMBER ns="ns13" tag="secondary-cause" type="class" type_ref="StatusContent" description="The reason the participant is connected as Secondary"/>
+		<MEMBER ns="ns13" tag="ongoing-party-status" type="class" type_ref="StatusContent" description="The participant status"/>
+		<MEMBER ns="ns13" tag="signalling-type" type="enum" type_ref="SignallingType" description="Call signalling type."/>
+		<MEMBER ns="ns13" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name."/>
+		<MEMBER ns="ns13" tag="party-id" type="opt int" description="The ID of the participant as assigned by the MCU."/>
+		<MEMBER ns="ns13" tag="local-comm-mode" type="opt string" description="The local H.221 capabilities"/>
+		<MEMBER ns="ns13" tag="remote-comm-mode" type="opt string" description="The remote H.221 capabilities"/>
+	</CLASS>
+	
+	
+	<CLASS name="PlcmCdrEventDisconnectedExtended" ns="ns14" tag="plcm-cdr-event-disconnected-extended">
+		<MEMBER ns="ns14" tag="q931-disconnection-cause" type="class" type_ref="StatusContent" description="Not supported in RMX. The Q.931 disconnect cause"/>
+		<MEMBER ns="ns14" tag="disconnection-cause" type="class" type_ref="StatusContent" description="The disconnection cause"/>
+		<MEMBER ns="ns14" tag="signalling-type" type="enum" type_ref="SignallingType" description="Call signalling type."/>
+		<MEMBER ns="ns14" tag="name" type="opt string" description="Contains either the conference name, primary proxy name, or alias name."/>
+		<MEMBER ns="ns14" tag="party-id" type="opt int" description="The ID of the participant as assigned by the MCU."/>
+		<MEMBER ns="ns14" tag="audio-board" type="opt string" description="The slot number of the Audio card handling the participant call."/>
+		<MEMBER ns="ns14" tag="video-board" type="opt string" description="The slot number of the video card handling the participant call"/>
+		<MEMBER ns="ns14" tag="data-board" type="opt string" description="The slot number of the data card handling the participant call"/>
+		<MEMBER ns="ns14" tag="mux-board" type="opt string" description="The slot number of the MUX card handling the participant call"/>
+		<MEMBER ns="ns14" tag="audio-bridge-board" type="opt string" description="The slot number of the Audio card on which the audio bridge handling the participant call is installed"/>
+		<MEMBER ns="ns14" tag="h323-board" type="opt string" description="The slot number of the IP card handling the participant call"/>
+		<MEMBER ns="ns14" tag="audio-unit" type="opt string" description="The slot number of the unit on the Audio card handling the participant call."/>
+		<MEMBER ns="ns14" tag="video-unit" type="opt string" description="The slot number of the unit on the video card handling the participant call"/>
+		<MEMBER ns="ns14" tag="data-unit" type="opt string" description="The slot number of the unit on the data card handling the participant call"/>
+		<MEMBER ns="ns14" tag="mux-unit" type="opt string" description="The slot number of the unit on the MUX card handling the participant call"/>
+		<MEMBER ns="ns14" tag="audio-bridge-unit" type="opt string" description="The slot number of the unit on the Audio card on which the audio bridge handling the participant call is installed"/>
+		<MEMBER ns="ns14" tag="h323-unit" type="opt string" description="The slot number of the unit on the IP card handling the participant call"/>
+		<MEMBER ns="ns14" tag="l-sync-loss" type="opt int" description="The number of times that the synchroniztion of the MCU MUX unit was lost"/>
+		<MEMBER ns="ns14" tag="r-sync-loss" type="opt int" description="The number of times that the synchroniztion of the participant MUX was lost"/>
+		<MEMBER ns="ns14" tag="l-video-sync-loss" type="opt int" description="The overall duration, in seconds, that the synchronization of the MCU Video unit was lost"/>
+		<MEMBER ns="ns14" tag="r-video-sync-loss" type="opt int" description="The number of times that the synchronization of the participant Video was lost."/>
+	</CLASS>
+	
+<ENUM name="OperatorConfActivityAction" base_value="-1">
+		<VALUE tag="terminate-conference"/>
+		<VALUE tag="set-end-time"/>
+	</ENUM>
+
+	<CLASS name="PlcmCdrEventOperatorConfActivity" ns="ns15" tag="plcm-cdr-event-operator-conf-activity">
+	    <MEMBER ns="ns15" tag="conf-id" type="opt string" description=""/>		 
+		<MEMBER ns="ns15" tag="operator-action" type="enum" type_ref="OperatorConfActivityAction"/>
+		<MEMBER ns="ns15" tag="operator-name" type="opt string"/>
+		<MEMBER ns="ns15" tag="end-time" type="opt string"/>
+	</CLASS>
+	
+	
+		<ENUM name="OperatorPartyActivityAction" base_value="-1">
+		<VALUE tag="disconnect-party"/>
+		<VALUE tag="set-end-time"/>
+		<VALUE tag="reconnect-party"/>
+	</ENUM>
+
+		
+
+	<CLASS name="PlcmCdrEventOperatorPartyActivity" ns="ns16" tag="plcm-cdr-event-operator-party-activity">
+	    <MEMBER ns="ns16" tag="conf-id" type="opt string" description=""/>		
+		<MEMBER ns="ns16" tag="operator-action" type="enum" type_ref="OperatorPartyActivityAction"/>
+		<MEMBER ns="ns16" tag="operator-name" type="opt string"/>
+		<MEMBER ns="ns16" tag="party-name" type="opt string"/>
+		<MEMBER ns="ns16" tag="party-id" type="opt short"/>
+	</CLASS>
+
+	
+
+	
+
+</API>

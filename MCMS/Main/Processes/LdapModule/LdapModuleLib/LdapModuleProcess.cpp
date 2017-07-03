@@ -1,0 +1,50 @@
+// LdapModuleProcess.cpp: implementation of the CLdapModuleProcess class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "LdapModuleProcess.h"
+#include "SystemFunctions.h"
+#include "LdapModuleCfg.h"
+
+extern void LdapModuleManagerEntryPoint(void* appParam);
+
+//////////////////////////////////////////////////////////////////////
+CProcessBase* CreateNewProcess()
+{
+	return new CLdapModuleProcess;
+}
+
+//////////////////////////////////////////////////////////////////////
+TaskEntryPoint CLdapModuleProcess::GetManagerEntryPoint()
+{
+	return LdapModuleManagerEntryPoint;
+}
+
+
+//////////////////////////////////////////////////////////////////////
+CLdapModuleProcess::CLdapModuleProcess()
+{
+	m_pLdapModuleCfg = new CLdapModuleCfg();
+}
+
+//////////////////////////////////////////////////////////////////////
+CLdapModuleProcess::~CLdapModuleProcess()
+{
+	POBJDELETE(m_pLdapModuleCfg);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+BOOL CLdapModuleProcess::GetLdapCfg(CLdapModuleCfg &ldapModuleCfg) const
+{
+	ldapModuleCfg = *m_pLdapModuleCfg;
+	return TRUE;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void CLdapModuleProcess::SetLdapCfg(const CLdapModuleCfg &ldapModuleCfg)
+{
+	*m_pLdapModuleCfg = ldapModuleCfg;
+}
+
+
+

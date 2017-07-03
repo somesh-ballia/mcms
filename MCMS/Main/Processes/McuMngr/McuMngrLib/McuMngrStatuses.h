@@ -1,0 +1,7 @@
+#ifndef MCUMNGRSTATUSES_H_
+#define MCUMNGRSTATUSES_H_
+
+
+
+
+#endif /*MCUMNGRSTATUSES_H_*/

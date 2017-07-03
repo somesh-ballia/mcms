@@ -1,0 +1,84 @@
+<API name="cdr common">
+	<ENUM name="conference info terminated reason">
+		<VALUE tag="deactivated"/>
+		<VALUE tag="probation"/>
+		<VALUE tag="rejected"/>
+		<VALUE name="time out" tag="timeout"/>
+		<VALUE name="give up" tag="giveup"/>
+		<VALUE name="no resource" tag="noresource"/>
+	</ENUM>
+
+	<ENUM name="conference info subscription state">
+		<VALUE tag="active"/>
+		<VALUE tag="pending"/>
+		<VALUE tag="terminated"/>
+	</ENUM>
+
+	<CLASS name="latency"> 
+		<PROPERTY name="peak" tag="peak" type="api int"/>
+		<PROPERTY name="average" tag="avg" type="api int"/>
+	</CLASS>
+
+	<CLASS name="jitter"> 
+		<PROPERTY name="peak" tag="peak" type="api int"/>
+		<PROPERTY name="average" tag="avg" type="api int"/>
+	</CLASS>
+
+	<CLASS name="total number of lost packets"> 
+		<PROPERTY name="number" tag="num" type="api int"/>
+	</CLASS>
+
+	<CLASS name="total number of packets"> 
+		<PROPERTY name="number" tag="num" type="api int"/>
+	</CLASS>
+
+	<CLASS name="resolution frame rate">
+		<PROPERTY name="width" tag="width" type="api int"/>
+		<PROPERTY name="height" tag="height" type="api int"/>
+		<PROPERTY name="frame rate" tag="frameRate" type="api int"/>
+	</CLASS>
+
+	<CLASS name="resolutions frame rates"> 
+		<MEMBER name="max" tag="max" type="class" type_ref="resolution frame rate"/>
+		<MEMBER name="min" tag="min" type="class" type_ref="resolution frame rate"/>
+	</CLASS>
+
+	<CLASS name="channel"> 
+		<MEMBER name="resolution frame rate" tag="resolution-frame-rate" type="class" type_ref="resolutions frame rates"/>
+		<MEMBER name="total number of packets" tag="total-number-of-packets" type="class" type_ref="total number of packets"/>
+		<MEMBER name="total number of lost packets" tag="total-number-of-lost-packets" type="class" type_ref="total number of lost packets"/>
+		<MEMBER name="jitter" tag="jitter" type="class" type_ref="jitter"/>
+		<MEMBER name="latency" tag="latency" type="class" type_ref="latency"/>
+		<PROPERTY name="channel name" tag="channelName" type="api string"/>
+	</CLASS>
+
+	<CLASS name="channels"> 
+		<MEMBER name="channel" tag="channel" type="class" type_ref="channel" container="list"/>
+	</CLASS>
+
+	<CLASS name="participant info notify" tag="participant-info-notify"> 
+		<MEMBER name="channels" tag="channels" type="class" type_ref="channels"/>
+		<PROPERTY name="party call id" tag="partyCallId" type="api string"/>
+		<PROPERTY name="conf id" tag="confId" type="api string"/>
+	</CLASS>
+
+	<CLASS name="event element" tag="event">
+		<MEMBER type="choice" name="participant info notify">
+			<MEMBER type_ref="participant info notify"/>
+		</MEMBER>
+		<PROPERTY name="id" tag="id" type="api string"/>
+		<MEMBER name="subscription state" tag="subscription-state" type="enum" type_ref="conference info subscription state"/>
+		<PROPERTY name="urgent" tag="urgent" type="api string"/>
+		<PROPERTY name="expires" tag="expires" type="api int"/>
+		<PROPERTY name="min expires" tag="minexpires" type="api int"/>
+		<MEMBER name="reason" tag="reason" type="enum" type_ref="conference info terminated reason"/>
+		<PROPERTY name="retry after" tag="retry-after" type="api int"/>
+	</CLASS>
+
+	<CLASS name="msc polycom mixer" tag="mscpolycommixer" root="true">
+		<MEMBER type="choice" name="event">
+			<MEMBER type_ref="event element"/>
+		</MEMBER>
+		<PROPERTY name="version" tag="version" type="api string"/>
+	</CLASS>
+</API>

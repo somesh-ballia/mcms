@@ -1,0 +1,52 @@
+// CSMngrStatuses.h:
+//
+//
+//Date         Updated By         Description
+//
+//21/12/05	  Judith			Statuses for CSMngr
+//========   ==============   =====================================================================
+
+#ifndef      __CSMngrStatuses__
+#define      __CSMngrStatuses__
+
+//Range 100000 and above
+#define STATUS_END_CONFIG								100000
+#define STATUS_END_COMMON								100001
+#define STATUS_SYSTEM_CONFIG_FILE_NOT_EXISTS			100002
+#define STATUS_SECTION_NOT_FOUND						100003
+#define STATUS_INFO_MESSAGE_OK							100004
+#define STATUS_INFO_MESSAGE_FAIL						100005
+#define STATUS_NO_SIP_IN_SERVICE						100006
+#define STATUS_NO_DATA_COME_FROM_CS_MODULE				100007
+#define STATUS_CORRUPTED_IP_SERVICE						100008
+#define STATUS_PORT_NOT_READY							100009
+
+#define STATUS_FAILED_TO_SEND_MSG_TO_CS					100010
+#define STATUS_FAILED_TO_SEND_CONFIG_PARAMS				100011
+#define STATUS_FAILED_TO_SEND_COMMON_PARAMS				100012
+#define STATUS_FAILED_TO_RECEIVE_MSG_FROM_CS			100013
+#define STATUS_FAILED_TO_UNPACK_MSG_FROM_CS				100014
+#define STATUS_INVALID_SECTION_NAME						100015
+#define STATUS_NO_SPANS_IN_SERVICE						100016
+#define STATUS_NO_NAT_IN_SERVICE						100017
+#define STATUS_NO_DNS_IN_SERVICE						100018
+#define STATUS_ILLEGAL_IP_PROTOCOL						100019
+#define STATUS_ILLEGAL_SERVICE_STATUS					100020
+#define STATUS_NOT_VALID_DHCP							100021
+#define STATUS_ILLEGAL_DNS_STATUS						100022
+#define STATUS_NO_DOMAIN_NAME							100023
+#define STATUS_NO_HOST_NAME								100024
+
+#define STATUS_NO_AUT_IN_SERVICE						100025
+#define STATUS_NO_AUT_ELEMENT_IN_SERVICE				100026
+#define STATUS_NO_SEQURITY_IN_SERVICE					100027
+#define STATUS_NO_PROTOCOL_NAME							100028
+#define STATUS_NO_USER_NAME								100029
+#define STATUS_NO_PASSWORD								100030
+#define STATUS_NO_SERVER_NAME							100031
+#define STATUS_NO_DNS_PREFIX_NAME						100032
+#define STATUS_NO_WEB_RTC_ICE_IN_SERVICE				100033
+#define STATUS_NO_SERVICE								100036
+
+
+#endif  // __CSMngrStatuses__

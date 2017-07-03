@@ -1,0 +1,16 @@
+
+    <TRANS_CONF_2>
+      <TRANS_COMMON_PARAMS>
+        <MCU_TOKEN>3</MCU_TOKEN>
+        <MCU_USER_TOKEN>3</MCU_USER_TOKEN>
+        <MESSAGE_ID>26183</MESSAGE_ID>
+      </TRANS_COMMON_PARAMS>
+      <ACTION>
+        <MOVE_PARTY>
+          <ID>14</ID>
+          <PARTY_ID>0</PARTY_ID>
+          <TARGET_ID>13</TARGET_ID>
+        </MOVE_PARTY>
+      </ACTION>
+    </TRANS_CONF_2>
+

@@ -1,0 +1,25 @@
+<API name="Cdr Registration" >
+	<DEFINE name="max num ip addresses per device" value="20"/>
+
+	<NAMESPACE tag="nsRegistration" value="urn:com:polycom:api:rest:plcm-cdr-event-source"/>
+
+	<CLASS name="plcm-cdr-event-source" ns="nsRegistration" tag="plcm-cdr-event-source" root="true">
+		<MEMBER ns="nsRegistration" tag="ip-address-list" type="class" type_ref="ip address list type"/>
+		<MEMBER ns="nsRegistration" tag="product-type" type="string" />
+		<MEMBER ns="nsRegistration" tag="name" type="string" />
+		<MEMBER ns="nsRegistration" tag="product" type="string" />
+		<MEMBER ns="nsRegistration" tag="model" type="string"/>
+		<MEMBER ns="nsRegistration" tag="software-version" type="string"/>
+		<MEMBER ns="nsRegistration" tag="hardware-version" type="string"/>
+		<MEMBER ns="nsRegistration" tag="serial-number" type="string"/>
+	</CLASS>
+
+	<CLASS ns="nsRegistration" name="ip address list type">
+		<MEMBER ns="nsRegistration" tag="ip-address" type="string" container="list"/>
+	</CLASS>
+
+	<CLASS tag="plcm-cdr-event-source-id" root="true">
+		<NAMESPACE value="urn:com:polycom:api:rest:plcm-cdr-event-source-id"/>
+		<MEMBER tag="source-id" type="api string" description="Source id received upon successful registration"/>
+	</CLASS>
+</API>

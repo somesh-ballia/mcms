@@ -1,0 +1,494 @@
+#!/bin/bash
+#
+# Process List
+# ------------
+# Check the Soft MCU process list
+# Written by: Shachar Bar
+#
+
+clear
+COLOR="On"
+if [[ "$1" == "C" ]]; then
+        COLOR="Off"
+else
+        COLOR="On"
+fi
+
+COLORIZE () {
+        if [[ "X$COLOR" == "X" || "$COLOR" == "Off" ]]; then
+                return
+        fi
+        case $1 in
+        NORMAL)
+                COL="\033[0m"
+                ;;
+	UNDERLINE)
+		COL="\033[1;21m"
+		;;
+	WHITE)
+		COL="\033[1;28m"
+		;;
+        RED)
+                COL="\033[0;31m"
+                ;;
+        GREEN)
+                COL="\033[0;32m"
+                ;;
+        YELLOW)
+                COL="\033[0;33m"
+                ;;
+        BLUE)
+                COL="\033[0;34m"
+                ;;
+        PURPLE)
+                COL="\033[0;35m"
+                ;;
+        L_BLUE)
+                COL="\033[0;36m"
+                ;;
+        esac
+        echo -n -e "$COL"
+}
+
+UNCOLORIZE () {
+        if [[ "X$COLOR" == "X" ]]; then
+                return
+        fi
+        echo -n -e "\033[0m"
+}
+
+REST=0
+UP=0
+
+COLORIZE UNDERLINE
+echo "Checking Soft MCU environment"
+#echo "-----------------------------"
+UNCOLORIZE
+COLORIZE YELLOW
+echo -n -e "OS health status for\t\t"
+UNCOLORIZE
+COLORIZE L_BLUE
+echo -e "`hostname`"
+UNCOLORIZE
+echo -n -e "Uptime:\t\t\t\t"
+COLORIZE BLUE
+echo -e "`uptime | tr -s ' ' | cut -d' ' -f2- | cut -d',' -f1`"
+UNCOLORIZE
+RAM_Size=`free | head -2 | tail -1 | tr -s ' ' | cut -d' ' -f2`
+RAM_Available=`free | head -2 | tail -1 | tr -s ' ' | cut -d' ' -f4`
+echo -n -e "RAM free/available in KB:\t"
+COLORIZE L_BLUE
+echo -n -e "$RAM_Available"
+UNCOLORIZE
+echo -n -e " / "
+COLORIZE BLUE
+echo -n -e "$RAM_Size\n"
+UNCOLORIZE
+if (( $RAM_Available < 524288 )); then
+	COLORIZE RED
+	echo "You are running low on RAM (less than 512 MB) !!!"
+	UNCOLORIZE
+fi
+
+CPU_Load=`uptime | tr -s ' ' | cut -d' ' -f11-`
+echo -n -e "CPU load:\t\t\t"
+COLORIZE L_BLUE
+echo -n -e "$CPU_Load\n"
+UNCOLORIZE
+CPU_Load=`uptime | tr -s ' ' | cut -d' ' -f11 | tr -d ','`
+if [[ `echo -n $CPU_Load | cut -d'.' -f1` > 0 ]]; then
+	COLORIZE RED
+	echo "Your VM is overloaded !!!"
+	UNCOLORIZE
+fi
+
+Disk_Size=`df -h / | tail -1 | tr -s ' ' | cut -d ' ' -f2`
+Disk_Free=`df -h / | tail -1 | tr -s ' ' | cut -d ' ' -f4`
+Disk_Util=`df -h / | tail -1 | tr -s ' ' | cut -d ' ' -f5 | tr -d '%'`
+echo -n -e "VM Disk space:\t\t\t"
+COLORIZE L_BLUE
+echo -n -e "$Disk_Free"
+UNCOLORIZE
+echo -n -e " / "
+COLORIZE BLUE
+echo -e "$Disk_Size"
+UNCOLORIZE
+if (( $Disk_Util > 98 )); then
+	COLORIZE RED
+	echo "Your VM is running out of disk space (less than 2% free) !!!"
+	UNCOLORIZE
+fi
+
+echo -n -e "Network interfaces:\t\t"
+Ifaces=`ifconfig -a | grep 'HWaddr' | tr -s ' ' | cut -d' ' -f1`
+COLORIZE L_BLUE
+echo -e "$Ifaces"
+UNCOLORIZE
+
+Zombies_Number=`ps -ef | grep '<defunct>' | grep -v grep | wc -l`
+Zombies_Names=`ps -ef | grep '<defunct>' | tr -s ' ' | grep -v grep | tr -s ' ' | cut -d' ' -f8 | uniq | xargs -i echo -n {}`
+if [[ $Zombies_Number > 0 ]]; then
+	echo -n -e "Zombie processes:\t\t"
+	COLORIZE RED
+	echo -n -e "$Zombies_Number\t"
+	COLORIZE WHILE
+	echo -n -e "$Zombies_Names\n"
+	UNCOLORIZE
+else
+	echo -n -e "Zombie processes:\t\t"
+	COLORIZE GREEN
+	echo -n -e "0\n"
+	UNCOLORIZE
+fi
+
+COLORIZE YELLOW
+echo "Soft MCU status"
+UNCOLORIZE
+if [[ -d /mcms/StaticCfg || -f $HOME/dev_env/mcms ]]; then
+	echo -n -e "MCMS status is:\t\t\t"
+	COLORIZE GREEN
+	echo -n -e "OK\n"
+	UNCOLORIZE
+else
+	#if [[ -f /cs/bin/acloader || -f $HOME/dev_env/cs ]]; then
+	#	Build_Dir=`file $HOME/dev_env/cs/bin | cut -d"\`" -f2 | sed  -e 's#/cs_smcu.*##'`
+	#	rm -f /tmp/mcms
+	#	ln -s $Build_Dir/mcms /tmp/mcms
+	#fi
+	if [[ ( ! -d /mcms ) && ( -d $HOME/dev_env/mcms ) ]]; then
+         	rm -f /tmp/mcms
+         	ln -sf $HOME/dev_env/mcms /tmp/mcms
+ 	fi
+	echo -n -e "MCMS status is:\t\t\t"
+	if [[ -d /mcms/StaticCfg || -f $HOME/dev_env/mcms ]]; then
+		COLORIZE YELLOW
+		echo -n -e "Fixed\n"
+		UNCOLORIZE
+	else
+		COLORIZE RED
+		echo -n -e "Fail\n"
+		UNCOLORIZE
+	fi
+	#exit 2 
+fi
+
+if [[ -f /cs/bin/acloader || -f $HOME/dev_env/cs ]]; then
+	echo -n -e "CS status is:\t\t\t"
+	COLORIZE GREEN
+	echo -n -e "OK\n"
+	UNCOLORIZE
+else
+	if [[ ( ! -d /cs ) && ( -d $HOME/dev_env/cs ) ]]; then
+         	rm -f /tmp/cs
+         	ln -sf $HOME/dev_env/cs /tmp/cs
+ 	fi
+	echo -n -e "CS status is:\t\t\t"
+	if [[ -f /cs/bin/acloader || -f $HOME/dev_env/cs ]]; then
+		COLORIZE YELLOW
+		echo -n -e "Fixed\n"
+		UNCOLORIZE
+	else
+		COLORIZE RED
+		echo -n -e "Fail\n"
+		UNCOLORIZE
+		#exit 3
+	fi
+fi
+
+if [[ -e /usr/rmx1000/bin/mpproxy && -e /usr/rmx1000/bin/video ]]; then
+	echo -n -e "RMX1000 status is:\t\t"
+	COLORIZE GREEN
+	echo -n -e "OK\n"
+	UNCOLORIZE
+else
+	echo -n -e "RMX1000 status is:\t\t"
+	COLORIZE RED
+	echo -n -e "Fail\n"
+	UNCOLORIZE
+	#exit 4
+fi
+
+if [[ -f /mcms/ProductType ]]; then
+	Product=`cat /mcms/ProductType`
+	echo -n -e "Product Type:\t\t\t"
+	COLORIZE PURPLE
+	echo -n -e "$Product\n"
+	UNCOLORIZE
+else
+	COLORIZE RED
+	echo -e "Couldn't determine product type"
+	UNCOLORIZE
+	#exit 1
+fi
+
+if [[ `grep 'Single Apache' /mcms/Scripts/soft.sh` ]]; then
+SA=1
+tput sc
+echo -n -e "Single Apache:\t\t\t"
+COLORIZE YELLOW
+echo -n -e "Please wait..."
+UNCOLORIZE
+#if [[ ( ! `rpm -qa | grep SingleApache` ) || `file -L /usr/local/apache2/bin/http | grep '64-bit'` ]]; then
+if [[ ! -f /usr/local/apache2/bin/httpd ]]; then
+	sudo /opt/polycom/ks-correction.sh SA >& /dev/null
+fi
+if [[ `file -L /usr/local/apache2/bin/httpd | grep '64-bit'` ]]; then
+	sudo /opt/polycom/ks-correction.sh SA >& /dev/null
+	if [[ ! `rpm -qa | grep UI_AIM` ]]; then
+		sudo /opt/polycom/ks-correction.sh REST >& /dev/null
+	fi
+	tput el1
+	tput rc
+	echo -n -e "Single Apache:\t\t\t"
+	COLORIZE YELLOW
+	echo "Installed"
+	UNCOLORIZE
+else
+	if [[ ! `rpm -qa | grep UI_AIM` ]]; then
+		sudo /opt/polycom/ks-correction.sh REST >& /dev/null
+	fi
+	tput el1
+	tput rc
+	echo -n -e "Single Apache:\t\t\t"
+	COLORIZE GREEN
+	echo "OK"
+	UNCOLORIZE
+	# Testing REST API
+	echo -n -e "REST API:\t\t\t"
+	AUTH="Authorization: Basic U1VQUE9SVDpTVVBQT1JU"
+	TYPE="Content-Type: application/vnd.plcm.dummy+xml"
+	PARM="If-None-Match: -1"
+	MYIP=`/sbin/ifconfig | grep 'inet add' | grep -v 127.0.0.1 | tr -s ' ' | cut -d':' -f2 | cut -d' ' -f1`
+	RestAPI=`curl -s -k -H "$PARM" -H "$TYPE" -H "$AUTH" -G http://$MYIP/plcm/mcu/api/1.0/health/status`
+	if [[ `echo $RestAPI | grep '^<MCU_STATE>.*success.*</MCU_STATE>'` ]]; then
+		COLORIZE GREEN
+		echo "OK"
+		UNCOLORIZE
+		REST=1
+	else
+		COLORIZE RED
+		echo "Fail"
+		UNCOLORIZE
+	fi
+fi
+# End of Single Apache block
+else # Old Apache block
+	SA=0
+	tput sc
+	echo -n -e "Old Apache:\t\t\t"
+	COLORIZE YELLOW
+	echo -n -e "Please wait..."
+	UNCOLORIZE
+	if [[ `file -L /usr/local/apache2/bin/httpd | grep '32-bit'` ]]; then
+		sudo /opt/polycom/ks-correction.sh apache >& /dev/null
+		tput el1
+		tput rc
+		echo -n -e "Old Apache:\t\t\t"
+		COLORIZE YELLOW
+		echo "Installed"
+		UNCOLORIZE
+	else
+		tput el1
+		tput rc
+		echo -n -e "Old Apache:\t\t\t"
+		COLORIZE GREEN
+		echo "OK"
+		UNCOLORIZE
+		# Testing REST API
+		sudo service httpd start >& /dev/null
+		echo -n -e "REST API:\t\t\t"
+		AUTH="Authorization: Basic U1VQUE9SVDpTVVBQT1JU"
+		TYPE="Content-Type: application/vnd.plcm.dummy+xml"
+		PARM="If-None-Match: -1"
+		MYIP=`/sbin/ifconfig | grep 'inet add' | grep -v 127.0.0.1 | tr -s ' ' | cut -d':' -f2 | cut -d' ' -f1`
+		RestAPI=`curl -s -k -H "$PARM" -H "$TYPE" -H "$AUTH" -G https://$MYIP/plcm/mcu/api/1.0/health/status`
+		if [[ `echo $RestAPI | grep '^<MCU_STATE>.*success.*</MCU_STATE>'` ]]; then
+			COLORIZE GREEN
+			echo "OK"
+			UNCOLORIZE
+			REST=1
+		else
+			COLORIZE RED
+			echo "Fail"
+			UNCOLORIZE
+		fi
+	fi
+	if [[ ! `rpm -qa | grep UI_AIM` ]]; then
+		sudo /opt/polycom/ks-correction.sh REST >& /dev/null
+	fi
+fi
+
+#ps -ef | grep mcms | grep -v sleep | grep -v grep | tr -s ' '  | cut -d' ' -f 8- | sort | uniq 
+Process_List="./bin/acloader -c -C;\
+Bin/Auditor 0;\
+Bin/Authentication 0;\
+Bin/BackupRestore 0;\
+./bin/calltask -Tct1;\
+./bin/calltask -Tct2;\
+Bin/Cards 0;\
+Bin/CDR 0;\
+Bin/CertMngr 0;\
+Bin/Collector 0;\
+Bin/Configurator 0;\
+Bin/ConfParty 0;\
+Bin/CSApi 0;\
+./bin/csman -Tcsman -Mcsman -r0 -P6 -S1;\
+Bin/CSMngr 0;\
+Bin/DNSAgent 0;\
+Bin/EncryptionKeyServer 0;\
+Bin/ExchangeModule 0;\
+Bin/Failover 0;\
+Bin/Faults 0;\
+Bin/Gatekeeper 0;\
+./bin/gkiftask -Tgkiftask -Mgkiftask -r0 -P6 -S1;\
+./bin/h323LoadBalancer -Tlb323 -Mlb323 -r0 -P6;\
+Bin/LdapModule 0;\
+./bin/LinuxSysCallProcess;\
+Bin/Logger 0;\
+Bin/MCCFMngr 0;\
+Bin/McmsDaemon;\
+./bin/mcmsif -Tmcmsif -Mmcmsif -r0 -P6 -S1;\
+Bin/McuMngr 0;\
+./bin/mp_launcher 1 -x86\
+./bin/mfa;\
+Bin/MplApi 0;\
+./Bin/mrmTargetBinFile all;\
+Bin/NotificationMngr 0;\
+Bin/QAAPI 0;\
+Bin/Resource 0;\
+Bin/RtmIsdnMngr 0;\
+/bin/sh ./mrm.sh all;\
+/bin/sh ./scripts_x86/runmfa.sh;\
+Bin/SipProxy 0;\
+Bin/Ice 0;\
+./bin/siptask -Tsiptask -Msiptask -r0 -P6 -S1;\
+Bin/SNMPProcess 0;\
+Bin/SystemMonitoring 0;\
+Bin/Utility 0;\
+in/httpd;\
+snmpd;\
+/usr/rmx1000/bin/audio_soft;\
+/usr/rmx1000/bin/launcher;\
+/usr/rmx1000/bin/mpproxy;\
+/usr/rmx1000/bin/traced;\
+/usr/rmx1000/bin/video"
+#/bin/sh Bin/ApacheModule 0;\
+#./bin/IpmcSim.x86;\
+#============= End of Process List ============================================
+
+if [[ "$Product" == "SOFT_MCU_MFW" ]]; then
+	Process_List="/bin/sh /mcms/Scripts/SoftMcuWatcher.sh;$Process_List"
+fi
+
+Count=0
+Fail=0
+Line=''
+
+#Process_Array=$(echo $Process_List | tr ";" "\n")
+Process_Array=$(echo $Process_List)
+IFS=";"
+for Process in $Process_Array; do
+	(( Count++ ))
+	#echo "$Count: $Process"
+	if [[ $SA == "0" && $Process == '/mcms/Bin/httpd' ]]; then
+		Process='./Bin/httpd'
+	fi
+	if [[ ! `ps -ef | grep -v '<defunct>' | grep "$Process" | grep -v grep` ]]; then
+		#if [[ $Process == '/mcms/Bin/httpd' && `grep 'Single Apache' /mcms/Scripts/soft.sh` ]]; then
+		if [[ `echo $Process | grep 'Bin/httpd'` ]]; then
+			tput sc
+			echo -e -n "Recovering Apache:\t\t"
+			COLORIZE YELLOW
+			echo -n -e "Please wait..."
+			UNCOLORIZE
+			if [[ `grep 'Single Apache' /mcms/Scripts/soft.sh` ]]; then
+				sudo /opt/polycom/ks-correction.sh EMA2 >& /dev/null
+			else 
+				export LD_LIBRARY_PATH=/mcms/Bin
+				(/mcms/Bin/httpd -f /mcms/StaticCfg/httpd.conf.sim >& /dev/null &) 2> /dev/null
+			fi
+			if [[ ! `ps -ef | grep -v grep | grep '/mcms/Bin/httpd'` ]]; then
+				if [[ ! -e /mcms/Bin/libProcessBase.so ]]; then
+					Missing="$Missing libProcessBase.so"
+				fi
+				if [[ ! -e /mcms/Bin/libXmlPars.so ]]; then
+					Missing="$Missing libXmlPars.so"
+				fi
+				if [[ ! -e /mcms/Bin/libCommon.so ]]; then
+					Missing="$Missing libCommon.so"
+				fi
+				if [[ ! -e /mcms/Bin/libSimLinux.so ]]; then
+					Missing="$Missing libSimLinux.so"
+				fi
+				if [[ ! -e /mcms/Bin/libMcmsEncryption.so ]]; then
+					Missing="$Missing libMcmsEncryption.so"
+				fi
+				tput el1
+				tput rc
+				echo -e -n "Recovering Apache:\t\t"
+				COLORIZE RED
+				echo -e -n "Fail"
+				UNCOLORIZE
+				if [[ "X$Missing" == "X" ]]; then
+					echo ""
+				else
+					echo -n -e "\tMissing: "
+					COLORIZE YELLOW
+					echo "$Missing"
+					UNCOLORIZE
+				fi
+				Failures[$Fail]="$Process"
+				(( Fail++ ))
+			else
+				tput el1
+				tput rc
+				echo -e -n "Recovering Apache:\t\t"
+				COLORIZE GREEN
+				echo "OK"
+				UNCOLORIZE
+			fi
+		elif [[ $Process == "snmpd" ]]; then
+			#sudo killall -q snmpd
+			#sleep 1
+			sudo snmpd -C -c /tmp/snmpd.conf >& /dev/null
+		else
+			Failures[$Fail]="$Process"
+			(( Fail++ ))
+		fi
+	fi
+done
+
+if [[ "$Fail" == "0" ]]; then
+	echo -n -e "Soft MCU status is:\t\t"
+	COLORIZE GREEN
+	echo "OK"
+	UNCOLORIZE
+	UP=1
+else
+	echo -n -e "Soft MCU status is:\t\t"
+	COLORIZE RED
+	echo -n -e "Fail "
+	UNCOLORIZE
+	echo -n -e "( "
+	COLORIZE RED
+	echo -n -e "$Fail"
+	UNCOLORIZE
+	echo -n -e " / "
+	COLORIZE BLUE
+	echo -n -e "$Count"
+	UNCOLORIZE
+	echo -n -e " )\n"
+	COLORIZE YELLOW
+	echo "Missing processes"
+	UNCOLORIZE
+	IFS=";"
+	COLORIZE WHITE
+	echo -e "${Failures[*]}"
+	UNCOLORIZE
+fi
+
+if [[ $REST == "0" && $UP == "0" ]]; then
+	sleep 10
+	clear
+	$0
+fi

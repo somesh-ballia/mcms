@@ -1,0 +1,403 @@
+<API name="EventPackage interface" ns="EventPackage">
+
+	<NAMESPACE              value="urn:ietf:params:xml:ns:conference-info"/>
+	<NAMESPACE tag="mscp"   value="http://schemas.microsoft.com/rtc/2005/08/cccpextensions"/>
+	<NAMESPACE tag="msas"   value="http://schemas.microsoft.com/rtc/2005/08/asconfinfoextensions"/>
+	<NAMESPACE tag="msav"   value="http://schemas.microsoft.com/rtc/2005/08/avconfinfoextensions"/>
+	<NAMESPACE tag="msci"   value="http://schemas.microsoft.com/rtc/2005/08/confinfoextensions"/>
+	<NAMESPACE tag="msdata" value="http://schemas.microsoft.com/rtc/2005/08/dataconfinfoextensions"/>
+	<NAMESPACE tag="msci2"  value="http://schemas.microsoft.com/rtc/2008/12/confinfoextensions"/>
+	<NAMESPACE tag="msmcu"  value="http://schemas.microsoft.com/rtc/2009/03/commonmcuextensions"/>
+	<NAMESPACE tag="ci"     value="urn:ietf:params:xml:ns:conference-info"/>
+	<NAMESPACE tag="cis"    value="urn:ietf:params:xml:ns:conference-info-separator"/>
+
+	<TYPEDEF name="LyncMsi" value="unsigned int"/>
+	<TYPEDEF name="SsrcID"  value="unsigned int"/>
+
+	<!-- EVENT TYPE, name="event-type" -->
+	<ENUM name="EventType">
+		<VALUE name="UserAdded" tag="eEventType_UserAdded"/>
+		<VALUE name="UserDeleted" tag="eEventType_UserDeleted"/>
+		<VALUE name="UserDisplayTextUpdated" tag="eEventType_UserDisplayTextUpdated"/>
+
+		<VALUE name="EndpointAdded" tag="eEventType_EndpointAdded"/>
+		<VALUE name="EndpointDeleted" tag="eEventType_EndpointDeleted"/>
+		<VALUE name="EndpointDisplayTextUpdated" tag="eEventType_EndpointDisplayTextUpdated"/>
+		<VALUE name="EndpointStatusUpdated" tag="eEventType_EndpointStatusUpdated"/>
+
+		<VALUE name="MediaAdded" tag="eEventType_MediaAdded"/>
+		<VALUE name="MediaDeleted" tag="eEventType_MediaDeleted"/>
+		<VALUE name="MediaDisplayTextUpdated" tag="eEventType_MediaDisplayTextUpdated"/>
+		<VALUE name="MediaStatusUpdated" tag="eEventType_MediaStatusUpdated"/>
+		
+		<VALUE name="VideoSwitchingModeUpdated" tag="eEventType_VideoSwitchingModeUpdated"/>
+	</ENUM>
+
+	<!-- STATE TYPE, name="state-type" -->
+	<ENUM name="StateType">
+		<VALUE tag="full"/>
+		<VALUE tag="partial"/>
+		<VALUE tag="deleted"/>
+	</ENUM>
+
+	<!-- ENDPOINT STATUS TYPE, name="endpoint-status-type" -->
+	<ENUM name="EndpointStatusType">
+		<VALUE tag="pending"/>
+		<VALUE tag="dialing-out"/>
+		<VALUE tag="dialing-in"/>
+		<VALUE tag="alerting"/>
+		<VALUE tag="on-hold"/>
+		<VALUE tag="connected"/>
+		<VALUE tag="muted-via-focus"/>
+		<VALUE tag="disconnecting"/>
+		<VALUE tag="disconnected"/>
+	</ENUM>
+
+	<!-- JOINING TYPE, name="joining-type" -->
+	<ENUM name="JoiningType">
+		<VALUE tag="dialed-in"/>
+		<VALUE tag="dialed-out"/>
+		<VALUE tag="focus-owner"/>
+	</ENUM>
+
+	<!-- DISCONNECTION TYPE, name="disconnection-type" -->
+	<ENUM name="DisconnectionType">
+		<VALUE tag="departed"/>
+		<VALUE tag="booted"/>
+		<VALUE tag="failed"/>
+		<VALUE tag="busy"/>
+	</ENUM>
+
+	<!-- MEDIA TYPE, name="media-type" -->
+	<ENUM name="MediaType">
+		<VALUE tag="video"/>
+		<VALUE tag="audio"/>
+		<VALUE tag="text"/>
+		<VALUE tag="application"/>
+		<VALUE tag="message"/>
+		<VALUE tag="image"/>
+		<VALUE tag="chat"/>
+	</ENUM>
+
+	<!-- MEDIUM TYPE, name="medium-type" -->
+	<ENUM name="MediumType">
+		<VALUE tag="video"/>
+		<VALUE tag="audio"/>
+		<VALUE tag="text"/>
+		<VALUE tag="application"/>
+		<VALUE tag="message"/>
+		<VALUE tag="image"/>
+		<VALUE tag="chat"/>
+		<VALUE tag="panoramic-video"/>
+		<VALUE tag="applicationsharing"/>
+		<VALUE tag="data"/>
+		<VALUE tag="data-conf"/>
+		<VALUE tag="control"/>
+	</ENUM>
+
+	<!-- MEDIA STATUS TYPE, name="media-status-type" -->
+	<ENUM name="MediaStatusType">
+		<VALUE name="RecvOnly" tag="recvonly"/>
+		<VALUE name="SendOnly" tag="sendonly"/>
+		<VALUE name="SendRecv" tag="sendrecv"/>
+		<VALUE name="Inactive" tag="inactive"/>
+	</ENUM>
+
+	<!-- RESPONSE CODE TYPE, name="response-code-type" -->
+	<ENUM name="ResponseCodeType">
+		<VALUE tag="success"/>
+		<VALUE tag="pending"/>
+		<VALUE tag="failure"/>
+	</ENUM>
+
+	<!-- REASON CODE TYPE, name="reason-code-type-ex" -->
+	<ENUM name="ReasonCodeExType"> <!-- Should be union type and optional, ask Alex how to define -->
+		<VALUE tag="serverBusy"/>
+		<VALUE tag="timeout"/>
+		<VALUE tag="unauthorized"/>
+		<VALUE tag="requestMalformed"/>
+		<VALUE tag="requestTooLarge"/>
+		<VALUE tag="requestCancelled"/>
+		<VALUE tag="notSupported"/>
+		<VALUE tag="otherFailure"/>
+	</ENUM>
+
+	<ENUM name="UriPurposeType">
+		<VALUE tag="audio-video"/>
+		<VALUE tag="chat"/>
+		<VALUE tag="applicationsharing"/>
+		<VALUE tag="data-conf"/>
+		<VALUE tag="local-caa-uri"/>
+	</ENUM>
+
+	<ENUM name="VideoSwitchingModeType">
+		<VALUE tag="dominant-speaker-switched"/>
+		<VALUE tag="manual-switched"/>
+	</ENUM>
+
+	<ENUM name="SessionType">
+		<VALUE tag="focus"/>
+		<VALUE tag="audio-video"/>
+		<VALUE tag="chat"/>
+	</ENUM>
+
+	<!-- SIDEBARS BY VAL TYPE, name="sidebars-by-val-type" -->
+	<CLASS name="SidebarsByVal" tag="sidebars-by-val"> <!-- do not change tag since it using in MEMBER type="choice" -->
+		<MEMBER name="conferences info" tag="entry" type="class" type_ref="Conference" container="list"/>
+		<PROPERTY name="state" tag="state" type="enum" type_ref="StateType" description="Indicates whether the document contains the whole conference information or only the information that has changed since the previous document"/>
+	</CLASS>
+
+	<!-- CONFERENCE TYPE, name="conference-type" -->
+	<CLASS name="Conference" tag="conference-info" root="true">
+		<MEMBER name="conference description" tag="conference-description" type="class" type_ref="ConferenceDescription" description="Describes the conference as a whole"/>
+		<MEMBER name="host info" tag="host-info" type="class" type_ref="Host" description="Contains information about the entity hosting the conference"/>
+		<MEMBER name="conference state" tag="conference-state" type="class" type_ref="ConferenceState" description="By including this element in the conference document, the server can inform the subscribers about the changes in the overall conference information"/>
+		<MEMBER name="users" tag="users" type="class" type_ref="Users" description="The sequence of users elements, each describing a single participant in the conference"/>
+		<MEMBER name="sidebars by ref" tag="sidebars-by-ref" type="class" type_ref="Uris" description="Contains a set of 'entry' child elements, each containing a sidebar conference URI"/>
+		<MEMBER name="conference view" tag="conference-view" ns="msci" type="class" type_ref="ConferenceView" description="msci:extension: Used to communicate settings, policies, capabilities, and state information for the focus and the MCUs within the conference"/>
+		<MEMBER type="choice" name="sidebars by val">
+			<MEMBER type_ref="SidebarsByVal"/>
+		</MEMBER>
+		<PROPERTY name="entity" tag="entity" type="string" description="The SIP URI that an interested entity needs to SUBSCRIBE to in order to get the conference package information"/>
+		<PROPERTY name="state" tag="state" type="enum" type_ref="StateType" description="Indicates whether the document contains the whole conference information or only the information that has changed since the previous document"/>
+		<PROPERTY name="version" tag="version" type="unsigned int" description="A server increment the version number for each notification being sent to a subscriber"/>
+	</CLASS>
+
+	<!-- CONFERENCE DESCRIPTION TYPE, name="conference-description-type" -->
+	<CLASS name="ConferenceDescription">
+		<MEMBER name="display text" tag="display-text" type="api string" description="Descriptive text suitable for human consumption, for example, listing in a directory"/>
+		<MEMBER name="subject" tag="subject" type="api string" description="The subject of the conference"/>
+		<MEMBER name="free text" tag="free-text" type="api string" description="An additional longer description of the conference"/>
+		<MEMBER name="keywords" tag="keywords" type="api string"  description="The list of space-separated string tokens that can be used by search engines to better classify the conference"/>
+		<MEMBER name="conf uris" tag="conf-uris" type="class" type_ref="Uris" description="The sequence of Conference URI, each being indexed by the attribute 'uri'"/>
+		<MEMBER name="service uris" tag="service-uris" type="class" type_ref="Uris" description="The sequence of auxiliary services available for the conference"/>
+		<MEMBER name="maximum user count" tag="maximum-user-count" type="api unsigned int" description="The number of users that can be invited to the conference"/>
+		<MEMBER name="available media" tag="available-media" type="class" type_ref="ConferenceMedia" description="The sequence of Conference Media, each being indexed by the attribute 'label'"/>
+	</CLASS>
+
+	<!-- HOST TYPE, name="host-type" -->
+	<CLASS name="Host">
+		<MEMBER name="display text" tag="display-text" type="api string" description="The display text describing the entity hosting the conference"/>
+		<MEMBER name="web page" tag="web-page" type="api string" description="URI of a web page describing either the conference service or the user hosting the conference"/>
+		<MEMBER name="uris" tag="uris" type="class" type_ref="Uris" description="The sequence of URI values and optionally its description"/>
+	</CLASS>
+		
+	<!-- CONFERENCE STATE TYPE, name="conference-state-type" -->
+	<CLASS name="ConferenceState">
+		<MEMBER name="user count" tag="user-count" type="api unsigned int" description="The overall number of users participating in the conference at a certain moment"/>
+		<MEMBER name="active" tag="active" type="api bool" description="Indicates whether the conference is currently active"/>
+		<MEMBER name="locked" tag="locked" type="api bool" description="Indicates whether the conference is currently locked"/>
+	</CLASS>
+		
+	<!-- CONFERENCE MEDIA TYPE, name="conference-media-type" -->
+	<CLASS name="ConferenceMedia">
+		<MEMBER name="mediums" tag="entry" type="class" type_ref="ConferenceMedium" container="list" description="The sequence of Conference Media, each being indexed by the attribute 'label'"/>
+	</CLASS>
+
+	<!-- CONFERENCE MEDIUM TYPE, name="conference-medium-type" -->
+	<CLASS name="ConferenceMedium">
+		<PROPERTY name="label" tag="label" type="string" description="The unique media stream identifier assigned by the conferencing server"/>
+		<MEMBER name="display text" tag="display-text" type="api string" description="The display text for the media stream"/>
+		<MEMBER name="type" tag="type" type="enum" type_ref="MediumType" description="The media type of the media stream audio/video/text/message"/>
+		<MEMBER name="status" tag="status" type="enum" type_ref="MediaStatusType" description="The available status of the media stream available to the conference participants"/>
+		<MEMBER name="modal parameters" tag="modal-parameters" ns="msci" type="class" type_ref="ModalParameters"/>
+	</CLASS>
+
+	<!-- URIs TYPE, name="uris-type" -->
+	<CLASS name="Uris">
+		<MEMBER name="uris" tag="entry" type="class" type_ref="Uri" container="list" description="The sequence of URI values and optionally its description"/>
+		<PROPERTY name="state" tag="state" type="enum" type_ref="StateType" description="This attribute indicates whether the document contains the whole URIs information or only the information that has changed since the previous document"/>
+	</CLASS>
+
+	<!-- URI TYPE, name="uri-type" -->
+	<CLASS name="Uri">
+		<MEMBER name="entity" tag="uri" type="string" description="The URI to to access the conference by different signaling means"/>
+		<MEMBER name="display text" tag="display-text" type="api string" description="The textual description meant for human consumption"/>
+		<MEMBER name="purpose" tag="purpose" type="api string" description="Describes what happens when accessing the URI (participation or streaming)"/>
+		<MEMBER name="modified" tag="modified" type="class" type_ref="Execution" description="Modification information"/>
+	</CLASS>
+
+	<!-- USERS TYPE, name="users-type" -->
+	<CLASS name="Users">
+		<MEMBER name="users" tag="user" type="class" type_ref="User" container="list" description="The sequence of users elements, each describing a single participant in the conference"/>
+		<PROPERTY name="state" tag="state" type="enum" type_ref="StateType" description="This attribute indicates whether the document contains the whole users information or only the information that has changed since the previous document"/>
+	</CLASS>
+
+	<!-- USER TYPE, name="user-type" -->
+	<CLASS name="User">
+		<MEMBER name="display text" tag="display-text" type="api string" description="The display the user-friendly name in the conference"/>
+		<MEMBER name="associated aors" tag="associated-aors" type="class" type_ref="Uris" description="The additional (to the 'entity') URIs being associated with the user"/>
+		<MEMBER tag="roles" type="class" type_ref="UserRoles" description="The set of human-readable strings describing the roles of the user in the conference"/>
+		<MEMBER tag="languages" type="api string" description="The list of tokens, separated by spaces, each containing a language understood by the user"/>
+		<MEMBER name="cascaded focus" tag="cascaded-focus" type="api string" description="The conference URI (different from the main conference URI) for users that are connected to the main conference as a result of focus cascading"/>
+		<MEMBER name="endpoints" tag="endpoint" type="class" type_ref="Endpoint" container="list" description="The list of multiple endpoints under a common user"/>
+		<PROPERTY name="entity" tag="entity" type="string" description="The the URI for the user in the conference. This is a logical identifier, which corresponds to the call signaling authenticated identity of the participant"/>
+		<PROPERTY name="state" tag="state" type="enum" type_ref="StateType" description="This attribute indicates whether the document contains the whole user information or only the information that has changed since the previous document"/>
+	</CLASS>
+		
+	<!-- USER ROLES TYPE, name="user-roles-type" -->
+	<CLASS name="UserRoles">
+		<MEMBER name="roles" tag="entry" type="string" container="list"/>
+	</CLASS>
+
+	<!-- ENDPOINT TYPE, name="endpoint-type" -->
+	<CLASS name="Endpoint">
+		<MEMBER name="display text" tag="display-text" type="api string" description="The display text for the endpoint"/>
+		<MEMBER name="referred" tag="referred" type="class" type_ref="Execution" description="The information about the user whose action resulted in this endpoint being brought into the conference"/>
+		<MEMBER name="status" tag="status" type="enum" type_ref="EndpointStatusType" description="The connection status of the endpoint"/>
+		<MEMBER name="joining method" tag="joining-method" type="enum" type_ref="JoiningType" description="The method by which the endpoint joined the conference dialed-in/dialed-out/focus-owner"/>
+		<MEMBER name="joining info" tag="joining-info" type="class" type_ref="Execution" description="The information about how the endpoint joined"/>
+		<MEMBER name="disconnection method" tag="disconnection-method" type="enum" type_ref="DisconnectionType" description="The method by which the endpoint departed the conference"/>
+		<MEMBER name="disconnection info" tag="disconnection-info" type="class" type_ref="Execution" description="The information about the endpoint's departure from the conference"/>
+		<MEMBER name="medias" tag="media" type="class" type_ref="Media" container="list" description="The list of media streams being established between the focus and the endpoint"/>
+		<MEMBER name="call info" tag="call-info" type="class" type_ref="Call" description="Detailed call signaling information for a call being maintained between the participant and the focus"/>
+		<MEMBER name="client info" tag="clientInfo" ns="msci" type="class" type_ref="ClientInfo"/>
+		<PROPERTY name="entity" tag="entity" type="string" description="The unique identifier for this endpoint among all endpoints in the conference and is assigned by the focus"/>
+		<PROPERTY name="state" tag="state" type="enum" type_ref="StateType" description="Indicates whether the element contains the whole endpoint information or only the information that has changed since the previous document"/>
+		<PROPERTY name="session type" tag="session-type" ns="msci" type="enum" type_ref="SessionType"/>
+		<PROPERTY name="id" tag="epid" ns="msci" type="api string"/>
+		<PROPERTY name="uri" tag="endpoint-uri" ns="msci" type="api string"/>
+	</CLASS>
+		
+	<CLASS name="ClientInfo">
+		<!-->MEMBER tag="separator" ns="cis" type="api string"/-->
+		<MEMBER tag="lobby-capable" ns="msci2" type="api bool"/>
+	</CLASS>
+		
+	<!-- EXECUTION TYPE, name="execution-type" -->
+	<CLASS name="Execution">
+		<MEMBER name="when" tag="when" type="api string" description="The date and time that the endpoint was joined/departed/referred to the conference"/>
+		<MEMBER name="reason" tag="reason" type="api string" description="The reason the endpoint was joined/departed/referred to the conference"/>
+		<MEMBER name="by" tag="by" type="api string" description="The URI of the entity that caused the endpoint to joined/departed/referred to the conference"/>
+	</CLASS>
+		
+	<!-- SIP DIALOG ID TYPE, name="sip-dialog-id-type" -->
+	<CLASS name="SipDialogId" tag="sip"> <!-- do not change tag since it is used as choice alternative -->
+		<MEMBER name="display text" tag="display-text" type="api string"/>
+		<MEMBER name="call id" tag="call-id" type="string"/>
+		<MEMBER name="from tag" tag="from-tag" type="string"/>
+		<MEMBER name="to tag" tag="to-tag" type="string"/>
+	</CLASS>
+		
+	<!-- CALL TYPE, name="call-type" -->
+	<CLASS name="Call">
+		<MEMBER type="choice" name="call type"> 
+			<MEMBER type_ref="SipDialogId"/>
+		</MEMBER>
+	</CLASS>
+		
+	<!-- MEDIA TYPE, name="media-type" -->
+	<CLASS name="Media">
+		<PROPERTY name="id" tag="id" type="string" description="This is the key to refer to a particular media stream in the conference document"/>
+		<MEMBER name="display text" tag="display-text" type="api string" description="The display text for the media stream"/>
+		<MEMBER name="type" tag="type" type="enum" type_ref="MediaType" description="The media type for the media stream. Must be one of the values registered for 'media' of SDP"/>
+		<MEMBER name="label" tag="label" type="api string" description="The unique identifier for this stream among all streams in the conference and is assigned by the focus"/>
+		<MEMBER name="ssrc id" tag="src-id" type="typedef" type_ref="SsrcID" description="The synchronization source (SSRC) identifier value generated by the endpoint for the stream it sends"/>
+		<MEMBER name="status" tag="status" type="enum" type_ref="MediaStatusType" description="Indicates the status in both directions of the media stream and has the values 'sendrecv/sendonly/recvonly/inactive'"/>
+		<MEMBER name="msi" tag="media-source-id" ns="msci" type="typedef" type_ref="LyncMsi" description="msci:extension: Represents the Media Source ID (MSI) as defined in [MS-SDPEXT] section 3.1.5.32"/>
+		<MEMBER name="source name" tag="source-name" ns="msci" type="api string" description="msci:extension: Represents descriptive name of media stream. If the value is not present in the SDP offer or SDP answer, then the label SHOULD be used"/>
+	</CLASS>
+
+	<!-- CONFERENCE KEYS TYPE, name="conference-keys" -->
+	<CLASS name="ConferenceKeys">
+		<PROPERTY name="confEntity" tag="confEntity" type="string"/>
+		<!-- xs:attribute ref="msci:conference-id" />  -->
+		<!-- xs:attribute ref="mscp:telemetry-id" use="optional" /> -->
+	</CLASS>
+		
+	<!-- ADD USER TYPE, name="add-user-keys" -->
+	<CLASS name="AddUser" tag="addUser"> <!-- do not change tag since it is used as a choice alternative -->
+		<MEMBER name="conferenceKeys" tag="conferenceKeys" type="class" type_ref="ConferenceKeys"/>
+		<MEMBER name="user" tag="user" type="class" type_ref="User"/>
+	</CLASS>
+
+	<!-- REQUEST TYPE, name="request-keys" -->
+	<CLASS name="Request" tag="request" root="true" >
+		<MEMBER type="choice" name="request type">
+			<MEMBER type_ref="AddUser"/>
+		</MEMBER>
+		<PROPERTY name="requestId" tag="requestId" type="string"/>
+		<PROPERTY name="C3PVersion" tag="C3PVersion" type="api string" description="The CCCP version of the originator of the request"/>
+		<PROPERTY name="from" tag="from" type="api string" description="The  URI of the CCCP client sending the CCCP request"/>
+		<PROPERTY name="to" tag="to" type="api string" description="The URI of the CCCP server the request is destined to"/>
+		<PROPERTY name="target" tag="target" type="api string" description="The URI of the final CCCP target server the request is destined to"/>
+		<PROPERTY name="originator" tag="originator" type="api string" description="The trusted Identifier of the originator of the request"/>
+	</CLASS>
+
+	<!-- RESPONSE TYPE, name="response-keys" -->
+	<CLASS name="Response">
+		<MEMBER type="choice" name="request type">
+			<CHOICE type_ref="AddUser"/>
+		</MEMBER>
+		<PROPERTY name="requestId" tag="requestId" type="string"/>
+		<PROPERTY name="C3PVersion" tag="C3PVersion" type="api string" description="The CCCP version of the originator of the recipient of the request"/>
+		<PROPERTY name="from" tag="from" type="api string" description="The  URI of the CCCP server sending the CCCP response"/>
+		<PROPERTY name="to" tag="to" type="api string" description="The  URI of the CCCP client the response is destined to"/>
+		<PROPERTY name="responder" tag="responder" type="api string" description="The trusted Identifier of the responder"/>
+		<PROPERTY name="code" tag="code" type="enum" type_ref="ResponseCodeType"/>
+		<PROPERTY name="reason" tag="reason" type="enum" type_ref="ReasonCodeExType"/>
+		<PROPERTY name="timeOut" tag="timeOut" type="api unsigned int"/>
+		<PROPERTY name="retryAfter" tag="retryAfter" type="api unsigned int"/>
+		<PROPERTY name="version" tag="version" type="api unsigned int"/>
+	</CLASS>
+
+	<!-- AVAILABILITY TYPE, name="availability-keys" -->
+	<CLASS name="Availability">
+		<PROPERTY name="available" tag="available" type="bool"/>
+	</CLASS>
+
+	<!-- CONF INVITE TYPE, name="conf-invite-keys" -->
+	<CLASS name="ConfInvite" tag="Conferencing" root="true">
+		<NAMESPACE/>
+		<PROPERTY name="version" tag="version" type="string"/>
+		<MEMBER name="focusUri" tag="focus-uri" type="string"/>
+		<MEMBER name="subject" tag="subject" type="string"/>
+		<MEMBER name="im" tag="im" type="class" type_ref="Availability"/>
+		<MEMBER name="audio" tag="audio" type="class" type_ref="Availability"/>
+		<MEMBER name="video" tag="video" type="class" type_ref="Availability"/>
+		<MEMBER name="conversationId" tag="conversation-id" type="string"/>
+	</CLASS>
+
+	<!-- CONFERENCE VIEW TYPE, name="conference-view" -->
+	<CLASS name="ConferenceView">
+		<PROPERTY name="state" tag="state" ns="ci" type="enum" type_ref="StateType" description="Indicates whether the document contains all of the conference-view information, with the value 'full', or only the information that has changed after the previous document, with the value 'partial'"/>
+		<MEMBER name="entity views" tag="entity-view" ns="msci" type="class" type_ref="EntityView" container="list" description="msci:extension: Container of entity-view elements, each describing either an MCU or the focus"/>
+	</CLASS>
+
+	<!-- ENTITY VIEW TYPE, name="entity-view" -->
+	<CLASS name="EntityView">
+		<PROPERTY name="state" tag="state" ns="ci" type="enum" type_ref="StateType"/>
+		<PROPERTY name="entity" tag="entity" type="string"/>
+		<MEMBER name="entity state" tag="entity-state" ns="msci" type="class" type_ref="EntityState"/>
+	</CLASS>
+
+	<!-- ENTITY STATE TYPE, name="entity-state-type" -->
+	<CLASS name="EntityState">
+		<MEMBER name="display text" tag="displayText" ns="msci" type="api string" description=""/>
+		<MEMBER name="active" tag="active" ns="msci" type="api bool" description=""/>
+		<MEMBER name="locked" tag="locked" ns="msci" type="api bool" description=""/>
+		<MEMBER name="media" tag="media" ns="msci" type="class" type_ref="ConferenceMedia" description=""/>
+		<MEMBER name="presentation mode capable" tag="presentation-mode-capable" ns="msmcu" type="api bool" description="The presentation-mode-capable element can be present and, if present, MUST adhere to the syntax rules specified in section 2.2.2.2.1.3"/>
+		<MEMBER name="multi view capable" tag="multi-view-capable" ns="msmcu" type="api bool" description="If the multi-view-capable element is set to 'true', then the MCU MUST support negotiating multiple video streams with label 'main-video' as defined in [MS-SDPEXT] section 3.1.5.35"/>
+		<MEMBER name="video presentation mode capable" tag="video-presentation-mode-capable" ns="msmcu" type="api bool" description="The video-presentation-mode-capable element SHOULD be present and, if present, MUST adhere to the syntax rules specified in section 2.2.2.2.1.3"/>
+	</CLASS>
+
+	<!-- MODAL PARAMETERS TYPE, name="modal-parameters-type" -->
+	<CLASS name="ModalParameters">
+		<MEMBER name="video parameters" tag="video-parameters" ns="msci" type="class" type_ref="VideoParameters" description="Intended specifically for video media types"/>
+	</CLASS>
+
+	<!-- VIDEO PARAMETERS TYPE, name="video-parameters-type" -->
+	<CLASS name="VideoParameters">
+		<MEMBER name="video mode" tag="video-mode" ns="msav" type="enum" type_ref="VideoSwitchingModeType" description="Specifies the video processing mode of the MCU"/>
+		<MEMBER name="intended primary presenter source" tag="intended-primary-presenter-source" ns="msav" type="class" type_ref="ContributingSources" description="It SHOULD only be present if the video-mode is present and has a value of 'manual-switched'"/>
+	</CLASS>
+
+	<!-- CONTRIBUTING SOURCE TYPE, name="contributing-sources-type" -->
+	<CLASS name="ContributingSources">
+		<PROPERTY name="empty" tag="empty" type="api bool" description="Identifies that there the video source specified by the entry element is not in the conference"/>
+		<MEMBER name="entry" tag="entry" ns="msav" type="api string" description="Identifies the user in the conference that will be the only video source available for the conference"/>
+	</CLASS>
+
+
+</API>

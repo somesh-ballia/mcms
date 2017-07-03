@@ -1,0 +1,12 @@
+<TRANS_RSRC_REPORT>
+        <TRANS_COMMON_PARAMS>
+                <MCU_TOKEN>2</MCU_TOKEN>
+                <MCU_USER_TOKEN>2</MCU_USER_TOKEN>
+                <MESSAGE_ID>585</MESSAGE_ID>
+        </TRANS_COMMON_PARAMS>
+        <ACTION>
+                <SET_PORT_GAUGE>
+                        <PORT_GAUGE_VALUE>1</PORT_GAUGE_VALUE>
+                </SET_PORT_GAUGE>
+        </ACTION>
+</TRANS_RSRC_REPORT>

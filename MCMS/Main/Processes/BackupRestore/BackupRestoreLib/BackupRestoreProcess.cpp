@@ -1,0 +1,34 @@
+// BackupRestoreProcess.cpp: implementation of the CBackupRestoreProcess class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "BackupRestoreProcess.h"
+#include "SystemFunctions.h"
+
+extern void BackupRestoreManagerEntryPoint(void* appParam);
+
+//////////////////////////////////////////////////////////////////////
+CProcessBase* CreateNewProcess()
+{
+	return new CBackupRestoreProcess;
+}
+
+//////////////////////////////////////////////////////////////////////
+TaskEntryPoint CBackupRestoreProcess::GetManagerEntryPoint()
+{
+	return BackupRestoreManagerEntryPoint;
+}
+
+
+//////////////////////////////////////////////////////////////////////
+CBackupRestoreProcess::CBackupRestoreProcess()
+{
+
+}
+
+//////////////////////////////////////////////////////////////////////
+CBackupRestoreProcess::~CBackupRestoreProcess()
+{
+
+}
+

@@ -1,0 +1,34 @@
+// IPMCInterfaceProcess.cpp: implementation of the CIPMCInterfaceProcess class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "IPMCInterfaceProcess.h"
+#include "SystemFunctions.h"
+
+extern void IPMCInterfaceManagerEntryPoint(void* appParam);
+
+//////////////////////////////////////////////////////////////////////
+CProcessBase* CreateNewProcess()
+{
+	return new CIPMCInterfaceProcess;
+}
+
+//////////////////////////////////////////////////////////////////////
+TaskEntryPoint CIPMCInterfaceProcess::GetManagerEntryPoint()
+{
+	return IPMCInterfaceManagerEntryPoint;
+}
+
+
+//////////////////////////////////////////////////////////////////////
+CIPMCInterfaceProcess::CIPMCInterfaceProcess()
+{
+
+}
+
+//////////////////////////////////////////////////////////////////////
+CIPMCInterfaceProcess::~CIPMCInterfaceProcess()
+{
+
+}
+

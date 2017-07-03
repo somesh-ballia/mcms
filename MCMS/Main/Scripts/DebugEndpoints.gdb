@@ -1,0 +1,1 @@
+shell Scripts/DebugEndpoints.sh

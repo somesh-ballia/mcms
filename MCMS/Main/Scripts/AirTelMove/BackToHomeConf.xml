@@ -1,0 +1,17 @@
+
+<TRANS_CONF_2>
+      <TRANS_COMMON_PARAMS>
+        <MCU_TOKEN>5</MCU_TOKEN>
+        <MCU_USER_TOKEN>5</MCU_USER_TOKEN>
+        <MESSAGE_ID>1720</MESSAGE_ID>
+      </TRANS_COMMON_PARAMS>
+      <ACTION>
+        <BACK_TO_CONF_PARTY>
+          <ID>15</ID>
+          <PARTY_ID>5</PARTY_ID>
+          <OPERATOR_CONF_NAME />
+          <OPERATOR_CONF_ID>0</OPERATOR_CONF_ID>
+        </BACK_TO_CONF_PARTY>
+      </ACTION>
+    </TRANS_CONF_2>
+
